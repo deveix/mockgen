@@ -23,6 +23,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { skeletons } from "@/components/template-skeletons"
 
 import {
+  AppleLogo,
   BlogLogo,
   FacebookLogo,
   LinkedInLogo,
@@ -33,6 +34,7 @@ import {
 
 type Platform =
   | "open-graph"
+  | "apple"
   | "blog"
   | "facebook"
   | "x"
@@ -51,11 +53,17 @@ interface TemplateFilter {
 
 const templateFilters: TemplateFilter[] = [
   {
-    platform: "open-graph",
-    label: "Open Graph Protocol",
-    width: 1200,
-    height: 630,
+    platform: "apple",
+    label: "App Screenshot",
+    width: 1179,
+    height: 2556,
   },
+  // {
+  //   platform: "open-graph",
+  //   label: "Open Graph Protocol",
+  //   width: 1200,
+  //   height: 630,
+  // },
   // {
   //   platform: "blog",
   //   label: "Wide (16:9)",
@@ -80,12 +88,13 @@ const templateFilters: TemplateFilter[] = [
   //   width: 1024,
   //   height: 512,
   // },
-  {
-    platform: "x",
-    label: "Header",
-    width: 1500,
-    height: 500,
-  },
+  // {
+  //   platform: "x",
+  //   label: "Header",
+  //   width: 1500,
+  //   height: 500,
+  // },
+
   // {
   //   platform: "linkedin",
   //   label: "Post",
@@ -110,6 +119,10 @@ const platforms: Record<Platform, PlatformProps> = {
   "open-graph": {
     label: "Open Graph",
     icon: OpenGraphLogo,
+  },
+  apple: {
+    label: "Apple",
+    icon: AppleLogo,
   },
   blog: {
     label: "Blog",
@@ -207,6 +220,15 @@ const templates = [
     width: 1500,
     height: 500,
     skeleton: skeletons["x:header-logo"],
+  },
+
+  // Apple
+  {
+    platform: "apple",
+    name: "apple:app-screenshot",
+    width: 1179,
+    height: 2556,
+    skeleton: skeletons["apple:app-screenshot"],
   },
 ]
 

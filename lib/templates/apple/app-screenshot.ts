@@ -8,7 +8,7 @@ import { imageSchema } from "../elements/image"
 import { textSchema } from "../elements/text"
 
 export const appScreenshotTemplateSchema = z.object({
-  name: z.literal("og:app-screenshot"),
+  name: z.literal("apple:app-screenshot"),
   params: z.object({
     logo: imageSchema,
     title: textSchema,
@@ -20,7 +20,7 @@ export const appScreenshotTemplateSchema = z.object({
 export type AppScreenshotTemplate = z.infer<typeof appScreenshotTemplateSchema>
 
 export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
-  name: "og:app-screenshot",
+  name: "apple:app-screenshot",
   params: {
     title: {
       text: "A super helpful app feature goes here",

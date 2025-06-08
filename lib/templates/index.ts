@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
 
@@ -16,6 +17,9 @@ const templateNameSchema = z.union([
   z.literal("x:header-basic"),
   z.literal("x:header-minimalist"),
   z.literal("x:header-logo"),
+
+  // Apple
+  z.literal("apple:app-screenshot"),
 ])
 export type TemplateName = z.infer<typeof templateNameSchema>
 
@@ -32,6 +36,9 @@ export const templateSchema = z.discriminatedUnion("name", [
   x.header.basicTemplateSchema,
   x.header.minimalistTemplateSchema,
   x.header.logoTemplateSchema,
+
+  // Apple
+  apple.appScreenshotTemplateSchema,
 ])
 export type Template = z.infer<typeof templateSchema>
 
@@ -48,4 +55,7 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "x:header-basic": x.header.basicTemplateDefault,
   "x:header-minimalist": x.header.minimalistTemplateDefault,
   "x:header-logo": x.header.logoTemplateDefault,
+
+  // Apple
+  "apple:app-screenshot": apple.appScreenshotTemplateDefault,
 }

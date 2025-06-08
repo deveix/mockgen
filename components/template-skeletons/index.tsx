@@ -1,3 +1,4 @@
+import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
 
@@ -14,4 +15,7 @@ export const skeletons = {
   "x:header-basic": x.header.Basic,
   "x:header-minimalist": x.header.Minimalist,
   "x:header-logo": x.header.Logo,
+
+  // Apple
+  "apple:app-screenshot": apple.AppScreenshot,
 }

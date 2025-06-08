@@ -1,7 +1,7 @@
 import { z } from "zod"
 
-const DEFAULT_WIDTH = 1200
-const DEFAULT_HEIGHT = 630
+const DEFAULT_WIDTH = 1179
+const DEFAULT_HEIGHT = 2556
 
 export const canvasSchema = z.object({
   width: z.number().default(DEFAULT_WIDTH),

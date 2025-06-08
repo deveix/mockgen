@@ -1,3 +1,4 @@
+import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
 
@@ -14,4 +15,7 @@ export const templates = {
   "x:header-basic": x.header.basic,
   "x:header-minimalist": x.header.minimalist,
   "x:header-logo": x.header.logo,
+
+  // Apple
+  "apple:app-screenshot": apple.appScreenshot,
 }
