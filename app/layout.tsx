@@ -17,21 +17,22 @@ import { MobileNav } from "@/components/nav/mobile-nav"
 import { ThemeProvider } from "@/components/theme-provider"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://imgsrc.io"),
-  title: "imgsrc",
-  description: "Generate beautiful Open Graph images with zero effort.",
+  metadataBase: new URL("https://mockgen.click"),
+  title: "MockGen",
+  description: "Generate App store & Play store screenshots with zero effort.",
   openGraph: {
-    title: "imgsrc",
-    description: "Generate beautiful Open Graph images with zero effort.",
+    title: "MockGen",
+    description:
+      "Generate App store & Play store screenshots with zero effort.",
     type: "website",
-    url: "https://imgsrc.io",
-    siteName: "imgsrc",
+    url: "https://mockgen.click",
+    siteName: "MockGen",
     images: [
       {
-        url: "https://imgsrc.io/og.png",
+        url: "https://mockgen.click/og.png",
         width: 1200,
         height: 630,
-        alt: "imgsrc - Generate beautiful Open Graph images with zero effort.",
+        alt: "MockGen - Generate App store & Play store screenshots with zero effort.",
       },
     ],
     locale: "en_US",
