@@ -8,6 +8,7 @@ export const templates = {
   "og:hero": og.hero,
   "og:image-right": og.imageRight,
   "og:logos": og.logos,
+  "og:app-screenshot": og.appScreenshot,
 
   // X Header templates
   "x:header-basic": x.header.basic,

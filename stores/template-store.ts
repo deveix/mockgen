@@ -15,7 +15,7 @@ export type Actions = {
 }
 
 export const defaultInitState: TemplateState = {
-  ...templateDefaults["og:image-right"],
+  ...templateDefaults["og:app-screenshot"],
   previewSvg: null,
 }
 

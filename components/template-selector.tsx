@@ -143,40 +143,47 @@ const templateFiltersByPlatform = templateFilters.reduce(
 
 const templates = [
   // Open Graph
+  // {
+  //   platform: "open-graph",
+  //   name: "og:image-right",
+  //   width: 1200,
+  //   height: 630,
+  //   skeleton: skeletons["og:image-right"],
+  // },
+  // {
+  //   platform: "open-graph",
+  //   name: "og:hero",
+  //   width: 1200,
+  //   height: 630,
+  //   skeleton: skeletons["og:hero"],
+  // },
+  // {
+  //   platform: "open-graph",
+  //   name: "og:logos",
+  //   width: 1200,
+  //   height: 630,
+  //   skeleton: skeletons["og:logos"],
+  // },
+  // {
+  //   platform: "open-graph",
+  //   name: "og:basic",
+  //   width: 1200,
+  //   height: 630,
+  //   skeleton: skeletons["og:basic"],
+  // },
+  // {
+  //   platform: "open-graph",
+  //   name: "og:notice",
+  //   width: 1200,
+  //   height: 630,
+  //   skeleton: skeletons["og:notice"],
+  // },
   {
     platform: "open-graph",
-    name: "og:image-right",
+    name: "og:app-screenshot",
     width: 1200,
     height: 630,
-    skeleton: skeletons["og:image-right"],
-  },
-  {
-    platform: "open-graph",
-    name: "og:hero",
-    width: 1200,
-    height: 630,
-    skeleton: skeletons["og:hero"],
-  },
-  {
-    platform: "open-graph",
-    name: "og:logos",
-    width: 1200,
-    height: 630,
-    skeleton: skeletons["og:logos"],
-  },
-  {
-    platform: "open-graph",
-    name: "og:basic",
-    width: 1200,
-    height: 630,
-    skeleton: skeletons["og:basic"],
-  },
-  {
-    platform: "open-graph",
-    name: "og:notice",
-    width: 1200,
-    height: 630,
-    skeleton: skeletons["og:notice"],
+    skeleton: skeletons["og:app-screenshot"],
   },
 
   // Twitter/X Header

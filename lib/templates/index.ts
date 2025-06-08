@@ -10,6 +10,7 @@ const templateNameSchema = z.union([
   z.literal("og:hero"),
   z.literal("og:notice"),
   z.literal("og:logos"),
+  z.literal("og:app-screenshot"),
 
   // X Header templates
   z.literal("x:header-basic"),
@@ -25,6 +26,7 @@ export const templateSchema = z.discriminatedUnion("name", [
   og.heroTemplateSchema,
   og.noticeTemplateSchema,
   og.logosTemplateSchema,
+  og.appScreenshotTemplateSchema,
 
   // X Header templates
   x.header.basicTemplateSchema,
@@ -40,6 +42,7 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "og:hero": og.heroTemplateDefault,
   "og:notice": og.noticeTemplateDefault,
   "og:logos": og.logosTemplateDefault,
+  "og:app-screenshot": og.appScreenshotTemplateDefault,
 
   // X Header templates
   "x:header-basic": x.header.basicTemplateDefault,

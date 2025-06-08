@@ -8,6 +8,7 @@ export const skeletons = {
   "og:hero": og.Hero,
   "og:image-right": og.ImageRight,
   "og:logos": og.Logos,
+  "og:app-screenshot": og.AppScreenshot,
 
   // X Header templates
   "x:header-basic": x.header.Basic,
