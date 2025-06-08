@@ -1,5 +1,5 @@
+import { AppScreenshotTemplate } from "@/lib/templates/apple"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
-import { AppScreenshotTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
 
 import { Watermark } from "../elements/watermark"
@@ -37,15 +37,15 @@ export function Template(props: {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          bottom: -150,
+          bottom: template.params.bottomPadding + 50,
         }}
       >
         <img
           src={template.params.logo.url}
           alt="Logo"
           style={{
-            width: 100,
-            height: 100,
+            width: template.params.logo.width,
+            height: template.params.logo.height,
           }}
         />
         <p
@@ -54,6 +54,8 @@ export function Template(props: {
             fontWeight: template.params.title.fontWeight,
             fontSize: `${template.params.title.fontSize}px`,
             color: template.params.title.color,
+            marginLeft: 100,
+            marginRight: 100,
           }}
         >
           {template.params.title.text}
@@ -61,27 +63,38 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth,
-          height: screenshotHeight,
+          width: screenshotWidth + 40,
+          height: screenshotHeight + 120,
           display: "flex",
-          bottom: -200,
+          bottom: template.params.bottomPadding,
           overflow: "hidden",
-          backgroundImage: `url(${absoluteUrl("/iphone-frame.svg")})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
         }}
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
+        <img
+          src={absoluteUrl("/iphone-frame.svg")}
+          alt="Device Frame"
+          style={{
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            zIndex: 4,
+          }}
+        />
         {/* User screenshot */}
         <img
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{
-            width: "100%",
-            height: "100%",
+            position: "absolute",
+            top: 80,
+            left: 20,
+            right: 20,
+            width: screenshotWidth,
+            height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
+            borderRadius: 200,
           }}
         />
       </div>

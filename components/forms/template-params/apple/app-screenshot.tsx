@@ -1,7 +1,7 @@
 import { useTemplateStore } from "@/providers/template-store-provider"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
-import { AppScreenshotTemplate } from "@/lib/templates/open-graph/app-screenshot"
+import { AppScreenshotTemplate } from "@/lib/templates/apple/app-screenshot"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
@@ -100,19 +101,56 @@ export function Form() {
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="logo">Logo</Label>
-              <ImageSelector
-                id="logo"
-                onChange={(v) =>
-                  template.updateParams({
-                    logo: {
-                      url: v ?? "",
-                    },
-                  })
-                }
-                initialFileName={
-                  params.logo.url ? params.logo.url.split("/").pop() : undefined
-                }
-              />
+              <div className="flex space-x-2">
+                <div className="flex-1">
+                  <ImageSelector
+                    id="logo"
+                    onChange={(v) =>
+                      template.updateParams({
+                        logo: {
+                          ...(params.logo ?? {}),
+                          url: v ?? "",
+                        },
+                      })
+                    }
+                    initialFileName={
+                      params.logo.url
+                        ? params.logo.url.split("/").pop()
+                        : undefined
+                    }
+                  />
+                </div>
+                <ResponsivePopover
+                  title="Logo Settings"
+                  description="Customize the logo."
+                  trigger={
+                    <Button variant="outline" size="icon">
+                      <MixerHorizontalIcon className="h-4 w-4" />
+                    </Button>
+                  }
+                >
+                  <ImageSettings
+                    width={params.logo.width ?? 200}
+                    height={params.logo.height ?? 200}
+                    onChangeWidth={(width) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          width: width ?? 200,
+                        },
+                      })
+                    }
+                    onChangeHeight={(height) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          height: height ?? 200,
+                        },
+                      })
+                    }
+                  />
+                </ResponsivePopover>
+              </div>
             </div>
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
@@ -130,6 +168,19 @@ export function Form() {
                   params.screenshot.url
                     ? params.screenshot.url.split("/").pop()
                     : "screenshot.png"
+                }
+              />
+            </div>
+
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="bottomPadding">Bottom Padding</Label>
+              <Input
+                id="bottomPadding"
+                value={params.bottomPadding}
+                onChange={(e) =>
+                  template.updateParams({
+                    bottomPadding: Number(e.target.value),
+                  })
                 }
               />
             </div>

@@ -13,6 +13,7 @@ export const appScreenshotTemplateSchema = z.object({
     logo: imageSchema,
     title: textSchema,
     screenshot: imageSchema,
+    bottomPadding: z.number(),
   }),
   background: backgroundSchema,
   canvas: canvasSchema,
@@ -25,16 +26,19 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     title: {
       text: "A super helpful app feature goes here",
       fontFamily: "inter",
-      fontWeight: 700,
-      fontSize: 40,
+      fontWeight: 800,
+      fontSize: 64,
       color: "#222",
     },
     logo: {
       url: absoluteUrl("/logo.svg"),
+      width: 200,
+      height: 200,
     },
     screenshot: {
       url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
     },
+    bottomPadding: -400,
   },
   background: {
     type: "color",
