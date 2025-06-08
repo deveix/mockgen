@@ -68,7 +68,7 @@ export function ImageSelector({
         <DropdownMenuTrigger asChild>
           <Button
             variant="outline"
-            className="justify-start space-x-1 overflow-hidden"
+            className="w-full justify-start space-x-1 overflow-hidden"
           >
             <span>{file?.name ? "File:" : "Choose Image:"}</span>
             <span className="overflow-hidden overflow-ellipsis font-mono font-normal">

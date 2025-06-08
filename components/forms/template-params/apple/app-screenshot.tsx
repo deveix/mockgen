@@ -99,10 +99,10 @@ export function Form() {
               </div>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="logo">Logo</Label>
-              <div className="flex space-x-2">
-                <div className="flex-1">
+              <div className="flex space-x-2 overflow-hidden">
+                <div className="min-w-0 flex-1">
                   <ImageSelector
                     id="logo"
                     onChange={(v) =>
@@ -153,7 +153,7 @@ export function Form() {
               </div>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
+            <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="screenshot">Screenshot</Label>
               <ImageSelector
                 id="screenshot"
