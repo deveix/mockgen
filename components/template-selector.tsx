@@ -55,8 +55,8 @@ const templateFilters: TemplateFilter[] = [
   {
     platform: "apple",
     label: "App Screenshot",
-    width: 1179,
-    height: 2556,
+    width: 1320,
+    height: 2868,
   },
   // {
   //   platform: "open-graph",
@@ -226,8 +226,8 @@ const templates = [
   {
     platform: "apple",
     name: "apple:app-screenshot",
-    width: 1179,
-    height: 2556,
+    width: 1320,
+    height: 2868,
     skeleton: skeletons["apple:app-screenshot"],
   },
 ]

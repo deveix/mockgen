@@ -43,7 +43,7 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     gridOverlay: undefined,
   },
   canvas: {
-    width: 1080,
-    height: 1920,
+    width: 1320,
+    height: 2868,
   },
 }
