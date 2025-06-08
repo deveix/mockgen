@@ -40,7 +40,7 @@ export default function Home() {
               </div>
             </Card>
 
-            <Tabs defaultValue="save">
+            {/* <Tabs defaultValue="save">
               <TabsList className="grid grid-cols-2">
                 <TabsTrigger value="save">Save Image</TabsTrigger>
                 <TabsTrigger value="api">API Request</TabsTrigger>
@@ -94,7 +94,33 @@ export default function Home() {
                   </CardContent>
                 </Card>
               </TabsContent>
-            </Tabs>
+            </Tabs> */}
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Save Image</CardTitle>
+                <CardDescription>Export the image as a PNG.</CardDescription>
+              </CardHeader>
+              <CardContent className="flex items-center justify-between space-x-2">
+                <div className="flex items-center">
+                  <InfoCircledIcon className="mr-2 h-4 w-4" />
+                  <p className="text-sm">
+                    <Button
+                      className="h-auto p-0 underline"
+                      variant="link"
+                      asChild
+                    >
+                      <Link href="https://imgsrc.io/guides/open-graph-meta-tags">
+                        Learn more
+                      </Link>
+                    </Button>{" "}
+                    about Open Graph meta tags.
+                  </p>
+                </div>
+
+                <SaveImageButton />
+              </CardContent>
+            </Card>
           </div>
         </div>
       </div>

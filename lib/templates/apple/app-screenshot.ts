@@ -25,9 +25,9 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
   params: {
     title: {
       text: "A super helpful app feature goes here",
-      fontFamily: "inter",
-      fontWeight: 800,
-      fontSize: 64,
+      fontFamily: "poppins",
+      fontWeight: 700,
+      fontSize: 100,
       color: "#222",
     },
     logo: {
@@ -42,7 +42,7 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
   },
   background: {
     type: "color",
-    color: "#c7d2fe",
+    color: "#f3f4f6",
     noise: 0.1,
     gridOverlay: undefined,
   },

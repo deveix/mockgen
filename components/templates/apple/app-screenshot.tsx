@@ -56,6 +56,7 @@ export function Template(props: {
             color: template.params.title.color,
             marginLeft: 100,
             marginRight: 100,
+            lineHeight: 1.2,
           }}
         >
           {template.params.title.text}

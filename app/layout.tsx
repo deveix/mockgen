@@ -110,7 +110,7 @@ export default async function RootLayout({
             <div className="flex justify-between">
               <div className="flex items-center space-x-2">
                 <div className="font-mono font-semibold">
-                  <Link href="https://imgsrc.io">.imgsrc</Link>
+                  <Link href="https://mockgen.click">.mockgen</Link>
                 </div>
 
                 <div>
