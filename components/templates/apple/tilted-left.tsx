@@ -37,6 +37,8 @@ export function Template(props: {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
+          flex: 1,
+          top: 120,
         }}
       >
         <p
@@ -45,8 +47,8 @@ export function Template(props: {
             fontWeight: template.params.title.fontWeight,
             fontSize: `${template.params.title.fontSize}px`,
             color: template.params.title.color,
-            marginLeft: 100,
-            marginRight: 100,
+            marginLeft: 150,
+            marginRight: 150,
             lineHeight: 1.2,
           }}
         >
@@ -59,7 +61,7 @@ export function Template(props: {
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
-          marginBottom: 0,
+          top: 200,
         }}
       >
         {/* Device frame using tilted-left SVG */}

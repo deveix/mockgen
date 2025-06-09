@@ -26,7 +26,7 @@ export const tiltedLeftTemplateDefault: TiltedLeftTemplate = {
       text: "A super helpful app feature goes here",
       fontFamily: "poppins",
       fontWeight: 700,
-      fontSize: 100,
+      fontSize: 110,
       color: "#222",
     },
     logo: {
