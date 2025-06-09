@@ -19,4 +19,5 @@ export const skeletons = {
   // Apple
   "apple:app-screenshot": apple.AppScreenshot,
   "apple:tilted-left": apple.TiltedLeft,
+  "apple:tilted-right": apple.TiltedRight,
 }

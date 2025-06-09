@@ -18,3 +18,12 @@ export function TiltedLeft() {
     </div>
   )
 }
+
+export function TiltedRight() {
+  return (
+    <div className="flex aspect-video h-full w-full flex-col items-center justify-between">
+      <Skeleton className="h-3 w-1/4 md:mt-3 md:h-4" />
+      <Skeleton className="w-1/6 flex-1 md:mt-2" />
+    </div>
+  )
+}
