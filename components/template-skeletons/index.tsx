@@ -20,4 +20,6 @@ export const skeletons = {
   "apple:app-screenshot": apple.AppScreenshot,
   "apple:tilted-left": apple.TiltedLeft,
   "apple:tilted-right": apple.TiltedRight,
+  "apple:hanged-up": apple.HangedUp,
+  "apple:rotated": apple.Rotated,
 }

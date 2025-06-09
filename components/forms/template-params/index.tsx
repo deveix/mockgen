@@ -15,6 +15,7 @@ export const templates = {
   "apple:app-screenshot": apple.appScreenshot,
   "apple:tilted-left": apple.tiltedLeft,
   "apple:tilted-right": apple.tiltedRight,
+  "apple:hanged-up": apple.hangedUp,
 
   // X Header templates
   "x:header-basic": x.header.basic,
