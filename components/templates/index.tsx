@@ -18,4 +18,5 @@ export const templates = {
 
   // Apple
   "apple:app-screenshot": apple.appScreenshot,
+  "apple:tilted-left": apple.tiltedLeft,
 }

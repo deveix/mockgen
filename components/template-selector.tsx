@@ -230,6 +230,14 @@ const templates = [
     height: 2868,
     skeleton: skeletons["apple:app-screenshot"],
   },
+
+  {
+    platform: "apple",
+    name: "apple:tilted-left",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["apple:tilted-left"],
+  },
 ]
 
 export default function TemplateSelector() {
