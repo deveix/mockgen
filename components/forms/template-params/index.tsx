@@ -13,6 +13,7 @@ export const templates = {
 
   // Apple
   "apple:app-screenshot": apple.appScreenshot,
+  "apple:tilted-left": apple.tiltedLeft,
 
   // X Header templates
   "x:header-basic": x.header.basic,
