@@ -1,4 +1,4 @@
-# imgsrc-app
+# mockgen
 
 ## Development
 
