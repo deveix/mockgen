@@ -10,7 +10,6 @@ import { textSchema } from "../elements/text"
 export const tiltedLeftTemplateSchema = z.object({
   name: z.literal("apple:tilted-left"),
   params: z.object({
-    logo: imageSchema,
     title: textSchema,
     screenshot: imageSchema,
   }),
@@ -28,11 +27,6 @@ export const tiltedLeftTemplateDefault: TiltedLeftTemplate = {
       fontWeight: 700,
       fontSize: 110,
       color: "#222",
-    },
-    logo: {
-      url: absoluteUrl("/logo.svg"),
-      width: 200,
-      height: 200,
     },
     screenshot: {
       url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
