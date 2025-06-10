@@ -238,6 +238,30 @@ const templates = [
     height: 2868,
     skeleton: skeletons["apple:tilted-left"],
   },
+
+  {
+    platform: "apple",
+    name: "apple:tilted-right",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["apple:tilted-right"],
+  },
+
+  {
+    platform: "apple",
+    name: "apple:hanged-up",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["apple:hanged-up"],
+  },
+
+  {
+    platform: "apple",
+    name: "apple:rotated",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["apple:rotated"],
+  },
 ]
 
 export default function TemplateSelector() {

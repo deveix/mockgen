@@ -21,6 +21,9 @@ const templateNameSchema = z.union([
   // Apple
   z.literal("apple:app-screenshot"),
   z.literal("apple:tilted-left"),
+  z.literal("apple:tilted-right"),
+  z.literal("apple:hanged-up"),
+  z.literal("apple:rotated"),
 ])
 export type TemplateName = z.infer<typeof templateNameSchema>
 
@@ -41,6 +44,9 @@ export const templateSchema = z.discriminatedUnion("name", [
   // Apple
   apple.appScreenshotTemplateSchema,
   apple.tiltedLeftTemplateSchema,
+  apple.tiltedRightTemplateSchema,
+  apple.hangedUpTemplateSchema,
+  apple.rotatedTemplateSchema,
 ])
 export type Template = z.infer<typeof templateSchema>
 
@@ -61,4 +67,7 @@ export const templateDefaults: Record<TemplateName, Template> = {
   // Apple
   "apple:app-screenshot": apple.appScreenshotTemplateDefault,
   "apple:tilted-left": apple.tiltedLeftTemplateDefault,
+  "apple:tilted-right": apple.tiltedRightTemplateDefault,
+  "apple:hanged-up": apple.hangedUpTemplateDefault,
+  "apple:rotated": apple.rotatedTemplateDefault,
 }

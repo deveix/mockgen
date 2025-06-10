@@ -1,2 +1,5 @@
 export * from "./app-screenshot"
 export * from "./tilted-left"
+export * from "./tilted-right"
+export * from "./hanged-up"
+export * from "./rotated"
