@@ -16,6 +16,7 @@ export const templates = {
   "apple:tilted-left": apple.tiltedLeft,
   "apple:tilted-right": apple.tiltedRight,
   "apple:hanged-up": apple.hangedUp,
+  "apple:rotated": apple.rotated,
 
   // X Header templates
   "x:header-basic": x.header.basic,
