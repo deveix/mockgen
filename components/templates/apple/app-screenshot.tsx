@@ -10,8 +10,8 @@ export function Template(props: {
 }) {
   const { template, renderWatermark } = props
   // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width * 0.8
-  const screenshotHeight = screenshotWidth * 2.1
+  const screenshotWidth = template.canvas.width * 0.85
+  const screenshotHeight = screenshotWidth * 2.2
 
   return (
     <div
@@ -36,18 +36,10 @@ export function Template(props: {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          bottom: template.params.bottomPadding + 50,
+          justifyContent: "flex-end",
+          bottom: template.params.bottomPadding,
         }}
       >
-        <img
-          src={template.params.logo.url}
-          alt="Logo"
-          style={{
-            width: template.params.logo.width,
-            height: template.params.logo.height,
-          }}
-        />
         <p
           style={{
             fontFamily: template.params.title.fontFamily,
@@ -57,14 +49,28 @@ export function Template(props: {
             marginLeft: 100,
             marginRight: 100,
             lineHeight: 1.2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 40,
           }}
         >
+          <img
+            src={template.params.logo.url}
+            alt="Logo"
+            style={{
+              width: template.params.logo.width,
+              height: template.params.logo.height,
+              position: "relative",
+            }}
+          />
           {template.params.title.text}
         </p>
       </div>
       <div
         style={{
-          width: screenshotWidth + 40,
+          width: screenshotWidth + 135,
           height: screenshotHeight + 120,
           display: "flex",
           bottom: template.params.bottomPadding,
@@ -73,7 +79,7 @@ export function Template(props: {
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
         <img
-          src={absoluteUrl("/iphone-frame.svg")}
+          src={absoluteUrl("/mocks/iphone-frame.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -88,14 +94,14 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 80,
-            left: 20,
+            top: 90,
+            left: 70,
             right: 20,
             width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderRadius: 200,
+            borderRadius: 150,
           }}
         />
       </div>
