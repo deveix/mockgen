@@ -15,7 +15,7 @@ export type Actions = {
 }
 
 export const defaultInitState: TemplateState = {
-  ...templateDefaults["apple:rotated"],
+  ...templateDefaults["apple:tilted-left"],
   previewSvg: null,
 }
 
