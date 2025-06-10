@@ -57,7 +57,7 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth + 120,
+          width: screenshotWidth + 160,
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
@@ -81,17 +81,16 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 70,
+            top: 98,
             left: 70,
             right: 20,
             width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 200,
-            borderTopRightRadius: 200,
-            transform:
-              "rotate(7.5deg) skewX(7deg) skewY(-10deg) translateX(-30px)",
+            borderTopLeftRadius: 120,
+            borderTopRightRadius: 120,
+            transform: "rotate(7deg) skewX(7deg) skewY(-10deg)",
             transformOrigin: "center center",
           }}
         />
