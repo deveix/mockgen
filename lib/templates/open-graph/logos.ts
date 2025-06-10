@@ -67,7 +67,7 @@ export const logosTemplateDefault: LogosTemplate = {
       "rgb(252, 165, 165)",
       "rgb(254, 240, 138)",
     ],
-    noise: 0.15,
+    noise: 0,
   },
   canvas: {
     width: 1200,

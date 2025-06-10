@@ -13,7 +13,7 @@ export const appScreenshotTemplateSchema = z.object({
     logo: imageSchema,
     title: textSchema,
     screenshot: imageSchema,
-    bottomPadding: z.number(),
+    bottomPadding: z.string(),
   }),
   background: backgroundSchema,
   canvas: canvasSchema,
@@ -38,12 +38,12 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     screenshot: {
       url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
     },
-    bottomPadding: -400,
+    bottomPadding: "-500",
   },
   background: {
     type: "color",
     color: "#f3f4f6",
-    noise: 0.1,
+    noise: 0,
     gridOverlay: undefined,
   },
   canvas: {

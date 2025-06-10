@@ -61,7 +61,7 @@ export const basicTemplateDefault: BasicTemplate = {
       "#efeeec 75%",
       "#e9e9e7 100%",
     ],
-    noise: 0.15,
+    noise: 0,
     gridOverlay: {
       pattern: "grid",
       color: "#6b7280",

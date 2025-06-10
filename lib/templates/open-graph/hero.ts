@@ -54,7 +54,7 @@ export const heroTemplateDefault: HeroTemplate = {
   background: {
     type: "color",
     color: "#000000",
-    noise: 0.1,
+    noise: 0,
     gridOverlay: {
       pattern: "graph-paper",
       color: "#f9fafb",

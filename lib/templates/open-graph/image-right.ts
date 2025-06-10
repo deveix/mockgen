@@ -59,7 +59,7 @@ export const imageRightTemplateDefault: ImageRightTemplate = {
     type: "linear-gradient",
     direction: "to top right",
     colorStops: ["rgb(236, 72, 153)", "rgb(239, 68, 68)", "rgb(234, 179, 8)"],
-    noise: 0.15,
+    noise: 0,
     gridOverlay: {
       pattern: "grid",
       color: "#f9fafb",

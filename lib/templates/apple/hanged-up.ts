@@ -35,7 +35,7 @@ export const hangedUpTemplateDefault: HangedUpTemplate = {
   background: {
     type: "color",
     color: "#f3f4f6",
-    noise: 0.1,
+    noise: 0,
     gridOverlay: undefined,
   },
   canvas: {

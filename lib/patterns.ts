@@ -8,13 +8,13 @@ function grid({ color = "black", opacity = 0.5 }: PatternProps) {
     "data:image/svg+xml;base64," +
     btoa(`<svg
 xmlns="http://www.w3.org/2000/svg"
-width="48"
-height="48"
-viewBox="0 0 48 48"
+width="96"
+height="96"
+viewBox="0 0 96 96"
 >
 <g fill="none" opacity="${opacity}">
-  <path d="M48 47.5001L0 47.5001" stroke="${color}"></path>
-  <path d="M47.5 0V48" stroke="${color}"></path>
+  <path d="M96 95.5001L0 95.5001" stroke="${color}"></path>
+  <path d="M95.5 0V96" stroke="${color}"></path>
 </g>
 </svg>
 `)

@@ -177,9 +177,10 @@ export function Form() {
               <Input
                 id="bottomPadding"
                 value={params.bottomPadding}
+                type="number"
                 onChange={(e) =>
                   template.updateParams({
-                    bottomPadding: Number(e.target.value),
+                    bottomPadding: e.target.value,
                   })
                 }
               />

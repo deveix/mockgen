@@ -68,7 +68,7 @@ export default function PreviewRenderer() {
   }, [template.params, template.background, template.canvas])
 
   return (
-    <AspectRatio ratio={16 / 9}>
+    <AspectRatio ratio={12 / 9}>
       <Image
         alt="Preview"
         priority

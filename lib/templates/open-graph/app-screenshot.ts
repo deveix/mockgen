@@ -39,7 +39,7 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
   background: {
     type: "color",
     color: "#c7d2fe",
-    noise: 0.1,
+    noise: 0,
     gridOverlay: undefined,
   },
   canvas: {

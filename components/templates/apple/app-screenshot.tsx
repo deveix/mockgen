@@ -1,3 +1,4 @@
+import { patterns } from "@/lib/patterns"
 import { AppScreenshotTemplate } from "@/lib/templates/apple"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
@@ -10,7 +11,7 @@ export function Template(props: {
 }) {
   const { template, renderWatermark } = props
   // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width * 0.85
+  const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
 
   return (
@@ -29,6 +30,34 @@ export function Template(props: {
     >
       <div
         style={{
+          height: "100%",
+          width: "100%",
+          position: "absolute",
+          inset: 0,
+          filter: "brightness(100%) contrast(150%)",
+          opacity: template.background.noise,
+          backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
+          backgroundRepeat: "repeat",
+        }}
+      ></div>
+
+      {template.background.gridOverlay && (
+        <div
+          style={{
+            height: "100%",
+            width: "100%",
+            position: "absolute",
+            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
+            maskImage:
+              template.background.gridOverlay.blurRadius > 0
+                ? `radial-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) ${100 - template.background.gridOverlay.blurRadius}%)`
+                : "none",
+          }}
+        ></div>
+      )}
+
+      <div
+        style={{
           fontSize: template.params.title.fontSize,
           fontWeight: template.params.title.fontWeight,
           color: template.params.title.color,
@@ -37,7 +66,7 @@ export function Template(props: {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "flex-end",
-          bottom: template.params.bottomPadding,
+          bottom: Number(template.params.bottomPadding) ?? 0,
         }}
       >
         <p
@@ -70,10 +99,10 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth + 135,
+          width: screenshotWidth + 120,
           height: screenshotHeight + 120,
           display: "flex",
-          bottom: template.params.bottomPadding,
+          bottom: Number(template.params.bottomPadding) ?? 0,
           overflow: "hidden",
         }}
       >
@@ -95,13 +124,14 @@ export function Template(props: {
           style={{
             position: "absolute",
             top: 90,
-            left: 70,
+            left: 65,
             right: 20,
             width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderRadius: 150,
+            borderTopLeftRadius: 140,
+            borderTopRightRadius: 140,
           }}
         />
       </div>

@@ -54,7 +54,7 @@ export const noticeTemplateDefault: NoticeTemplate = {
   background: {
     type: "color",
     color: "#FFC5C5",
-    noise: 0.15,
+    noise: 0,
   },
   canvas: {
     width: 1200,
