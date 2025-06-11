@@ -246,7 +246,6 @@ export default async function RootLayout({
         </ThemeProvider>
 
         <Toaster />
-
         <SpeedInsights />
         <Analytics />
         <Script id="clarity-script" strategy="afterInteractive">
