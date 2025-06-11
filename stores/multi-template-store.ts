@@ -38,10 +38,22 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
     ...state,
     addScreenshot: (file: File) =>
       set((state) => {
-        if (state.screenshots.length >= 6) return state
-
         const newId = Math.max(0, ...state.screenshots.map((s) => s.id)) + 1
-        const baseTemplate = templateDefaults["apple:app-screenshot"]
+
+        // Apple templates in rotation order
+        const appleTemplates: TemplateName[] = [
+          "apple:app-screenshot",
+          "apple:tilted-left",
+          "apple:tilted-right",
+          "apple:hanged-up",
+          "apple:rotated",
+        ]
+
+        // Get the template based on current count (rotate through templates)
+        const templateIndex = state.screenshots.length % appleTemplates.length
+        const templateName = appleTemplates[templateIndex]
+        const baseTemplate = templateDefaults[templateName]
+
         const newScreenshot: ScreenshotTemplate = {
           id: newId,
           template: {

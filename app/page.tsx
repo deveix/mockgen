@@ -5,7 +5,7 @@ import {
   MultiTemplateStoreProvider,
   useMultiTemplateStore,
 } from "@/providers/multi-template-store-provider"
-import { InfoCircledIcon } from "@radix-ui/react-icons"
+import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -23,6 +23,9 @@ import ScreenshotTemplateSelector from "@/components/screenshot-template-selecto
 
 function MultiTemplateContent() {
   const screenshots = useMultiTemplateStore((state) => state.screenshots)
+  const removeScreenshot = useMultiTemplateStore(
+    (state) => state.removeScreenshot
+  )
 
   return (
     <div className="space-y-6">
@@ -68,6 +71,14 @@ function MultiTemplateContent() {
                             {screenshot.template.name}
                           </p>
                         </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
+                          onClick={() => removeScreenshot(screenshot.id)}
+                        >
+                          <Cross2Icon className="h-4 w-4" />
+                        </Button>
                       </div>
                     </CardHeader>
 
@@ -100,8 +111,8 @@ function MultiTemplateContent() {
           <CardHeader>
             <CardTitle>Get Started</CardTitle>
             <CardDescription>
-              Upload up to 6 screenshots to create beautiful templates for your
-              app store assets.
+              Upload screenshots to create beautiful templates for your app
+              store assets.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">

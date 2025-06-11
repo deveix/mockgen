@@ -2,7 +2,7 @@
 
 import { useRef, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
-import { UploadIcon } from "@radix-ui/react-icons"
+import { Cross2Icon, UploadIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -16,9 +16,8 @@ import {
 export function MultiUpload() {
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { screenshots, addScreenshot, clearAll } = useMultiTemplateStore(
-    (state) => state
-  )
+  const { screenshots, addScreenshot, clearAll, removeScreenshot } =
+    useMultiTemplateStore((state) => state)
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -37,7 +36,7 @@ export function MultiUpload() {
     const files = Array.from(e.dataTransfer.files)
     const imageFiles = files.filter((file) => file.type.startsWith("image/"))
 
-    imageFiles.slice(0, 6 - screenshots.length).forEach((file) => {
+    imageFiles.forEach((file) => {
       addScreenshot(file)
     })
   }
@@ -48,22 +47,20 @@ export function MultiUpload() {
     const files = Array.from(e.target.files)
     const imageFiles = files.filter((file) => file.type.startsWith("image/"))
 
-    imageFiles.slice(0, 6 - screenshots.length).forEach((file) => {
+    imageFiles.forEach((file) => {
       addScreenshot(file)
     })
 
     e.target.value = ""
   }
 
-  const canAddMore = screenshots.length < 6
-
   return (
     <Card>
       <CardHeader>
         <CardTitle>Upload Screenshots</CardTitle>
         <CardDescription>
-          Upload up to 6 screenshots to create templates. Supports PNG, JPG, and
-          JPEG files.
+          Upload multiple screenshots to create templates. Supports PNG, JPG,
+          and JPEG files.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -73,9 +70,7 @@ export function MultiUpload() {
             className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
               isDragOver
                 ? "border-primary bg-primary/5"
-                : canAddMore
-                  ? "border-muted-foreground/25 hover:border-muted-foreground/50"
-                  : "border-muted-foreground/10 bg-muted/30"
+                : "border-muted-foreground/25 hover:border-muted-foreground/50"
             }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -89,29 +84,24 @@ export function MultiUpload() {
               multiple
               className="hidden"
               onChange={handleFileSelect}
-              disabled={!canAddMore}
             />
 
             <div className="space-y-4">
               <UploadIcon className="mx-auto h-12 w-12 text-muted-foreground" />
               <div>
                 <p className="text-lg font-medium">
-                  {canAddMore
-                    ? "Drop your screenshots here, or click to browse"
-                    : "Maximum 6 screenshots reached"}
+                  Drop your screenshots here, or click to browse
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  {screenshots.length}/6 screenshots uploaded
+                  {screenshots.length} screenshots uploaded
                 </p>
               </div>
-              {canAddMore && (
-                <Button
-                  variant="outline"
-                  onClick={() => fileInputRef.current?.click()}
-                >
-                  Browse Files
-                </Button>
-              )}
+              <Button
+                variant="outline"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Browse Files
+              </Button>
             </div>
           </div>
 
@@ -148,6 +138,14 @@ export function MultiUpload() {
                         Template: {screenshot.template.name}
                       </p>
                     </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
+                      onClick={() => removeScreenshot(screenshot.id)}
+                    >
+                      <Cross2Icon className="h-4 w-4" />
+                    </Button>
                   </div>
                 ))}
               </div>
