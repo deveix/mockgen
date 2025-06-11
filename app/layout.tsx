@@ -102,11 +102,9 @@ export default async function RootLayout({
           </nav>
 
           <main className="mx-auto min-h-[calc(100dvh-84px)] max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
-            <TemplateStoreProvider>
-              <MultiTemplateStoreProvider>
-                {children}
-              </MultiTemplateStoreProvider>
-            </TemplateStoreProvider>
+            <MultiTemplateStoreProvider>
+              <TemplateStoreProvider>{children}</TemplateStoreProvider>
+            </MultiTemplateStoreProvider>
           </main>
 
           <Separator />

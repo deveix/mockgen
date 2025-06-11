@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useMemo } from "react"
 import Image from "next/image"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import satori from "satori"
@@ -18,13 +18,13 @@ interface ScreenshotPreviewRendererProps {
 export default function ScreenshotPreviewRenderer({
   screenshotId,
 }: ScreenshotPreviewRendererProps) {
-  const { screenshot, updatePreviewSvg } = useMultiTemplateStore((state) => {
-    const screenshot = state.screenshots.find((s) => s.id === screenshotId)
-    return {
-      screenshot,
-      updatePreviewSvg: state.updatePreviewSvg,
-    }
-  })
+  const { screenshots, updatePreviewSvg } = useMultiTemplateStore(
+    (state) => state
+  )
+  const screenshot = useMemo(
+    () => screenshots.find((s) => s.id === screenshotId),
+    [screenshots, screenshotId]
+  )
 
   async function renderSvg() {
     if (!screenshot) return

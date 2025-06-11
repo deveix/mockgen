@@ -17,11 +17,7 @@ export function MultiUpload() {
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
   const { screenshots, addScreenshot, clearAll } = useMultiTemplateStore(
-    (state) => ({
-      screenshots: state.screenshots,
-      addScreenshot: state.addScreenshot,
-      clearAll: state.clearAll,
-    })
+    (state) => state
   )
 
   const handleDragOver = (e: React.DragEvent) => {

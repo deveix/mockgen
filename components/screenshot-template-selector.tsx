@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 
 import { TemplateName } from "@/lib/templates"
@@ -60,49 +60,49 @@ const templateFilters: TemplateFilter[] = [
     width: 1320,
     height: 2868,
   },
-  {
-    platform: "open-graph",
-    label: "Open Graph Protocol",
-    width: 1200,
-    height: 630,
-  },
-  {
-    platform: "x",
-    label: "Twitter/X Header",
-    width: 1500,
-    height: 500,
-  },
+  //   {
+  //     platform: "open-graph",
+  //     label: "Open Graph Protocol",
+  //     width: 1200,
+  //     height: 630,
+  //   },
+  //   {
+  //     platform: "x",
+  //     label: "Twitter/X Header",
+  //     width: 1500,
+  //     height: 500,
+  //   },
 ]
 
 const platforms: Record<Platform, PlatformProps> = {
-  "open-graph": {
-    label: "Open Graph",
-    icon: OpenGraphLogo,
-  },
+  //   "open-graph": {
+  //     label: "Open Graph",
+  //     icon: OpenGraphLogo,
+  //   },
   apple: {
     label: "Apple",
     icon: AppleLogo,
   },
-  blog: {
-    label: "Blog",
-    icon: BlogLogo,
-  },
-  facebook: {
-    label: "Facebook",
-    icon: FacebookLogo,
-  },
-  x: {
-    label: "Twitter/X",
-    icon: TwitterLogo,
-  },
-  linkedin: {
-    label: "LinkedIn",
-    icon: LinkedInLogo,
-  },
-  "product-hunt": {
-    label: "Product Hunt",
-    icon: ProductHunt,
-  },
+  //   blog: {
+  //     label: "Blog",
+  //     icon: BlogLogo,
+  //   },
+  //   facebook: {
+  //     label: "Facebook",
+  //     icon: FacebookLogo,
+  //   },
+  //   x: {
+  //     label: "Twitter/X",
+  //     icon: TwitterLogo,
+  //   },
+  //   linkedin: {
+  //     label: "LinkedIn",
+  //     icon: LinkedInLogo,
+  //   },
+  //   "product-hunt": {
+  //     label: "Product Hunt",
+  //     icon: ProductHunt,
+  //   },
 }
 
 const templateFiltersByPlatform = templateFilters.reduce(
@@ -186,13 +186,13 @@ interface ScreenshotTemplateSelectorProps {
 export default function ScreenshotTemplateSelector({
   screenshotId,
 }: ScreenshotTemplateSelectorProps) {
-  const { screenshot, updateTemplate } = useMultiTemplateStore((state) => {
-    const screenshot = state.screenshots.find((s) => s.id === screenshotId)
-    return {
-      screenshot,
-      updateTemplate: state.updateTemplate,
-    }
-  })
+  const { screenshots, updateTemplate } = useMultiTemplateStore(
+    (state) => state
+  )
+  const screenshot = useMemo(
+    () => screenshots.find((s) => s.id === screenshotId),
+    [screenshots, screenshotId]
+  )
 
   const [selectedFilter, setSelectedFilter] = useState(templateFilters[0])
 
