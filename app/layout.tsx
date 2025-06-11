@@ -3,6 +3,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
+import { MultiTemplateStoreProvider } from "@/providers/multi-template-store-provider"
 import { TemplateStoreProvider } from "@/providers/template-store-provider"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -101,7 +102,11 @@ export default async function RootLayout({
           </nav>
 
           <main className="mx-auto min-h-[calc(100dvh-84px)] max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
-            <TemplateStoreProvider>{children}</TemplateStoreProvider>
+            <TemplateStoreProvider>
+              <MultiTemplateStoreProvider>
+                {children}
+              </MultiTemplateStoreProvider>
+            </TemplateStoreProvider>
           </main>
 
           <Separator />
