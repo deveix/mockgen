@@ -7,6 +7,7 @@ import {
 } from "@/providers/multi-template-store-provider"
 import { Cross2Icon, InfoCircledIcon } from "@radix-ui/react-icons"
 
+import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -68,7 +69,7 @@ function MultiTemplateContent() {
                               `Screenshot ${screenshot.id}`}
                           </h3>
                           <p className="truncate text-xs text-muted-foreground">
-                            {screenshot.template.name}
+                            {formatTemplateName(screenshot.template.name)}
                           </p>
                         </div>
                         <Button

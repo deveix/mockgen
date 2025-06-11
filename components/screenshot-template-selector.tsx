@@ -4,6 +4,7 @@ import { useMemo, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 
 import { TemplateName } from "@/lib/templates"
+import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Carousel,

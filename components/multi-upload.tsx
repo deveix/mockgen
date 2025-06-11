@@ -4,6 +4,7 @@ import { useRef, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { Cross2Icon, UploadIcon } from "@radix-ui/react-icons"
 
+import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -75,7 +76,6 @@ export function MultiUpload() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
-            onClick={() => fileInputRef.current?.click()}
           >
             <input
               ref={fileInputRef}
@@ -135,7 +135,7 @@ export function MultiUpload() {
                           `Screenshot ${screenshot.id}`}
                       </p>
                       <p className="truncate text-xs text-muted-foreground">
-                        Template: {screenshot.template.name}
+                        Template: {formatTemplateName(screenshot.template.name)}
                       </p>
                     </div>
                     <Button
