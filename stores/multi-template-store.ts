@@ -22,8 +22,10 @@ export interface MultiTemplateActions {
     id: number,
     background: Template["background"]
   ) => void
+  updateAllBackgrounds: (background: Template["background"]) => void
   updatePreviewSvg: (id: number, svg: string) => void
   clearAll: () => void
+  getScreenshotById: (id: number) => ScreenshotTemplate | undefined
 }
 
 export type MultiTemplateStore = MultiTemplateState & MultiTemplateActions
@@ -36,6 +38,10 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
   const state = initState || defaultInitState
   return createStore<MultiTemplateStore>()((set, get) => ({
     ...state,
+    // Selector helpers for performance optimization
+    getScreenshotById: (id: number) => {
+      return get().screenshots.find((s) => s.id === id)
+    },
     addScreenshot: (file: File) =>
       set((state) => {
         const newId = Math.max(0, ...state.screenshots.map((s) => s.id)) + 1
@@ -135,6 +141,16 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
               }
             : s
         ),
+      })),
+    updateAllBackgrounds: (background: Template["background"]) =>
+      set((state) => ({
+        screenshots: state.screenshots.map((s) => ({
+          ...s,
+          template: {
+            ...s.template,
+            background,
+          },
+        })),
       })),
     updatePreviewSvg: (id: number, svg: string) =>
       set((state) => ({
