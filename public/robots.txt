@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Disallow admin or sensitive areas (if any)
+# Disallow: /admin/
+# Disallow: /api/
+
+# Sitemap location
+Sitemap: https://mockgen.click/sitemap.xml
+
+# Crawl-delay (optional, in seconds)
+Crawl-delay: 1
+
+# Host directive (optional, specify preferred domain)
+Host: https://mockgen.click 
