@@ -112,31 +112,36 @@ function MultiTemplateContent() {
           <CardHeader>
             <CardTitle>Get Started</CardTitle>
             <CardDescription>
-              Upload screenshots to create beautiful templates for your app
-              store assets.
+              Upload your app screenshots and transform them into professional
+              App Store assets with beautiful templates designed for maximum
+              conversion.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid gap-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Upload multiple screenshots at once</span>
+                <span>Upload multiple app screenshots simultaneously</span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Choose different templates for each screenshot</span>
+                <span>
+                  Professional App Store templates for iOS, Android & web
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Customize titles, colors, and layouts</span>
+                <span>
+                  Customize titles, colors, and device frames instantly
+                </span>
               </div>
               <div className="flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-primary" />
-                <span>Download all images as a ZIP file</span>
+                <span>Download high-quality PNG assets as ZIP file</span>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 rounded-lg bg-muted p-3">
+            {/* <div className="flex items-center gap-2 rounded-lg bg-muted p-3">
               <InfoCircledIcon className="h-4 w-4" />
               <p className="text-sm">
                 <Button className="h-auto p-0 underline" variant="link" asChild>
@@ -146,7 +151,7 @@ function MultiTemplateContent() {
                 </Button>{" "}
                 about creating engaging app store assets.
               </p>
-            </div>
+            </div> */}
           </CardContent>
         </Card>
       )}
@@ -160,10 +165,11 @@ export default function Home() {
       <div className="space-y-6">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">
-            Multi-Screenshot Template Generator
+            App Store Screenshots Generator
           </h1>
           <p className="text-lg text-muted-foreground">
-            Create beautiful templates for all your screenshots at once
+            Create stunning App Store screenshots with professional templates.
+            Generate multiple designs instantly for iOS, Android.
           </p>
         </div>
 
