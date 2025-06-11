@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: "%s | MockGen - App Store Screenshot Generator",
   },
   description:
-    "Create stunning App Store and Google Play Store screenshots instantly. Professional templates for iOS and Android apps. Generate beautiful app store assets, device mockups, and promotional images with zero design skills required.",
+    "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
   keywords: [
     "app store screenshots",
     "google play store screenshots",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "MockGen - Professional App Store Screenshot Generator",
     description:
-      "Create stunning App Store and Google Play Store screenshots instantly. Professional templates for iOS and Android apps with zero design skills required.",
+      "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
     type: "website",
     url: "https://mockgen.click",
     siteName: "MockGen",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "MockGen - App Store Screenshot Generator",
     description:
-      "Create stunning App Store and Google Play Store screenshots instantly. Professional templates for iOS and Android apps.",
+      "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
     images: ["https://mockgen.click/og.png"],
     creator: "@mockgen",
   },
@@ -107,7 +107,7 @@ const structuredData = {
   "@type": "WebApplication",
   name: "MockGen",
   description:
-    "Professional App Store Screenshot Generator for iOS and Android apps",
+    "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
   url: "https://mockgen.click",
   applicationCategory: "DesignApplication",
   operatingSystem: "Web",

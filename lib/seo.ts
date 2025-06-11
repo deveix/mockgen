@@ -4,12 +4,11 @@ import { Metadata } from "next"
 export const SEO_CONFIG = {
   siteName: "MockGen",
   siteUrl: "https://mockgen.click",
-  defaultTitle:
-    "MockGen - Professional App Store Screenshot Generator | iOS & Android",
+  defaultTitle: "MockGen - App Store Screenshot Generator",
   defaultDescription:
-    "Create stunning App Store and Google Play Store screenshots instantly. Professional templates for iOS and Android apps. Generate beautiful app store assets, device mockups, and promotional images with zero design skills required.",
+    "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
   defaultImage: "/og.png",
-  twitterHandle: "@mockgen",
+  twitterHandle: "@aykasem001",
   defaultKeywords: [
     "app store screenshots",
     "google play store screenshots",
