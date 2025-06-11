@@ -1,0 +1,158 @@
+"use client"
+
+import { useRef, useState } from "react"
+import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
+import { Cross2Icon, UploadIcon } from "@radix-ui/react-icons"
+
+import { formatTemplateName } from "@/lib/utils"
+import { Button } from "@/components/ui/button"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+export function MultiUpload() {
+  const [isDragOver, setIsDragOver] = useState(false)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const { screenshots, addScreenshot, clearAll, removeScreenshot } =
+    useMultiTemplateStore((state) => state)
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    setIsDragOver(false)
+
+    const files = Array.from(e.dataTransfer.files)
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"))
+
+    imageFiles.forEach((file) => {
+      addScreenshot(file)
+    })
+  }
+
+  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return
+
+    const files = Array.from(e.target.files)
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"))
+
+    imageFiles.forEach((file) => {
+      addScreenshot(file)
+    })
+
+    e.target.value = ""
+  }
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>Upload Screenshots</CardTitle>
+        <CardDescription>
+          Upload multiple screenshots to create templates. Supports PNG, JPG,
+          and JPEG files.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-4">
+          {/* Upload Area */}
+          <div
+            className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
+              isDragOver
+                ? "border-primary bg-primary/5"
+                : "border-muted-foreground/25 hover:border-muted-foreground/50"
+            }`}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+          >
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*"
+              multiple
+              className="hidden"
+              onChange={handleFileSelect}
+            />
+
+            <div className="space-y-4">
+              <UploadIcon className="mx-auto h-12 w-12 text-muted-foreground" />
+              <div>
+                <p className="text-lg font-medium">
+                  Drop your screenshots here, or click to browse
+                </p>
+                <p className="text-sm text-muted-foreground">
+                  {screenshots.length} screenshots uploaded
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                Browse Files
+              </Button>
+            </div>
+          </div>
+
+          {/* Screenshot List */}
+          {screenshots.length > 0 && (
+            <div className="space-y-2">
+              <div className="flex items-center justify-between">
+                <h4 className="text-sm font-medium">Uploaded Screenshots</h4>
+                <Button variant="outline" size="sm" onClick={clearAll}>
+                  Clear All
+                </Button>
+              </div>
+              <div className="grid gap-2">
+                {screenshots.map((screenshot) => (
+                  <div
+                    key={screenshot.id}
+                    className="flex items-center gap-3 overflow-hidden rounded-md border bg-card p-2"
+                  >
+                    <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded border bg-muted">
+                      {screenshot.screenshot && (
+                        <img
+                          src={URL.createObjectURL(screenshot.screenshot)}
+                          alt="Screenshot preview"
+                          className="h-full w-full object-cover"
+                        />
+                      )}
+                    </div>
+                    <div className="min-w-0 flex-1 overflow-hidden">
+                      <p className="truncate text-sm font-medium">
+                        {screenshot.screenshot?.name ||
+                          `Screenshot ${screenshot.id}`}
+                      </p>
+                      <p className="truncate text-xs text-muted-foreground">
+                        Template: {formatTemplateName(screenshot.template.name)}
+                      </p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
+                      onClick={() => removeScreenshot(screenshot.id)}
+                    >
+                      <Cross2Icon className="h-4 w-4" />
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  )
+}
