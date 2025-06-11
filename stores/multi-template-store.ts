@@ -22,6 +22,7 @@ export interface MultiTemplateActions {
     id: number,
     background: Template["background"]
   ) => void
+  updateAllBackgrounds: (background: Template["background"]) => void
   updatePreviewSvg: (id: number, svg: string) => void
   clearAll: () => void
 }
@@ -135,6 +136,16 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
               }
             : s
         ),
+      })),
+    updateAllBackgrounds: (background: Template["background"]) =>
+      set((state) => ({
+        screenshots: state.screenshots.map((s) => ({
+          ...s,
+          template: {
+            ...s.template,
+            background,
+          },
+        })),
       })),
     updatePreviewSvg: (id: number, svg: string) =>
       set((state) => ({
