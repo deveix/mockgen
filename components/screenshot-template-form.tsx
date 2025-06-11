@@ -1,10 +1,11 @@
 "use client"
 
-import { useMemo } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
 import { AppScreenshotTemplate } from "@/lib/templates/apple/app-screenshot"
+import { useDebouncedValue } from "@/hooks/use-debounced-value"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -27,18 +28,68 @@ interface ScreenshotTemplateFormProps {
 export function ScreenshotTemplateForm({
   screenshotId,
 }: ScreenshotTemplateFormProps) {
-  const { screenshots, updateTemplateParams } = useMultiTemplateStore(
-    (state) => state
+  // More granular selector - only get what we need
+  const screenshot = useMultiTemplateStore(
+    useCallback(
+      (state) => state.getScreenshotById(screenshotId),
+      [screenshotId]
+    )
+  )
+  const updateTemplateParams = useMultiTemplateStore(
+    (state) => state.updateTemplateParams
   )
 
-  const screenshot = useMemo(
-    () => screenshots.find((s) => s.id === screenshotId),
-    [screenshots, screenshotId]
-  )
+  // Local state for immediate UI feedback
+  const [localTitle, setLocalTitle] = useState("")
 
-  if (!screenshot) return null
+  // Debounced value that updates the store
+  const debouncedTitle = useDebouncedValue(localTitle, 300)
 
-  const params = screenshot.template.params as AppScreenshotTemplate["params"]
+  // Initialize local state from store
+  useEffect(() => {
+    if (screenshot) {
+      // && screenshot.template.name !== "apple:app-screenshot"
+      const params = screenshot.template
+        .params as AppScreenshotTemplate["params"]
+      setLocalTitle(params.title.text)
+    }
+  }, [screenshot?.id]) // Only reset when screenshot ID changes
+
+  // Update store when debounced value changes
+  useEffect(() => {
+    if (
+      screenshot &&
+      // screenshot.template.name === "apple:app-screenshot" &&
+      debouncedTitle !== ""
+    ) {
+      const params = screenshot.template
+        .params as AppScreenshotTemplate["params"]
+      if (params.title.text !== debouncedTitle) {
+        updateTemplateParams(screenshotId, {
+          title: {
+            ...params.title,
+            text: debouncedTitle,
+          },
+        })
+      }
+    }
+  }, [debouncedTitle, screenshot, screenshotId, updateTemplateParams])
+
+  // Memoize params to avoid recalculating
+  const params = useMemo(() => {
+    if (!screenshot)
+      // || screenshot.template.name !== "apple:app-screenshot"
+      return null
+    return screenshot.template.params as AppScreenshotTemplate["params"]
+  }, [screenshot])
+
+  if (
+    !screenshot ||
+    // screenshot.template.name !== "apple:app-screenshot" ||
+    !params
+  ) {
+    return null
+  }
 
   return (
     <Card className="mt-4">
@@ -50,7 +101,7 @@ export function ScreenshotTemplateForm({
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {/* Title Input */}
+          {/* Title Input with local state */}
           <div className="space-y-2">
             <Label htmlFor={`title-${screenshotId}`} className="text-sm">
               Title
@@ -58,17 +109,10 @@ export function ScreenshotTemplateForm({
             <div className="flex space-x-2">
               <Input
                 id={`title-${screenshotId}`}
-                value={params.title.text}
+                value={localTitle}
                 className="text-sm"
                 placeholder="Enter title text..."
-                onChange={(e) =>
-                  updateTemplateParams(screenshotId, {
-                    title: {
-                      ...params.title,
-                      text: e.target.value,
-                    },
-                  })
-                }
+                onChange={(e) => setLocalTitle(e.target.value)}
               />
               <ResponsivePopover
                 title="Font Settings"
@@ -88,6 +132,7 @@ export function ScreenshotTemplateForm({
                     updateTemplateParams(screenshotId, {
                       title: {
                         ...params.title,
+                        text: localTitle, // Use current local state
                         fontFamily,
                       },
                     })
@@ -96,6 +141,7 @@ export function ScreenshotTemplateForm({
                     updateTemplateParams(screenshotId, {
                       title: {
                         ...params.title,
+                        text: localTitle, // Use current local state
                         fontSize,
                       },
                     })
@@ -104,6 +150,7 @@ export function ScreenshotTemplateForm({
                     updateTemplateParams(screenshotId, {
                       title: {
                         ...params.title,
+                        text: localTitle, // Use current local state
                         fontWeight,
                       },
                     })
@@ -112,6 +159,7 @@ export function ScreenshotTemplateForm({
                     updateTemplateParams(screenshotId, {
                       title: {
                         ...params.title,
+                        text: localTitle, // Use current local state
                         color,
                       },
                     })
@@ -120,6 +168,7 @@ export function ScreenshotTemplateForm({
               </ResponsivePopover>
             </div>
           </div>
+
           {/* Logo Input */}
           {screenshot.template.name === "apple:app-screenshot" && (
             <div className="space-y-2">
