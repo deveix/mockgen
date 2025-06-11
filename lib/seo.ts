@@ -144,7 +144,7 @@ export function generateStructuredData(
         contactPoint: {
           "@type": "ContactPoint",
           contactType: "customer service",
-          email: data.email || "support@mockgen.click",
+          email: data.email || "aykasem001@gmail.com",
         },
       }
 

@@ -85,7 +85,7 @@ export const metadata: Metadata = {
     description:
       "Create stunning App Store & Google Play screenshots instantly. Professional iOS & Android templates with zero design skills required.",
     images: ["https://mockgen.click/og.png"],
-    creator: "@mockgen",
+    creator: "@aykasem001",
   },
   viewport: {
     width: "device-width",
