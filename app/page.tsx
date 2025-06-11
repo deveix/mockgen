@@ -21,6 +21,7 @@ import { GlobalBackgroundForm } from "@/components/global-background-form"
 import { MultiUpload } from "@/components/multi-upload"
 import SaveAllImagesButton from "@/components/save-all-images-button"
 import ScreenshotPreviewRenderer from "@/components/screenshot-preview-renderer"
+import { ScreenshotTemplateForm } from "@/components/screenshot-template-form"
 import ScreenshotTemplateSelector from "@/components/screenshot-template-selector"
 
 function MultiTemplateContent() {
@@ -94,6 +95,9 @@ function MultiTemplateContent() {
                             screenshotId={screenshot.id}
                           />
                         </div>
+
+                        {/* Template Form (only for app-screenshot) */}
+                        <ScreenshotTemplateForm screenshotId={screenshot.id} />
 
                         {/* Preview */}
                         <div className="overflow-hidden rounded-lg border bg-muted/20 p-2">
