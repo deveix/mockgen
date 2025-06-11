@@ -74,15 +74,15 @@ const templateFilters: TemplateFilter[] = [
   //   },
 ]
 
-const platforms: Record<Platform, PlatformProps> = {
-  //   "open-graph": {
-  //     label: "Open Graph",
-  //     icon: OpenGraphLogo,
-  //   },
+const platforms: Partial<Record<Platform, PlatformProps>> = {
   apple: {
     label: "Apple",
     icon: AppleLogo,
   },
+  //   "open-graph": {
+  //     label: "Open Graph",
+  //     icon: OpenGraphLogo,
+  //   },
   //   blog: {
   //     label: "Blog",
   //     icon: BlogLogo,
@@ -207,7 +207,7 @@ export default function ScreenshotTemplateSelector({
         <div className="flex gap-2">
           {Object.entries(templateFiltersByPlatform).map(
             ([platform, filters]) => {
-              const PlatformLogo = platforms[platform as Platform].icon
+              const PlatformLogo = platforms[platform as Platform]?.icon
 
               return (
                 <DropdownMenu key={platform}>
@@ -220,8 +220,8 @@ export default function ScreenshotTemplateSelector({
                       }
                       size="sm"
                     >
-                      <PlatformLogo className="mr-1 size-3" />
-                      {platforms[platform as Platform].label}
+                      {PlatformLogo && <PlatformLogo className="mr-1 size-3" />}
+                      {platforms[platform as Platform]?.label}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className="w-[220px]">
@@ -265,10 +265,7 @@ export default function ScreenshotTemplateSelector({
                   t.height === selectedFilter.height
               )
               .map((t) => (
-                <CarouselItem
-                  key={t.name}
-                  className="basis-32 md:basis-48 lg:basis-1/6"
-                >
+                <CarouselItem key={t.name} className="basis-auto">
                   <RadioGroupItem
                     value={t.name}
                     id={`${screenshotId}-${t.name}`}
@@ -276,7 +273,7 @@ export default function ScreenshotTemplateSelector({
                   />
                   <Label
                     htmlFor={`${screenshotId}-${t.name}`}
-                    className="flex aspect-video max-h-16 items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary sm:max-h-20 [&:has([data-state=checked])]:border-primary"
+                    className="flex aspect-video h-24 items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary sm:max-h-20 [&:has([data-state=checked])]:border-primary"
                   >
                     <t.skeleton />
                   </Label>
