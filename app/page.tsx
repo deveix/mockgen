@@ -44,16 +44,13 @@ function MultiTemplateContent() {
               Your Screenshot Templates
             </h2>
 
-            <div className="flex flex-wrap justify-center gap-6">
+            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
               {screenshots.map((screenshot) => (
-                <div
-                  key={screenshot.id}
-                  className="min-w-[400px] max-w-[500px] flex-1"
-                >
-                  <Card className="h-full">
+                <div key={screenshot.id} className="w-full">
+                  <Card className="h-full overflow-hidden">
                     <CardHeader className="pb-4">
-                      <div className="flex items-center gap-3">
-                        <div className="h-12 w-12 overflow-hidden rounded-lg border bg-muted">
+                      <div className="flex items-center gap-3 overflow-hidden">
+                        <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border bg-muted">
                           {screenshot.screenshot && (
                             <img
                               src={URL.createObjectURL(screenshot.screenshot)}
@@ -62,28 +59,28 @@ function MultiTemplateContent() {
                             />
                           )}
                         </div>
-                        <div className="min-w-0">
+                        <div className="min-w-0 flex-1 overflow-hidden">
                           <h3 className="truncate font-semibold">
                             {screenshot.screenshot?.name ||
                               `Screenshot ${screenshot.id}`}
                           </h3>
-                          <p className="text-xs text-muted-foreground">
+                          <p className="truncate text-xs text-muted-foreground">
                             {screenshot.template.name}
                           </p>
                         </div>
                       </div>
                     </CardHeader>
 
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-4 overflow-hidden">
                       {/* Template Selector */}
-                      <div className="space-y-3">
+                      <div className="space-y-3 overflow-hidden">
                         <ScreenshotTemplateSelector
                           screenshotId={screenshot.id}
                         />
                       </div>
 
                       {/* Preview */}
-                      <div className="rounded-lg border bg-muted/20 p-2">
+                      <div className="overflow-hidden rounded-lg border bg-muted/20 p-2">
                         <ScreenshotPreviewRenderer
                           screenshotId={screenshot.id}
                         />

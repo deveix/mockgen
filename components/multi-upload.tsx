@@ -80,6 +80,7 @@ export function MultiUpload() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
           >
             <input
               ref={fileInputRef}
@@ -127,9 +128,9 @@ export function MultiUpload() {
                 {screenshots.map((screenshot) => (
                   <div
                     key={screenshot.id}
-                    className="flex items-center gap-3 rounded-md border bg-card p-2"
+                    className="flex items-center gap-3 overflow-hidden rounded-md border bg-card p-2"
                   >
-                    <div className="h-10 w-10 overflow-hidden rounded border bg-muted">
+                    <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded border bg-muted">
                       {screenshot.screenshot && (
                         <img
                           src={URL.createObjectURL(screenshot.screenshot)}
@@ -138,12 +139,12 @@ export function MultiUpload() {
                         />
                       )}
                     </div>
-                    <div className="min-w-0 flex-1">
+                    <div className="min-w-0 flex-1 overflow-hidden">
                       <p className="truncate text-sm font-medium">
                         {screenshot.screenshot?.name ||
                           `Screenshot ${screenshot.id}`}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="truncate text-xs text-muted-foreground">
                         Template: {screenshot.template.name}
                       </p>
                     </div>

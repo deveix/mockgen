@@ -251,12 +251,13 @@ export default function ScreenshotTemplateSelector({
           align: "start",
           dragFree: true,
         }}
+        className="w-full overflow-hidden"
       >
         <RadioGroup
           value={screenshot.template.name}
           onValueChange={(v) => updateTemplate(screenshotId, v as TemplateName)}
         >
-          <CarouselContent>
+          <CarouselContent className="overflow-hidden">
             {templates
               .filter(
                 (t) =>
@@ -265,7 +266,7 @@ export default function ScreenshotTemplateSelector({
                   t.height === selectedFilter.height
               )
               .map((t) => (
-                <CarouselItem key={t.name} className="basis-auto">
+                <CarouselItem key={t.name} className="flex-shrink-0 basis-24">
                   <RadioGroupItem
                     value={t.name}
                     id={`${screenshotId}-${t.name}`}
@@ -273,7 +274,7 @@ export default function ScreenshotTemplateSelector({
                   />
                   <Label
                     htmlFor={`${screenshotId}-${t.name}`}
-                    className="flex aspect-video h-24 items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary sm:max-h-20 [&:has([data-state=checked])]:border-primary"
+                    className="flex aspect-video h-16 w-20 items-center rounded-md border-2 border-muted bg-popover p-1 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                   >
                     <t.skeleton />
                   </Label>
