@@ -48,7 +48,7 @@ function MultiTemplateContent() {
           {/* Two-column layout: Global Background Form + Screenshots */}
           <div className="grid gap-6 lg:grid-cols-1 xl:grid-cols-[350px_1fr]">
             {/* Left: Global Background Form */}
-            <div className="space-y-4">
+            <div className="space-y-4 xl:sticky xl:top-6 xl:self-start">
               <GlobalBackgroundForm />
             </div>
 
