@@ -258,7 +258,7 @@ export default function ScreenshotTemplateSelector({
           value={screenshot.template.name}
           onValueChange={(v) => updateTemplate(screenshotId, v as TemplateName)}
         >
-          <CarouselContent className="overflow-hidden">
+          <CarouselContent className="-ml-2 pl-2 pr-4">
             {templates
               .filter(
                 (t) =>
@@ -267,7 +267,10 @@ export default function ScreenshotTemplateSelector({
                   t.height === selectedFilter.height
               )
               .map((t) => (
-                <CarouselItem key={t.name} className="flex-shrink-0 basis-24">
+                <CarouselItem
+                  key={t.name}
+                  className="flex-shrink-0 basis-24 pl-2"
+                >
                   <RadioGroupItem
                     value={t.name}
                     id={`${screenshotId}-${t.name}`}
