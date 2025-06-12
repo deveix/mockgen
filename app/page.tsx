@@ -19,6 +19,7 @@ import {
 import { Separator } from "@/components/ui/separator"
 import { GlobalBackgroundForm } from "@/components/global-background-form"
 import { MultiUpload } from "@/components/multi-upload"
+import { PlatformIcons } from "@/components/platform-icons"
 import SaveAllImagesButton from "@/components/save-all-images-button"
 import { ScreenshotCard } from "@/components/screenshot-card"
 
@@ -140,6 +141,12 @@ export default function Home() {
             professional templates. Generate multiple promotional designs
             instantly for iOS and Android apps with zero design skills required.
           </p>
+
+          {/* Platform Icons */}
+          <div className="py-4">
+            <PlatformIcons size="large" showLabels={true} />
+          </div>
+
           <div className="mt-4 flex flex-wrap justify-center gap-2 text-sm text-muted-foreground">
             <span className="rounded bg-muted px-2 py-1">
               App Store Optimization

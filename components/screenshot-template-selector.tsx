@@ -205,7 +205,7 @@ export default function ScreenshotTemplateSelector({
         <h3 className="text-sm font-medium">
           Choose template for Screenshot {screenshotId}
         </h3>
-        <div className="flex gap-2">
+        {/* <div className="flex gap-2">
           {Object.entries(templateFiltersByPlatform).map(
             ([platform, filters]) => {
               const PlatformLogo = platforms[platform as Platform]?.icon
@@ -244,7 +244,7 @@ export default function ScreenshotTemplateSelector({
               )
             }
           )}
-        </div>
+        </div> */}
       </div>
 
       <Carousel

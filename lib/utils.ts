@@ -7,6 +7,8 @@ export function cn(...inputs: ClassValue[]) {
 export function formatTemplateName(name: string) {
   return name
     .replace(/-/g, " ")
+    .replace("apple:", "")
+    .replace("android:", "")
     .replace(":", " ")
     .replace(/\b\w/g, (char) => char.toUpperCase())
 }
