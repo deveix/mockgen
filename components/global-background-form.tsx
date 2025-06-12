@@ -287,6 +287,90 @@ export function GlobalBackgroundForm() {
               </Card>
 
               <div className="space-y-2">
+                <div className="text-sm font-medium">Custom Gradient</div>
+                <Card className="p-4">
+                  <div className="space-y-3">
+                    <div className="text-xs text-muted-foreground">
+                      Create a custom gradient with two colors
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col items-center gap-1">
+                        <Label
+                          htmlFor="global-gradient-color-1"
+                          className="text-xs"
+                        >
+                          Color 1
+                        </Label>
+                        <input
+                          id="global-gradient-color-1"
+                          type="color"
+                          defaultValue="#000000"
+                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div
+                          className="h-8 rounded border-2 border-muted"
+                          style={{
+                            background: `linear-gradient(${
+                              background.type === "linear-gradient"
+                                ? background.direction
+                                : DEFAULT_LINEAR_GRADIENT_DIRECTION
+                            }, var(--global-gradient-color-1, #000000), var(--global-gradient-color-2, #ffffff))`,
+                          }}
+                        />
+                      </div>
+                      <div className="flex flex-col items-center gap-1">
+                        <Label
+                          htmlFor="global-gradient-color-2"
+                          className="text-xs"
+                        >
+                          Color 2
+                        </Label>
+                        <input
+                          id="global-gradient-color-2"
+                          type="color"
+                          defaultValue="#ffffff"
+                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                        />
+                      </div>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        const color1 =
+                          (
+                            document.getElementById(
+                              "global-gradient-color-1"
+                            ) as HTMLInputElement
+                          )?.value || "#000000"
+                        const color2 =
+                          (
+                            document.getElementById(
+                              "global-gradient-color-2"
+                            ) as HTMLInputElement
+                          )?.value || "#ffffff"
+                        updateBackground({
+                          type: "linear-gradient",
+                          colorStops: [color1, color2],
+                          direction:
+                            background.type === "linear-gradient"
+                              ? background.direction
+                              : DEFAULT_LINEAR_GRADIENT_DIRECTION,
+                          noise: background.noise || 0.15,
+                          gridOverlay: background.gridOverlay,
+                        })
+                      }}
+                    >
+                      Apply Custom Gradient
+                    </Button>
+                  </div>
+                </Card>
+              </div>
+
+              <div className="space-y-2">
                 <div className="text-sm font-medium">Gradient Direction</div>
                 <Card className="p-2">
                   <RadioGroup
@@ -457,6 +541,69 @@ export function GlobalBackgroundForm() {
                   </div>
                 </RadioGroup>
               </Card>
+
+              <div className="space-y-2">
+                <div className="text-sm font-medium">Custom Color</div>
+                <Card className="p-4">
+                  <div className="space-y-3">
+                    <div className="text-xs text-muted-foreground">
+                      Choose any custom color
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <div className="flex flex-col items-center gap-1">
+                        <Label
+                          htmlFor="global-custom-color"
+                          className="text-xs"
+                        >
+                          Color
+                        </Label>
+                        <input
+                          id="global-custom-color"
+                          type="color"
+                          defaultValue="#000000"
+                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                          onInput={(e) => {
+                            const preview = document.getElementById(
+                              "custom-color-preview"
+                            )
+                            if (preview) {
+                              preview.style.backgroundColor = (
+                                e.target as HTMLInputElement
+                              ).value
+                            }
+                          }}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <div
+                          id="custom-color-preview"
+                          className="h-8 rounded border-2 border-muted bg-black"
+                        />
+                      </div>
+                    </div>
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      className="w-full"
+                      onClick={() => {
+                        const color =
+                          (
+                            document.getElementById(
+                              "global-custom-color"
+                            ) as HTMLInputElement
+                          )?.value || "#000000"
+                        updateBackground({
+                          type: "color",
+                          color: color,
+                          noise: background.noise || 0.1,
+                        })
+                      }}
+                    >
+                      Apply Custom Color
+                    </Button>
+                  </div>
+                </Card>
+              </div>
             </TabsContent>
           </Tabs>
 
