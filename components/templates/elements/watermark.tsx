@@ -15,7 +15,7 @@ export function Watermark({ style }: Props) {
     >
       <img
         src={absoluteUrl("/assets/watermark.svg")}
-        alt="imgsrc.io"
+        alt="mockgen.click"
         style={{
           // watermark svg has a 2.7 aspect ratio
           width: "8.1rem",

@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     "screenshot maker",
     "app store tools",
   ],
-  authors: [{ name: "Fady Abdelmalik", url: "https://mockgen.click" }],
+  authors: [{ name: "Ahmed Kasem", url: "https://mockgen.click" }],
   creator: "MockGen",
   publisher: "MockGen",
   robots: {
@@ -93,9 +93,6 @@ export const metadata: Metadata = {
     width: "device-width",
     initialScale: 1,
     maximumScale: 1,
-  },
-  verification: {
-    google: "your-google-verification-code", // Replace with actual verification code
   },
   category: "Technology",
   alternates: {

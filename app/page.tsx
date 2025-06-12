@@ -114,7 +114,7 @@ function MultiTemplateContent() {
               <InfoCircledIcon className="h-4 w-4" />
               <p className="text-sm">
                 <Button className="h-auto p-0 underline" variant="link" asChild>
-                  <Link href="https://imgsrc.io/guides/open-graph-meta-tags">
+                  <Link href="https://mockgen.click/guides/open-graph-meta-tags">
                     Learn more
                   </Link>
                 </Button>{" "}

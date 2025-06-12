@@ -1,9 +1,9 @@
 {
-  "name": "imgsrc-app",
+  "name": "mockgen-app",
   "version": "0.1.0",
   "license": "MIT",
-  "homepage": "https://imgsrc.io",
-  "author": "Fady Abdelmalik <support@imgsrc.io>",
+  "homepage": "https://mockgen.click",
+  "author": "Ahmed Kasem <aykasem001@gmail.com>",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
