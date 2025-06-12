@@ -227,11 +227,11 @@ export default function Home() {
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   />
                 </div>
-                <div className="mt-2 text-center">
+                {/* <div className="mt-2 text-center">
                   <p className="text-sm text-muted-foreground">
                     Template {num}
                   </p>
-                </div>
+                </div> */}
               </div>
             ))}
           </div>
