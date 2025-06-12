@@ -190,28 +190,16 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
             const templateName = appleTemplates[templateIndex]
             const baseTemplate = templateDefaults[templateName]
 
-            // Preserve the screenshot URL and any custom params
-            const screenshotUrl = (screenshot.template.params as any).screenshot
-              ?.url
-            const customTitle = (screenshot.template.params as any).title?.text
-
             return {
               ...screenshot,
               template: {
-                ...baseTemplate,
+                ...screenshot.template, // Preserve all existing template properties
+                ...baseTemplate, // Apply new template defaults
                 params: {
-                  ...baseTemplate.params,
-                  ...(screenshotUrl && {
-                    screenshot: { url: screenshotUrl },
-                  }),
-                  ...(customTitle &&
-                    (baseTemplate.params as any).title && {
-                      title: {
-                        ...(baseTemplate.params as any).title,
-                        text: customTitle,
-                      },
-                    }),
+                  ...baseTemplate.params, // Start with new template params
+                  ...screenshot.template.params, // Override with existing params to preserve customizations
                 },
+                background: screenshot.template.background, // Explicitly preserve background
               } as Template,
               previewSvg: null, // Reset preview to trigger re-render
             }
