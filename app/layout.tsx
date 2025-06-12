@@ -17,6 +17,7 @@ import { Toaster } from "@/components/ui/sonner"
 import { ModeToggle } from "@/components/mode-toggle"
 import { MobileNav } from "@/components/nav/mobile-nav"
 import { ThemeProvider } from "@/components/theme-provider"
+import { XFollowButton } from "@/components/x-follow-button"
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://mockgen.click"),
@@ -183,11 +184,15 @@ export default async function RootLayout({
             </div>
 
             <div className="hidden space-x-2 sm:flex">
-              <Button variant="link">
-                <Link href="#" target="_blank">
-                  Support
-                </Link>
-              </Button>
+              <XFollowButton
+                username="aykasem001"
+                size="medium"
+                className="flex items-center"
+              />
+
+              {/* <Button variant="link">
+                <Link href="mailto:aykasem001@gmail.com">Support</Link>
+              </Button> */}
 
               <ModeToggle />
             </div>
@@ -209,26 +214,31 @@ export default async function RootLayout({
           <Separator />
 
           <footer className="mx-auto max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
-            <div className="flex justify-between">
-              <div className="flex items-center space-x-2">
+            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-0">
+              {/* Left section - Logo and Navigation */}
+              <div className="flex flex-col items-center gap-3 md:flex-row md:items-center md:space-x-2">
                 <div className="font-mono font-semibold">
                   <Link href="https://mockgen.click">.mockgen</Link>
                 </div>
 
-                <div>
-                  <Button variant="link" asChild>
+                <div className="flex flex-col items-center gap-2 md:flex-row md:items-center">
+                  <Button variant="link" className="px-0 md:px-4" asChild>
                     <Link href="/">Home</Link>
                   </Button>
 
-                  <Button variant="link" asChild>
-                    <Link href="#" target="_blank">
-                      Support
-                    </Link>
-                  </Button>
+                  {/* <Button variant="link" className="px-0 md:px-4" asChild>
+                    <Link href="mailto:aykasem001@gmail.com">Support</Link>
+                  </Button> */}
+
+                  <XFollowButton
+                    username="aykasem001"
+                    size="small"
+                    className="md:inline-flex md:items-center"
+                  />
                 </div>
               </div>
 
-              {/* only shows on Desktop */}
+              {/* Right section - Status indicator (Desktop only) */}
               <div className="hidden items-center gap-x-2 md:inline-flex">
                 <svg
                   className="h-2 w-2 fill-green-400"

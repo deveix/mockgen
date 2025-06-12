@@ -13,6 +13,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { XFollowButton } from "@/components/x-follow-button"
 
 export function MobileNav() {
   const [sheetOpen, setSheetOpen] = useState(false)
@@ -45,16 +46,18 @@ export function MobileNav() {
         </SheetHeader>
 
         <div className="mt-4 flex flex-col space-y-4">
-          <Button
+          <div className="flex justify-start">
+            <XFollowButton username="aykasem001" size="medium" />
+          </div>
+
+          {/* <Button
             onClick={() => setSheetOpen(false)}
             variant="link"
             className="justify-start px-0"
             asChild
           >
-            <Link href="mailto:support@imgsrc.io" target="_blank">
-              Support
-            </Link>
-          </Button>
+            <Link href="mailto:aykasem001@gmail.com">Support</Link>
+          </Button> */}
         </div>
       </SheetContent>
     </Sheet>
