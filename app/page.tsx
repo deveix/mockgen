@@ -143,7 +143,7 @@ export default function Home() {
           </p>
 
           {/* Platform Icons */}
-          <div className="py-4">
+          {/* <div className="py-4">
             <PlatformIcons size="large" showLabels={true} />
           </div>
 
@@ -156,7 +156,7 @@ export default function Home() {
               Android Screenshots
             </span>
             <span className="rounded bg-muted px-2 py-1">Device Mockups</span>
-          </div>
+          </div> */}
         </div>
 
         <MultiTemplateContent />

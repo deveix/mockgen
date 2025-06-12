@@ -76,6 +76,7 @@ export function MultiUpload() {
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
+            onClick={() => fileInputRef.current?.click()}
           >
             <input
               ref={fileInputRef}
@@ -98,7 +99,7 @@ export function MultiUpload() {
               </div>
               <Button
                 variant="outline"
-                onClick={() => fileInputRef.current?.click()}
+                // onClick={() => fileInputRef.current?.click()}
               >
                 Browse Files
               </Button>
