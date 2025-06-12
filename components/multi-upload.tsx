@@ -1,7 +1,21 @@
 "use client"
 
-import { useRef, useState } from "react"
+import { useMemo, useRef, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable"
 import { Cross2Icon, UploadIcon } from "@radix-ui/react-icons"
 
 import { formatTemplateName } from "@/lib/utils"
@@ -13,12 +27,42 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import { DraggableUploadItem } from "@/components/draggable-upload-item"
 
 export function MultiUpload() {
   const [isDragOver, setIsDragOver] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
-  const { screenshots, addScreenshot, clearAll, removeScreenshot } =
-    useMultiTemplateStore((state) => state)
+  const {
+    screenshots,
+    addScreenshot,
+    clearAll,
+    removeScreenshot,
+    reorderScreenshots,
+    reapplyTemplatesByOrder,
+  } = useMultiTemplateStore((state) => state)
+
+  // Memoize screenshot IDs for performance
+  const screenshotIds = useMemo(
+    () => screenshots.map((s) => s.id),
+    [screenshots]
+  )
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+
+    if (over && active.id !== over.id) {
+      reorderScreenshots(Number(active.id), Number(over.id))
+      // Reapply templates by order after reordering
+      reapplyTemplatesByOrder()
+    }
+  }
 
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
@@ -115,41 +159,25 @@ export function MultiUpload() {
                   Clear All
                 </Button>
               </div>
-              <div className="grid gap-2">
-                {screenshots.map((screenshot) => (
-                  <div
-                    key={screenshot.id}
-                    className="flex items-center gap-3 overflow-hidden rounded-md border bg-card p-2"
-                  >
-                    <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded border bg-muted">
-                      {screenshot.screenshot && (
-                        <img
-                          src={URL.createObjectURL(screenshot.screenshot)}
-                          alt="Screenshot preview"
-                          className="h-full w-full object-cover"
-                        />
-                      )}
-                    </div>
-                    <div className="min-w-0 flex-1 overflow-hidden">
-                      <p className="truncate text-sm font-medium">
-                        {screenshot.screenshot?.name ||
-                          `Screenshot ${screenshot.id}`}
-                      </p>
-                      <p className="truncate text-xs text-muted-foreground">
-                        Template: {formatTemplateName(screenshot.template.name)}
-                      </p>
-                    </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
-                      onClick={() => removeScreenshot(screenshot.id)}
-                    >
-                      <Cross2Icon className="h-4 w-4" />
-                    </Button>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={screenshotIds}
+                  strategy={verticalListSortingStrategy}
+                >
+                  <div className="grid gap-2">
+                    {screenshotIds.map((screenshotId) => (
+                      <DraggableUploadItem
+                        key={screenshotId}
+                        screenshotId={screenshotId}
+                      />
+                    ))}
                   </div>
-                ))}
-              </div>
+                </SortableContext>
+              </DndContext>
             </div>
           )}
         </div>

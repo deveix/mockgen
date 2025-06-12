@@ -6,6 +6,20 @@ import {
   MultiTemplateStoreProvider,
   useMultiTemplateStore,
 } from "@/providers/multi-template-store-provider"
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
+import {
+  rectSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+} from "@dnd-kit/sortable"
 import { InfoCircledIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -17,20 +31,38 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { DraggableScreenshotCard } from "@/components/draggable-screenshot-card"
 import { GlobalBackgroundForm } from "@/components/global-background-form"
 import { MultiUpload } from "@/components/multi-upload"
 import { PlatformIcons } from "@/components/platform-icons"
 import SaveAllImagesButton from "@/components/save-all-images-button"
-import { ScreenshotCard } from "@/components/screenshot-card"
 
 function MultiTemplateContent() {
-  const { screenshots } = useMultiTemplateStore((state) => state)
+  const { screenshots, reorderScreenshots, reapplyTemplatesByOrder } =
+    useMultiTemplateStore((state) => state)
 
   // Only select the screenshot IDs to minimize re-renders
   const screenshotIds = useMemo(
     () => screenshots.map((s) => s.id),
     [screenshots]
   )
+
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(KeyboardSensor, {
+      coordinateGetter: sortableKeyboardCoordinates,
+    })
+  )
+
+  function handleDragEnd(event: DragEndEvent) {
+    const { active, over } = event
+
+    if (over && active.id !== over.id) {
+      reorderScreenshots(Number(active.id), Number(over.id))
+      // Reapply templates by order after reordering
+      reapplyTemplatesByOrder()
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -55,14 +87,25 @@ function MultiTemplateContent() {
 
             {/* Right: Screenshots Grid */}
             <div className="space-y-4">
-              <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
-                {screenshotIds.map((screenshotId) => (
-                  <ScreenshotCard
-                    key={screenshotId}
-                    screenshotId={screenshotId}
-                  />
-                ))}
-              </div>
+              <DndContext
+                sensors={sensors}
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <SortableContext
+                  items={screenshotIds}
+                  strategy={rectSortingStrategy}
+                >
+                  <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-2">
+                    {screenshotIds.map((screenshotId) => (
+                      <DraggableScreenshotCard
+                        key={screenshotId}
+                        screenshotId={screenshotId}
+                      />
+                    ))}
+                  </div>
+                </SortableContext>
+              </DndContext>
             </div>
           </div>
         </>

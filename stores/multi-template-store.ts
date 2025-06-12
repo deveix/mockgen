@@ -24,6 +24,8 @@ export interface MultiTemplateActions {
   ) => void
   updateAllBackgrounds: (background: Template["background"]) => void
   updatePreviewSvg: (id: number, svg: string) => void
+  reorderScreenshots: (activeId: number, overId: number) => void
+  reapplyTemplatesByOrder: () => void
   clearAll: () => void
   getScreenshotById: (id: number) => ScreenshotTemplate | undefined
 }
@@ -158,6 +160,66 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           s.id === id ? { ...s, previewSvg: svg } : s
         ),
       })),
+    reorderScreenshots: (activeId: number, overId: number) =>
+      set((state) => {
+        const screenshots = [...state.screenshots]
+        const activeIndex = screenshots.findIndex((s) => s.id === activeId)
+        const overIndex = screenshots.findIndex((s) => s.id === overId)
+
+        if (activeIndex !== -1 && overIndex !== -1) {
+          const [reorderedItem] = screenshots.splice(activeIndex, 1)
+          screenshots.splice(overIndex, 0, reorderedItem)
+        }
+
+        return { screenshots }
+      }),
+    reapplyTemplatesByOrder: () =>
+      set((state) => {
+        // Apple templates in rotation order
+        const appleTemplates: TemplateName[] = [
+          "apple:app-screenshot",
+          "apple:tilted-left",
+          "apple:tilted-right",
+          "apple:hanged-up",
+          "apple:rotated",
+        ]
+
+        const updatedScreenshots = state.screenshots.map(
+          (screenshot, index) => {
+            const templateIndex = index % appleTemplates.length
+            const templateName = appleTemplates[templateIndex]
+            const baseTemplate = templateDefaults[templateName]
+
+            // Preserve the screenshot URL and any custom params
+            const screenshotUrl = (screenshot.template.params as any).screenshot
+              ?.url
+            const customTitle = (screenshot.template.params as any).title?.text
+
+            return {
+              ...screenshot,
+              template: {
+                ...baseTemplate,
+                params: {
+                  ...baseTemplate.params,
+                  ...(screenshotUrl && {
+                    screenshot: { url: screenshotUrl },
+                  }),
+                  ...(customTitle &&
+                    (baseTemplate.params as any).title && {
+                      title: {
+                        ...(baseTemplate.params as any).title,
+                        text: customTitle,
+                      },
+                    }),
+                },
+              } as Template,
+              previewSvg: null, // Reset preview to trigger re-render
+            }
+          }
+        )
+
+        return { screenshots: updatedScreenshots }
+      }),
     clearAll: () => set({ screenshots: [] }),
   }))
 }
