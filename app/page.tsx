@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import {
   MultiTemplateStoreProvider,
@@ -201,6 +202,49 @@ export default function Home() {
             <span className="rounded bg-muted px-2 py-1">Device Mockups</span>
           </div> */}
         </div>
+
+        {/* Examples Showcase Section */}
+        <div className="space-y-4">
+          <div className="text-center">
+            <h2 className="mb-2 text-2xl font-semibold">
+              Examples of Generated Screenshots
+            </h2>
+            <p className="text-muted-foreground">
+              See what professional App Store screenshots look like when created
+              with our tool
+            </p>
+          </div>
+
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <div key={num} className="group relative">
+                <div className="relative aspect-[9/16] overflow-hidden rounded-lg border bg-muted/30">
+                  <Image
+                    src={`/examples/${num}.png`}
+                    alt={`App Store screenshot example ${num}`}
+                    fill
+                    className="object-contain transition-transform group-hover:scale-105"
+                    sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
+                  />
+                </div>
+                <div className="mt-2 text-center">
+                  <p className="text-sm text-muted-foreground">
+                    Template {num}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center text-sm text-muted-foreground">
+            <p>
+              Professional templates designed for maximum conversion on App
+              Store and Google Play Store
+            </p>
+          </div>
+        </div>
+
+        <Separator />
 
         <MultiTemplateContent />
       </div>
