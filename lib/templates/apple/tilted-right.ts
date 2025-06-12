@@ -36,7 +36,12 @@ export const tiltedRightTemplateDefault: TiltedRightTemplate = {
     type: "color",
     color: "#f3f4f6",
     noise: 0,
-    gridOverlay: undefined,
+    gridOverlay: {
+      pattern: "grid",
+      color: "#030712",
+      opacity: 0.5,
+      blurRadius: 20,
+    },
   },
   canvas: {
     width: 1320,
