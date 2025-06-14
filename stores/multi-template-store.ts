@@ -55,8 +55,8 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           "apple:tilted-right",
           "apple:hanged-up",
           "apple:rotated",
-          "android:hanged-up",
           "android:app-screenshot",
+          "android:hanged-up",
         ]
 
         // Get the template based on current count (rotate through templates)
