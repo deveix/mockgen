@@ -190,12 +190,20 @@ const templates = [
     height: 2868,
     skeleton: skeletons["apple:rotated"],
   },
+  // Android
   {
     platform: "android",
     name: "android:app-screenshot",
     width: 1320,
     height: 2868,
     skeleton: skeletons["android:app-screenshot"],
+  },
+  {
+    platform: "android",
+    name: "android:hanged-up",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["android:hanged-up"],
   },
 ]
 

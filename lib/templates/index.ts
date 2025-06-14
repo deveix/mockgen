@@ -28,6 +28,7 @@ const templateNameSchema = z.union([
 
   // Android
   z.literal("android:app-screenshot"),
+  z.literal("android:hanged-up"),
 ])
 export type TemplateName = z.infer<typeof templateNameSchema>
 
@@ -54,6 +55,7 @@ export const templateSchema = z.discriminatedUnion("name", [
 
   // Android
   android.appScreenshotTemplateSchema,
+  android.hangedUpTemplateSchema,
 ])
 export type Template = z.infer<typeof templateSchema>
 
@@ -80,6 +82,7 @@ export const templateDefaults: Record<TemplateName, Template> = {
 
   // Android
   "android:app-screenshot": android.appScreenshotTemplateDefault,
+  "android:hanged-up": android.hangedUpTemplateDefault,
 }
 
 export * from "./android"

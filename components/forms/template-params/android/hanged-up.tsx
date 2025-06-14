@@ -1,7 +1,7 @@
 import { useTemplateStore } from "@/providers/template-store-provider"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
-import { AppScreenshotTemplate } from "@/lib/templates/android/app-screenshot"
+import { HangedUpTemplate } from "@/lib/templates/android/hanged-up"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -17,15 +17,14 @@ import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
 
-export function Form() {
+export default function Form() {
   const template = useTemplateStore((state) => state)
-  const params = template.params as AppScreenshotTemplate["params"]
-  const background = template.background as AppScreenshotTemplate["background"]
+  const params = template.params as HangedUpTemplate["params"]
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>App Screenshot Properties</CardTitle>
+        <CardTitle>Hanged-Up Screenshot Properties</CardTitle>
         <CardDescription>
           Customize your screenshot template properties.
         </CardDescription>
@@ -91,6 +90,60 @@ export function Form() {
                         title: {
                           ...params.title,
                           color,
+                        },
+                      })
+                    }
+                  />
+                </ResponsivePopover>
+              </div>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="logo">Logo</Label>
+              <div className="flex space-x-2 overflow-hidden">
+                <div className="min-w-0 flex-1">
+                  <ImageSelector
+                    id="logo"
+                    onChange={(v) =>
+                      template.updateParams({
+                        logo: {
+                          ...(params.logo ?? {}),
+                          url: v ?? "",
+                        },
+                      })
+                    }
+                    initialFileName={
+                      params.logo.url
+                        ? params.logo.url.split("/").pop()
+                        : undefined
+                    }
+                  />
+                </div>
+                <ResponsivePopover
+                  title="Logo Settings"
+                  description="Customize the logo."
+                  trigger={
+                    <Button variant="outline" size="icon">
+                      <MixerHorizontalIcon className="h-4 w-4" />
+                    </Button>
+                  }
+                >
+                  <ImageSettings
+                    width={params.logo.width ?? 200}
+                    height={params.logo.height ?? 200}
+                    onChangeWidth={(width) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          width: width ?? 200,
+                        },
+                      })
+                    }
+                    onChangeHeight={(height) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          height: height ?? 200,
                         },
                       })
                     }

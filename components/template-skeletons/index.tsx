@@ -26,4 +26,5 @@ export const skeletons = {
 
   // Android
   "android:app-screenshot": android.AppScreenshot,
+  "android:hanged-up": android.HangedUp,
 }
