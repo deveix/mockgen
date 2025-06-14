@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -31,14 +31,25 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import { Separator } from "@/components/ui/separator"
 import { DraggableScreenshotCard } from "@/components/draggable-screenshot-card"
 import { GlobalBackgroundForm } from "@/components/global-background-form"
+import { AppleLogo, GooglePlayLogo } from "@/components/icons"
 import { MultiUpload } from "@/components/multi-upload"
 import { PlatformIcons } from "@/components/platform-icons"
 import SaveAllImagesButton from "@/components/save-all-images-button"
 
-function MultiTemplateContent() {
+function MultiTemplateContent({
+  selectedPlatform,
+}: {
+  selectedPlatform: "apple" | "android"
+}) {
   const { screenshots, reorderScreenshots, reapplyTemplatesByOrder } =
     useMultiTemplateStore((state) => state)
 
@@ -61,9 +72,13 @@ function MultiTemplateContent() {
     if (over && active.id !== over.id) {
       reorderScreenshots(Number(active.id), Number(over.id))
       // Reapply templates by order after reordering
-      reapplyTemplatesByOrder()
+      reapplyTemplatesByOrder(selectedPlatform)
     }
   }
+
+  useEffect(() => {
+    reapplyTemplatesByOrder(selectedPlatform)
+  }, [selectedPlatform])
 
   return (
     <div className="space-y-6">
@@ -102,6 +117,7 @@ function MultiTemplateContent() {
                       <DraggableScreenshotCard
                         key={screenshotId}
                         screenshotId={screenshotId}
+                        platform={selectedPlatform}
                       />
                     ))}
                   </div>
@@ -175,6 +191,13 @@ function MultiTemplateContent() {
 export default function Home() {
   // Modal state for image preview
   const [previewImage, setPreviewImage] = useState<string | null>(null)
+  // Global platform state from store
+  const selectedPlatform = useMultiTemplateStore(
+    (state) => state.selectedPlatform
+  )
+  const setSelectedPlatform = useMultiTemplateStore(
+    (state) => state.setSelectedPlatform
+  )
 
   // Modal component
   function ImagePreviewModal({
@@ -290,8 +313,34 @@ export default function Home() {
         </div>
 
         <Separator />
-
-        <MultiTemplateContent />
+        {/* Platform Selector - Global, now above upload section */}
+        <div className="mb-4 flex justify-center">
+          <div className="flex gap-6">
+            <button
+              className={`flex flex-col items-center rounded-lg border px-4 py-2 transition-colors ${selectedPlatform === "apple" ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
+              onClick={() => setSelectedPlatform("apple")}
+            >
+              <AppleLogo className="mb-1 h-8 w-8" />
+              <span
+                className={`font-medium ${selectedPlatform === "apple" ? "text-primary" : "text-muted-foreground"}`}
+              >
+                Apple
+              </span>
+            </button>
+            <button
+              className={`flex flex-col items-center rounded-lg border px-4 py-2 transition-colors ${selectedPlatform === "android" ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
+              onClick={() => setSelectedPlatform("android")}
+            >
+              <GooglePlayLogo className="mb-1 h-8 w-8" />
+              <span
+                className={`font-medium ${selectedPlatform === "android" ? "text-primary" : "text-muted-foreground"}`}
+              >
+                Android
+              </span>
+            </button>
+          </div>
+        </div>
+        <MultiTemplateContent selectedPlatform={selectedPlatform} />
 
         {/* Image Preview Modal */}
         {previewImage && (

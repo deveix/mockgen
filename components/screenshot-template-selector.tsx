@@ -209,10 +209,12 @@ const templates = [
 
 interface ScreenshotTemplateSelectorProps {
   screenshotId: number
+  platform: "apple" | "android"
 }
 
 export default function ScreenshotTemplateSelector({
   screenshotId,
+  platform,
 }: ScreenshotTemplateSelectorProps) {
   const { screenshots, updateTemplate } = useMultiTemplateStore(
     (state) => state
@@ -222,8 +224,6 @@ export default function ScreenshotTemplateSelector({
     [screenshots, screenshotId]
   )
 
-  const [selectedFilter, setSelectedFilter] = useState(templateFilters[0])
-
   if (!screenshot) return null
 
   return (
@@ -232,62 +232,6 @@ export default function ScreenshotTemplateSelector({
         <h3 className="text-sm font-medium">
           Choose template for Screenshot {screenshotId}
         </h3>
-        <div className="flex gap-2">
-          {Object.entries(templateFiltersByPlatform).map(
-            ([platform, filters]) => {
-              const PlatformLogo = platforms[platform as Platform]?.icon
-
-              return (
-                <DropdownMenu key={platform}>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant={
-                        platform === selectedFilter.platform
-                          ? "secondary"
-                          : "outline"
-                      }
-                      size="sm"
-                    >
-                      {PlatformLogo && <PlatformLogo className="mr-1 size-3" />}
-                      {platforms[platform as Platform]?.label}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-[220px]">
-                    {filters.map((filter) => (
-                      <DropdownMenuItem
-                        key={filter.label}
-                        onSelect={() => {
-                          if (filter.platform !== selectedFilter.platform) {
-                            const template = templates.find(
-                              (t) =>
-                                t.platform === filter.platform &&
-                                t.width === filter.width &&
-                                t.height === filter.height
-                            )
-                            if (template) {
-                              updateTemplate(
-                                screenshotId,
-                                template.name as TemplateName
-                              )
-                            }
-                          }
-                          setSelectedFilter(filter)
-                        }}
-                      >
-                        <div className="space-y-1">
-                          <div className="font-medium">{filter.label}</div>
-                          <div className="font-mono text-xs text-muted-foreground">
-                            {filter.width}x{filter.height}
-                          </div>
-                        </div>
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )
-            }
-          )}
-        </div>
       </div>
 
       <Carousel
@@ -303,12 +247,7 @@ export default function ScreenshotTemplateSelector({
         >
           <CarouselContent className="-ml-2 pl-2 pr-4">
             {templates
-              .filter(
-                (t) =>
-                  t.platform === selectedFilter.platform &&
-                  t.width === selectedFilter.width &&
-                  t.height === selectedFilter.height
-              )
+              .filter((t) => t.platform === platform)
               .map((t) => (
                 <CarouselItem
                   key={t.name}

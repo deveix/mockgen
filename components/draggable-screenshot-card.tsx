@@ -9,10 +9,12 @@ import { ScreenshotCard } from "./screenshot-card"
 
 interface DraggableScreenshotCardProps {
   screenshotId: number
+  platform: "apple" | "android"
 }
 
 export function DraggableScreenshotCard({
   screenshotId,
+  platform,
 }: DraggableScreenshotCardProps) {
   const {
     attributes,
@@ -41,7 +43,7 @@ export function DraggableScreenshotCard({
       </div>
 
       {/* Screenshot Card */}
-      <ScreenshotCard screenshotId={screenshotId} />
+      <ScreenshotCard screenshotId={screenshotId} platform={platform} />
     </div>
   )
 }

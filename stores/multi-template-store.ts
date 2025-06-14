@@ -11,6 +11,7 @@ export interface ScreenshotTemplate {
 
 export interface MultiTemplateState {
   screenshots: ScreenshotTemplate[]
+  selectedPlatform: "apple" | "android"
 }
 
 export interface MultiTemplateActions {
@@ -25,15 +26,17 @@ export interface MultiTemplateActions {
   updateAllBackgrounds: (background: Template["background"]) => void
   updatePreviewSvg: (id: number, svg: string) => void
   reorderScreenshots: (activeId: number, overId: number) => void
-  reapplyTemplatesByOrder: () => void
+  reapplyTemplatesByOrder: (platform?: "apple" | "android") => void
   clearAll: () => void
   getScreenshotById: (id: number) => ScreenshotTemplate | undefined
+  setSelectedPlatform: (platform: "apple" | "android") => void
 }
 
 export type MultiTemplateStore = MultiTemplateState & MultiTemplateActions
 
 export const defaultInitState: MultiTemplateState = {
   screenshots: [],
+  selectedPlatform: "apple",
 }
 
 export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
@@ -44,12 +47,13 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
     getScreenshotById: (id: number) => {
       return get().screenshots.find((s) => s.id === id)
     },
+    setSelectedPlatform: (platform) => set({ selectedPlatform: platform }),
     addScreenshot: (file: File) =>
       set((state) => {
         const newId = Math.max(0, ...state.screenshots.map((s) => s.id)) + 1
 
         // Apple templates in rotation order
-        const appleTemplates: TemplateName[] = [
+        let appleTemplates: TemplateName[] = [
           "apple:app-screenshot",
           "apple:tilted-left",
           "apple:tilted-right",
@@ -58,6 +62,10 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           "android:app-screenshot",
           "android:hanged-up",
         ]
+
+        if (state.selectedPlatform === "android") {
+          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+        }
 
         // Get the template based on current count (rotate through templates)
         const templateIndex = state.screenshots.length % appleTemplates.length
@@ -175,16 +183,20 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
 
         return { screenshots }
       }),
-    reapplyTemplatesByOrder: () =>
+    reapplyTemplatesByOrder: (platform?: "apple" | "android") =>
       set((state) => {
-        // Apple templates in rotation order
-        const appleTemplates: TemplateName[] = [
+        // templates in rotation order
+        let appleTemplates: TemplateName[] = [
           "apple:app-screenshot",
           "apple:tilted-left",
           "apple:tilted-right",
           "apple:hanged-up",
           "apple:rotated",
         ]
+
+        if (platform === "android") {
+          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+        }
 
         const updatedScreenshots = state.screenshots.map(
           (screenshot, index) => {

@@ -13,10 +13,12 @@ import ScreenshotTemplateSelector from "@/components/screenshot-template-selecto
 
 interface ScreenshotCardProps {
   screenshotId: number
+  platform: "apple" | "android"
 }
 
 export const ScreenshotCard = React.memo(function ScreenshotCard({
   screenshotId,
+  platform,
 }: ScreenshotCardProps) {
   // Use granular selectors - only get what we need
   const screenshot = useMultiTemplateStore((state) =>
@@ -75,7 +77,10 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
         <CardContent className="space-y-4 overflow-hidden">
           {/* Template Selector */}
           <div className="space-y-3 overflow-hidden">
-            <ScreenshotTemplateSelector screenshotId={screenshot.id} />
+            <ScreenshotTemplateSelector
+              screenshotId={screenshot.id}
+              platform={platform}
+            />
           </div>
 
           {/* Template Form (only for app-screenshot) */}
