@@ -17,7 +17,7 @@ import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
 
-export default function Form() {
+export function Form() {
   const template = useTemplateStore((state) => state)
   const params = template.params as HangedUpTemplate["params"]
 
