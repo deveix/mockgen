@@ -256,7 +256,23 @@ export default function ScreenshotTemplateSelector({
                     {filters.map((filter) => (
                       <DropdownMenuItem
                         key={filter.label}
-                        onSelect={() => setSelectedFilter(filter)}
+                        onSelect={() => {
+                          if (filter.platform !== selectedFilter.platform) {
+                            const template = templates.find(
+                              (t) =>
+                                t.platform === filter.platform &&
+                                t.width === filter.width &&
+                                t.height === filter.height
+                            )
+                            if (template) {
+                              updateTemplate(
+                                screenshotId,
+                                template.name as TemplateName
+                              )
+                            }
+                          }
+                          setSelectedFilter(filter)
+                        }}
                       >
                         <div className="space-y-1">
                           <div className="font-medium">{filter.label}</div>
