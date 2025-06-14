@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import {
@@ -173,6 +173,47 @@ function MultiTemplateContent() {
 }
 
 export default function Home() {
+  // Modal state for image preview
+  const [previewImage, setPreviewImage] = useState<string | null>(null)
+
+  // Modal component
+  function ImagePreviewModal({
+    src,
+    onClose,
+  }: {
+    src: string
+    onClose: () => void
+  }) {
+    return (
+      <div
+        className="fixed inset-0 -top-10 z-50 flex items-center justify-center bg-black/70"
+        onClick={onClose}
+      >
+        <div
+          className="relative max-h-[90vh] max-w-[90vw] rounded-lg bg-white p-2 shadow-lg"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <button
+            className="absolute right-2 top-2 z-50 text-2xl font-bold text-gray-600 hover:text-black"
+            onClick={onClose}
+            aria-label="Close preview"
+          >
+            ×
+          </button>
+          <div className="relative h-[533px] w-[300px] sm:h-[640px] sm:w-[360px] md:h-[711px] md:w-[400px] lg:h-[568px] lg:w-[320px] xl:h-[640px] xl:w-[360px]">
+            <Image
+              src={src}
+              alt="Preview"
+              fill
+              className="rounded-lg object-contain"
+              sizes="90vw"
+            />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container mx-auto py-6">
       <div className="space-y-6">
@@ -217,7 +258,11 @@ export default function Home() {
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
             {[1, 2, 3, 4, 5].map((num) => (
-              <div key={num} className="group relative">
+              <div
+                key={num}
+                className="group relative cursor-pointer"
+                onClick={() => setPreviewImage(`/examples/${num}.png`)}
+              >
                 <div className="relative aspect-[9/16] overflow-hidden rounded-lg border bg-muted/30">
                   <Image
                     src={`/examples/${num}.png`}
@@ -247,6 +292,14 @@ export default function Home() {
         <Separator />
 
         <MultiTemplateContent />
+
+        {/* Image Preview Modal */}
+        {previewImage && (
+          <ImagePreviewModal
+            src={previewImage}
+            onClose={() => setPreviewImage(null)}
+          />
+        )}
       </div>
     </div>
   )
