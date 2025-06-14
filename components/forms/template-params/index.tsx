@@ -26,6 +26,7 @@ export const templates = {
 
   // Android
   "android:app-screenshot": android.appScreenshot,
+  "android:hanged-up": android.hangedUp,
 }
 
 export * from "./android"
