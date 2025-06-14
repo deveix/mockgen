@@ -1,3 +1,4 @@
+import * as android from "./android"
 import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
@@ -22,4 +23,9 @@ export const templates = {
   "apple:tilted-right": apple.tiltedRight,
   "apple:hanged-up": apple.hangedUp,
   "apple:rotated": apple.rotated,
+
+  // Android
+  "android:app-screenshot": android.appScreenshot,
 }
+
+export * from "./android"

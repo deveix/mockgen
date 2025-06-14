@@ -1,3 +1,4 @@
+import * as android from "./android"
 import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
@@ -22,4 +23,7 @@ export const skeletons = {
   "apple:tilted-right": apple.TiltedRight,
   "apple:hanged-up": apple.HangedUp,
   "apple:rotated": apple.Rotated,
+
+  // Android
+  "android:app-screenshot": android.AppScreenshot,
 }
