@@ -170,20 +170,6 @@ export default function Form() {
                 }
               />
             </div>
-
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="bottomPadding">Bottom Padding</Label>
-              <Input
-                id="bottomPadding"
-                value={params.bottomPadding}
-                type="number"
-                onChange={(e) =>
-                  template.updateParams({
-                    bottomPadding: e.target.value,
-                  })
-                }
-              />
-            </div>
           </div>
         </form>
       </CardContent>
