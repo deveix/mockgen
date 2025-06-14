@@ -1,5 +1,6 @@
 import { z } from "zod"
 
+import * as android from "./android"
 import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
@@ -24,6 +25,10 @@ const templateNameSchema = z.union([
   z.literal("apple:tilted-right"),
   z.literal("apple:hanged-up"),
   z.literal("apple:rotated"),
+
+  // Android
+  z.literal("android:app-screenshot"),
+  z.literal("android:hanged-up"),
 ])
 export type TemplateName = z.infer<typeof templateNameSchema>
 
@@ -47,6 +52,10 @@ export const templateSchema = z.discriminatedUnion("name", [
   apple.tiltedRightTemplateSchema,
   apple.hangedUpTemplateSchema,
   apple.rotatedTemplateSchema,
+
+  // Android
+  android.appScreenshotTemplateSchema,
+  android.hangedUpTemplateSchema,
 ])
 export type Template = z.infer<typeof templateSchema>
 
@@ -70,4 +79,10 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "apple:tilted-right": apple.tiltedRightTemplateDefault,
   "apple:hanged-up": apple.hangedUpTemplateDefault,
   "apple:rotated": apple.rotatedTemplateDefault,
+
+  // Android
+  "android:app-screenshot": android.appScreenshotTemplateDefault,
+  "android:hanged-up": android.hangedUpTemplateDefault,
 }
+
+export * from "./android"

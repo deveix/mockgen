@@ -27,6 +27,7 @@ import {
   AppleLogo,
   BlogLogo,
   FacebookLogo,
+  GooglePlayLogo,
   LinkedInLogo,
   OpenGraphLogo,
   ProductHunt,
@@ -36,6 +37,7 @@ import {
 type Platform =
   | "open-graph"
   | "apple"
+  | "android"
   | "blog"
   | "facebook"
   | "x"
@@ -61,6 +63,12 @@ const templateFilters: TemplateFilter[] = [
     width: 1320,
     height: 2868,
   },
+  {
+    platform: "android",
+    label: "App Screenshot",
+    width: 1320,
+    height: 2868,
+  },
   //   {
   //     platform: "open-graph",
   //     label: "Open Graph Protocol",
@@ -79,6 +87,10 @@ const platforms: Partial<Record<Platform, PlatformProps>> = {
   apple: {
     label: "Apple",
     icon: AppleLogo,
+  },
+  android: {
+    label: "Android",
+    icon: GooglePlayLogo,
   },
   //   "open-graph": {
   //     label: "Open Graph",
@@ -178,6 +190,21 @@ const templates = [
     height: 2868,
     skeleton: skeletons["apple:rotated"],
   },
+  // Android
+  {
+    platform: "android",
+    name: "android:app-screenshot",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["android:app-screenshot"],
+  },
+  {
+    platform: "android",
+    name: "android:hanged-up",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["android:hanged-up"],
+  },
 ]
 
 interface ScreenshotTemplateSelectorProps {
@@ -205,7 +232,7 @@ export default function ScreenshotTemplateSelector({
         <h3 className="text-sm font-medium">
           Choose template for Screenshot {screenshotId}
         </h3>
-        {/* <div className="flex gap-2">
+        <div className="flex gap-2">
           {Object.entries(templateFiltersByPlatform).map(
             ([platform, filters]) => {
               const PlatformLogo = platforms[platform as Platform]?.icon
@@ -244,7 +271,7 @@ export default function ScreenshotTemplateSelector({
               )
             }
           )}
-        </div> */}
+        </div>
       </div>
 
       <Carousel
