@@ -187,6 +187,10 @@ export default async function RootLayout({
                 className="flex items-center"
               />
 
+              <Button variant="link" asChild>
+                <Link href="/leaderboard">Made by Mockgen</Link>
+              </Button>
+
               {/* <Button variant="link">
                 <Link href="mailto:aykasem001@gmail.com">Support</Link>
               </Button> */}
@@ -197,6 +201,10 @@ export default async function RootLayout({
             {/* Mobile navigation */}
             <div className="flex space-x-2 sm:hidden">
               <ModeToggle />
+
+              <Button variant="link" asChild>
+                <Link href="/leaderboard">Made by Mockgen</Link>
+              </Button>
 
               <MobileNav />
             </div>
@@ -232,6 +240,10 @@ export default async function RootLayout({
                     size="small"
                     className="md:inline-flex md:items-center"
                   />
+
+                  <Button variant="link" className="px-0 md:px-4" asChild>
+                    <Link href="/leaderboard">Made by Mockgen</Link>
+                  </Button>
                 </div>
               </div>
 
