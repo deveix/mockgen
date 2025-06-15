@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 
+# /leaderboard is allowed for indexing
+
 # Disallow admin or sensitive areas (if any)
 # Disallow: /admin/
 # Disallow: /api/

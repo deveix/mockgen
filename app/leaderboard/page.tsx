@@ -16,7 +16,7 @@ export default function MadeByMockGenPage() {
         </p>
         <Separator />
       </div>
-      <div className="mb-16 flex flex-col items-center gap-8">
+      <div className="mb-8 flex flex-col items-center gap-8">
         {/* App Store Listing Style Card */}
         <div className="flex w-full max-w-2xl flex-col gap-4 rounded-xl bg-white p-6">
           <div className="flex items-center gap-4">
@@ -77,18 +77,9 @@ export default function MadeByMockGenPage() {
             ))}
           </div>
         </div>
-        {/* Placeholder for more apps */}
-        <div className="flex w-full max-w-2xl flex-col items-center justify-center rounded-xl bg-muted/10 p-6 opacity-70">
-          <span className="mb-2 text-base font-semibold text-muted-foreground">
-            Your app here?
-          </span>
-          <span className="text-xs text-muted-foreground">
-            More coming soon...
-          </span>
-        </div>
       </div>
       <Separator />
-      <div className="mt-16 flex justify-center">
+      <div className="flex justify-center">
         <div className="flex w-full max-w-md flex-col items-center rounded-2xl p-8">
           <h2 className="mb-2 text-2xl font-semibold">Submit Your App</h2>
           <p className="mb-4 text-center text-muted-foreground">
