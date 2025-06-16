@@ -1,4 +1,6 @@
-# mockgen
+# MockGen
+
+Generate modern App Store & Google Play screenshots with mockups.
 
 ## Development
 
