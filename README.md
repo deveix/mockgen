@@ -1,5 +1,14 @@
 # MockGen
 
+<div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin-bottom: 16px;">
+  <a href="https://mockgen.click/" target="_blank">
+    <img src="public/samples/logos/imgsrc.png" alt="MockGen Logo" width="300" />
+  </a>
+  <a href="https://mockgen.click/" target="_blank">
+    <img src="public/samples/logos/demo-logo.png" alt="Demo MockGen" width="200" />
+  </a>
+</div>
+
 Easily generate modern App Store & Google Play screenshots with customizable mockups.
 
 ## Features
@@ -11,9 +20,11 @@ Easily generate modern App Store & Google Play screenshots with customizable moc
 - Real-time preview
 - Multiple templates and formats supported
 
+<img src="public/samples/logos/preview.gif" alt="Preview of Mockgen" style="display: block; margin: 0 auto" />
+
 ## Development
 
-Set the required environment variables in your `.env.local`:
+Create a `.env.local` file by copying and filling the file env.example
 
 ```
 NEXT_PUBLIC_BASE_URL=http://localhost:3000
@@ -52,9 +63,5 @@ yarn start
 - `public/`: static assets (icons, images, examples)
 - `stores/`: state management (template stores)
 - `types/`: TypeScript types
-
-## Useful Links
-
-- [Live site](https://mockgen.click)
 
 MIT License
