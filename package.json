@@ -74,5 +74,11 @@
       "@types/react": "19.0.2",
       "@types/react-dom": "19.0.2"
     }
-  }
+  },
+  "keywords": [
+    "generate-screenshots",
+    "screenshots-app",
+    "screenshots-app-store",
+    "screenshots-google-play"
+  ]
 }

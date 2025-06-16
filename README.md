@@ -12,6 +12,6 @@ NEXT_PUBLIC_API_URL=http://localhost:3000/api
 Install the dependencies and run the app:
 
 ```shell
-pnpm i
-pnpm run dev
+yarn
+yarn dev
 ```
