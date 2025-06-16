@@ -3,8 +3,7 @@ import { TiltedRightTemplate } from "@/lib/templates/apple/tilted-right"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
-import { Watermark } from "../elements/watermark"
-
+import Image from 'next/image'
 export function Template(props: {
   template: TiltedRightTemplate
   renderWatermark: boolean
@@ -94,7 +93,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using tilted-right SVG */}
-        <img
+        <Image
           src={absoluteUrl("/mocks/iphone-tilted-right.svg")}
           alt="Device Frame"
           style={{
@@ -105,7 +104,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <img
+        <Image
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{
@@ -125,7 +124,7 @@ export function Template(props: {
         />
 
         {/* Device frame using tilted-right SVG */}
-        {/* <img
+        {/* <Image
           src={absoluteUrl("/mocks/dynamic-island.svg")}
           alt="Device Frame"
           style={{

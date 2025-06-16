@@ -89,11 +89,6 @@ export const metadata: Metadata = {
     images: ["https://mockgen.click/og.png"],
     creator: "@aykasem001",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   category: "Technology",
   alternates: {
     canonical: "https://mockgen.click",
@@ -129,6 +124,12 @@ const structuredData = {
     "Instant Download",
     "Zero Design Skills Required",
   ],
+}
+
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
 }
 
 export default async function RootLayout({

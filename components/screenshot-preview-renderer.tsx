@@ -46,7 +46,6 @@ export default function ScreenshotPreviewRenderer({
     const svg = await satori(
       <TemplateComp
         // @ts-ignore
-        template={screenshot.template}
         renderWatermark={false}
       />,
       {

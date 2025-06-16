@@ -1,5 +1,5 @@
 import { absoluteUrl } from "@/lib/url"
-
+import Image from "next/image"
 interface Props {
   style?: React.CSSProperties
 }
@@ -13,7 +13,7 @@ export function Watermark({ style }: Props) {
         ...style,
       }}
     >
-      <img
+      <Image
         src={absoluteUrl("/assets/watermark.svg")}
         alt="mockgen.click"
         style={{

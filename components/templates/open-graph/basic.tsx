@@ -3,6 +3,7 @@ import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { BasicTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
 
+import Image from 'next/image'
 import { Watermark } from "../elements/watermark"
 
 export const Template = ({
@@ -61,11 +62,12 @@ export const Template = ({
       }}
     >
       {template.params.logo.url && (
-        <img
+        <Image
           style={{
             width: "6rem",
             height: "6rem",
           }}
+          alt="logo"
           src={template.params.logo.url}
         />
       )}

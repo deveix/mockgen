@@ -32,7 +32,6 @@ export default function PreviewRenderer() {
     template.updatePreviewSvg(
       await satori(
         <TemplateComp
-          // @ts-ignore
           template={template}
           renderWatermark
         />,

@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { HangedUpTemplate } from "@/lib/templates/apple/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from 'next/image'
 
 export function Template(props: {
   template: HangedUpTemplate
@@ -65,7 +64,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using iphone-up SVG rotated upside down */}
-        <img
+        <Image
           src={absoluteUrl("/mocks/iphone-up.svg")}
           alt="Device Frame"
           style={{
@@ -77,7 +76,7 @@ export function Template(props: {
         />
         {/* User screenshot */}
         {template.params.screenshot.url && (
-          <img
+          <Image
             src={template.params.screenshot.url}
             alt="App Screenshot"
             style={{

@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { AppScreenshotTemplate } from "@/lib/templates/apple"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from 'next/image'
 
 export function Template(props: {
   template: AppScreenshotTemplate
@@ -85,7 +84,7 @@ export function Template(props: {
             gap: 40,
           }}
         >
-          <img
+          <Image
             src={template.params.logo.url}
             alt="Logo"
             style={{
@@ -107,7 +106,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
-        <img
+        <Image
           src={absoluteUrl("/mocks/iphone-frame.svg")}
           alt="Device Frame"
           style={{
@@ -118,7 +117,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <img
+        <Image
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{

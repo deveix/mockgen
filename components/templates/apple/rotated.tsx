@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { RotatedTemplate } from "@/lib/templates/apple/rotated"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from 'next/image'
 
 export function Template(props: {
   template: RotatedTemplate
@@ -93,7 +92,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using iphone-right-left SVG */}
-        <img
+        <Image
           src={absoluteUrl("/mocks/iphone-right-left.svg")}
           alt="Device Frame"
           style={{
@@ -104,7 +103,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <img
+        <Image
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{

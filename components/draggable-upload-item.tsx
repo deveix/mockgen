@@ -5,7 +5,7 @@ import { useMultiTemplateStore } from "@/providers/multi-template-store-provider
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { Cross2Icon, DragHandleDots2Icon } from "@radix-ui/react-icons"
-
+import Image from 'next/image'
 import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
@@ -57,7 +57,7 @@ export function DraggableUploadItem({
 
       <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded border bg-muted">
         {screenshot.screenshot && (
-          <img
+          <Image
             src={URL.createObjectURL(screenshot.screenshot)}
             alt="Screenshot preview"
             className="h-full w-full object-cover"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { DownloadIcon } from "@radix-ui/react-icons"
 import JSZip from "jszip"
@@ -37,11 +37,15 @@ function initResvgWorker() {
   }
 }
 
-const renderPNG = initResvgWorker()
-
 export default function SaveAllImagesButton() {
   const screenshots = useMultiTemplateStore((state) => state.screenshots)
   const [isGenerating, setIsGenerating] = useState(false)
+  const [renderPNG, setRenderPNG] = useState<ReturnType<typeof initResvgWorker>>()
+
+  // S'assure que le worker est initialisé côté client uniquement
+  useEffect(() => {
+    setRenderPNG(() => initResvgWorker())
+  }, [])
 
   const handleSaveAll = async () => {
     if (screenshots.length === 0) return
