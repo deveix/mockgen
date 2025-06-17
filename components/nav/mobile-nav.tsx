@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import Link from "next/link"
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -28,16 +27,16 @@ export function MobileNav() {
       <SheetContent>
         <SheetHeader className="pb-4 text-left">
           <SheetTitle>
-            <Image
+            <img
               src="/logo.svg"
-              alt="imgsrc"
+              alt="logo-mockgen"
               width={32}
               height={32}
               className="block dark:hidden"
             />
-            <Image
+            <img
               src="/logo_dark.svg"
-              alt="imgsrc"
+              alt="logo-mockgen-dark"
               width={32}
               height={32}
               className="hidden dark:block"

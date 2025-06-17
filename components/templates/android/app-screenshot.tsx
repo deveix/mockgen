@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { AppScreenshotTemplate as AndroidAppScreenshotTemplate } from "@/lib/templates/android/app-screenshot"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from "next/image"
 
 export function Template(props: {
   template: AndroidAppScreenshotTemplate

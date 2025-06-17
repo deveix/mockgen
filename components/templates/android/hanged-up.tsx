@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { HangedUpTemplate as AndroidHangedUpTemplate } from "@/lib/templates/android/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from "next/image"
 
 export function Template(props: {
   template: AndroidHangedUpTemplate

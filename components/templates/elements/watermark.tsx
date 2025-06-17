@@ -1,5 +1,5 @@
 import { absoluteUrl } from "@/lib/url"
-
+import Image from "next/image"
 interface Props {
   style?: React.CSSProperties
 }

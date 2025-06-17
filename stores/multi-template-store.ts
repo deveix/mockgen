@@ -18,7 +18,7 @@ export interface MultiTemplateActions {
   addScreenshot: (file: File) => void
   removeScreenshot: (id: number) => void
   updateTemplate: (id: number, templateName: TemplateName) => void
-  updateTemplateParams: (id: number, params: any) => void
+  updateTemplateParams: (id: number, params: Partial<Template["params"]>) => void
   updateTemplateBackground: (
     id: number,
     background: Template["background"]

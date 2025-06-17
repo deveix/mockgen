@@ -3,8 +3,7 @@ import { TiltedRightTemplate } from "@/lib/templates/apple/tilted-right"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
-import { Watermark } from "../elements/watermark"
-
+import Image from 'next/image'
 export function Template(props: {
   template: TiltedRightTemplate
   renderWatermark: boolean

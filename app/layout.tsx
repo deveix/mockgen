@@ -89,11 +89,6 @@ export const metadata: Metadata = {
     images: ["https://mockgen.click/og.png"],
     creator: "@aykasem001",
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
   category: "Technology",
   alternates: {
     canonical: "https://mockgen.click",
@@ -131,6 +126,12 @@ const structuredData = {
   ],
 }
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+}
+
 export default async function RootLayout({
   children,
 }: {
@@ -161,7 +162,7 @@ export default async function RootLayout({
             <div className="flex items-center space-x-4">
               <div>
                 <Link href="/">
-                  <Image
+                  <img
                     className="block dark:hidden"
                     src="/logo.svg"
                     alt="MockGen Logo - App Store Screenshot Generator"
@@ -171,7 +172,7 @@ export default async function RootLayout({
                 </Link>
 
                 <Link href="/">
-                  <Image
+                  <img
                     className="hidden dark:block"
                     src="/logo_dark.svg"
                     alt="MockGen Logo - App Store Screenshot Generator"

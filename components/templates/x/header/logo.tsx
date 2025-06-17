@@ -2,7 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { LogoTemplate } from "@/lib/templates/x/header"
 import { absoluteUrl } from "@/lib/url"
-
+import Image from 'next/image'
 import { Watermark } from "../../elements/watermark"
 
 export const Template = ({
@@ -66,8 +66,7 @@ export const Template = ({
             width: "6rem",
             height: "6rem",
           }}
-          src={template.params.logo.url}
-        />
+          src={template.params.logo.url} alt={"logo"} />
       )}
 
       {template.params.description.text && (

@@ -2,7 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { HeroTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
-
+import Image from 'next/image'
 import { Watermark } from "../elements/watermark"
 
 export const Template = ({
@@ -132,6 +132,7 @@ export const Template = ({
               borderRadius: "0.75rem",
             }}
             src={template.params.image.url}
+            alt="logo"
           />
         </div>
       )}

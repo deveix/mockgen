@@ -25,6 +25,13 @@ const nextConfig: NextConfig = {
     ],
   },
 
+  // Remove console logs in production except errors
+  compiler: {
+    removeConsole: {
+      exclude: ['error'],
+    },
+  },
+
   // Headers for better SEO and security
   async headers() {
     return [

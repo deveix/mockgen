@@ -32,7 +32,7 @@ export default function PreviewRenderer() {
     template.updatePreviewSvg(
       await satori(
         <TemplateComp
-          // @ts-ignore
+          // @ts-expect-error need to fix this type
           template={template}
           renderWatermark
         />,
@@ -69,9 +69,8 @@ export default function PreviewRenderer() {
 
   return (
     <AspectRatio ratio={12 / 9}>
-      <Image
+      <img
         alt="Preview"
-        priority
         className="h-full w-full object-contain"
         width={template.canvas.width}
         height={template.canvas.height}

@@ -5,7 +5,6 @@ import { useMultiTemplateStore } from "@/providers/multi-template-store-provider
 import { useSortable } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
 import { Cross2Icon, DragHandleDots2Icon } from "@radix-ui/react-icons"
-
 import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 

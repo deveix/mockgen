@@ -2,8 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { RotatedTemplate } from "@/lib/templates/apple/rotated"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from 'next/image'
 
 export function Template(props: {
   template: RotatedTemplate

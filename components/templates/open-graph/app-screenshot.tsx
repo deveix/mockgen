@@ -2,8 +2,7 @@ import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { AppScreenshotTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
 
-import { Watermark } from "../elements/watermark"
-
+import Image from 'next/image'
 export function Template(props: {
   template: AppScreenshotTemplate
   renderWatermark: boolean
