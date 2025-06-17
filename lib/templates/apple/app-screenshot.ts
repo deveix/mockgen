@@ -38,7 +38,7 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     screenshot: {
       url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
     },
-    bottomPadding: "-500",
+    bottomPadding: "0",
   },
   background: {
     type: "color",

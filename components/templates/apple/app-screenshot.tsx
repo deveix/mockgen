@@ -84,7 +84,7 @@ export function Template(props: {
             gap: 40,
           }}
         >
-          <img
+          {template.params.logo.url && <img
             src={template.params.logo.url}
             alt="Logo"
             style={{
@@ -92,7 +92,7 @@ export function Template(props: {
               height: template.params.logo.height,
               position: "relative",
             }}
-          />
+          />}
           {template.params.title.text}
         </p>
       </div>

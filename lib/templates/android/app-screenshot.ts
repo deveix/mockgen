@@ -38,7 +38,7 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     screenshot: {
       url: absoluteUrl("/samples/screenshots/android-screenshot.png"),
     },
-    bottomPadding: "-150",
+    bottomPadding: "0",
   },
   background: {
     type: "color",

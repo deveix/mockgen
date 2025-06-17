@@ -49,7 +49,12 @@ export function toBackgroundShorthand(
   background:
     | Pick<LinearGradientBackgroundParams, "type" | "direction" | "colorStops">
     | Pick<ColorBackgroundParams, "type" | "color">
+    | "transparent"
 ) {
+  if (background === "transparent") {
+    console.log("Using transparent background")
+    return 'transparent'
+  }
   if (background.type === "color") {
     return background.color
   } else if (background.type === "linear-gradient") {

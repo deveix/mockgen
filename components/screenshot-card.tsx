@@ -39,7 +39,6 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
   }, [screenshot?.template.name])
 
   if (!screenshot) return null
-
   return (
     <div className="w-full">
       <Card className="h-full overflow-hidden">

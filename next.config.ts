@@ -1,4 +1,4 @@
-import type { NextConfig } from "next"
+import { NextConfig } from "next"
 
 const nextConfig: NextConfig = {
   // Enable static exports if needed for better SEO
@@ -24,12 +24,18 @@ const nextConfig: NextConfig = {
       "@radix-ui/react-tabs",
     ],
   },
-
+   webpack: (config) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      canvas: false,
+    };
+    return config;
+  },
   // Remove console logs in production except errors
   compiler: {
-    removeConsole: {
+   /*  removeConsole: {
       exclude: ['error'],
-    },
+    }, */
   },
 
   // Headers for better SEO and security
