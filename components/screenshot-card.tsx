@@ -3,7 +3,6 @@
 import React, { useMemo } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { Cross2Icon } from "@radix-ui/react-icons"
-import Image from "next/image"
 import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -48,7 +47,7 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="size-12 shrink-0 overflow-hidden rounded-lg border bg-muted">
               {screenshotSrc && (
-                <Image
+                <img
                   src={screenshotSrc}
                   alt="Screenshot preview"
                   className="size-full object-cover"

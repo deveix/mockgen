@@ -96,10 +96,9 @@ export default function ScreenshotPreviewRenderer({
         screenshot.template.canvas.width / screenshot.template.canvas.height
       }
     >
-      <Image
+      <img
         alt="Preview"
-        priority
-        className="size-full rounded-md border object-contain"
+        className="h-full w-full rounded-md border object-contain"
         width={screenshot.template.canvas.width}
         height={screenshot.template.canvas.height}
         src={

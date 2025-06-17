@@ -84,7 +84,7 @@ export function Template(props: {
             gap: 40,
           }}
         >
-          <Image
+          <img
             src={template.params.logo.url}
             alt="Logo"
             style={{
@@ -106,7 +106,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
-        <Image
+        <img
           src={absoluteUrl("/mocks/iphone-frame.svg")}
           alt="Device Frame"
           style={{
@@ -117,7 +117,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <Image
+        <img
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{

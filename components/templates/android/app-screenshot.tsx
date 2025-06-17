@@ -97,7 +97,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
-        <Image
+        <img
           src={absoluteUrl("/mocks/android/android-frame.svg")}
           alt="Device Frame"
           style={{
@@ -108,7 +108,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <Image
+        <img
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{

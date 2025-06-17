@@ -224,10 +224,9 @@ export default function Home() {
             ×
           </button>
           <div className="relative h-[533px] w-[300px] sm:h-[640px] sm:w-[360px] md:h-[711px] md:w-[400px] lg:h-[568px] lg:w-[320px] xl:h-[640px] xl:w-[360px]">
-            <Image
+            <img
               src={src}
               alt="Preview"
-              fill
               className="rounded-lg object-contain"
               sizes="90vw"
             />
@@ -287,10 +286,9 @@ export default function Home() {
                 onClick={() => setPreviewImage(`/examples/${num}.png`)}
               >
                 <div className="relative aspect-[9/16] overflow-hidden rounded-lg border bg-muted/30">
-                  <Image
+                  <img
                     src={`/examples/${num}.png`}
                     alt={`App Store screenshot example ${num}`}
-                    fill
                     className="object-contain transition-transform group-hover:scale-105"
                     sizes="(max-width: 768px) 50vw, (max-width: 1024px) 33vw, 20vw"
                   />

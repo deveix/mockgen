@@ -65,7 +65,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using android-frame SVG rotated upside down */}
-        <Image
+        <img
           src={absoluteUrl("/mocks/android/android-frame.svg")}
           alt="Device Frame"
           style={{
@@ -77,7 +77,7 @@ export function Template(props: {
         />
         {/* User screenshot */}
         {template.params.screenshot.url && (
-          <Image
+          <img
             src={template.params.screenshot.url}
             alt="App Screenshot"
             style={{

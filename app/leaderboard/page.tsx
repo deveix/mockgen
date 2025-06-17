@@ -27,7 +27,7 @@ export default function MadeByMockGenPage() {
               rel="noopener noreferrer"
               className="size-16 shrink-0 overflow-hidden rounded-2xl bg-muted/20 shadow-sm"
             >
-              <Image
+              <img
                 src="/examples/logo.png"
                 alt="Qrosh app icon"
                 width={64}
@@ -66,10 +66,9 @@ export default function MadeByMockGenPage() {
                 key={num}
                 className="relative h-[400px] w-[200px] overflow-hidden rounded-lg bg-muted/10"
               >
-                <Image
+                <img
                   src={`/examples/${num}.png`}
                   alt={`Qrosh screenshot ${num}`}
-                  fill
                   className="object-cover"
                   sizes="(max-width: 768px) 20vw, 10vw"
                 />

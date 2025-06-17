@@ -27,14 +27,14 @@ export function MobileNav() {
       <SheetContent>
         <SheetHeader className="pb-4 text-left">
           <SheetTitle>
-            <Image
+            <img
               src="/logo.svg"
               alt="logo-mockgen"
               width={32}
               height={32}
               className="block dark:hidden"
             />
-            <Image
+            <img
               src="/logo_dark.svg"
               alt="logo-mockgen-dark"
               width={32}
