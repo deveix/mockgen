@@ -101,14 +101,14 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           const newTemplate = templateDefaults[templateName]
           // Preserve screenshot URL if the new template supports it
           const screenshotUrl = (s.template.params as any).screenshot?.url
-
+          console.log("newTemplate", {newTemplate, templateName})
           return {
             ...s,
             template: {
               ...newTemplate,
               params: {
-                ...newTemplate.params,
-                ...(screenshotUrl && (newTemplate.params as any).screenshot
+                ...newTemplate?.params,
+                ...(screenshotUrl && (newTemplate?.params as any).screenshot
                   ? {
                       screenshot: { url: screenshotUrl },
                     }

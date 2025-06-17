@@ -167,7 +167,7 @@ export function Form() {
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="image">Image</Label>
-              <imgSelector
+              <ImageSelector
                 id="image"
                 onChange={(v) =>
                   template.updateParams({

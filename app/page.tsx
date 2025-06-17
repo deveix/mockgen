@@ -344,7 +344,7 @@ export default function Home() {
 
         {/* Image Preview Modal */}
         {previewImage && (
-          <imgPreviewModal
+          <ImagePreviewModal
             src={previewImage}
             onClose={() => setPreviewImage(null)}
           />

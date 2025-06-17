@@ -42,8 +42,6 @@ export default function ScreenshotPreviewRenderer({
 
     // get the template component based on the currently selected template
     const TemplateComp = templates[screenshot.template.name] as React.ComponentType<any>
-    console.log("🧪 template debug", JSON.stringify(screenshot.template, null, 2))
-    console.log("🧪 props passed to satori:", <TemplateComp template={screenshot.template} renderWatermark={false} />);
     const svg = await satori(
       <TemplateComp
         template={screenshot.template}

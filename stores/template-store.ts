@@ -45,7 +45,6 @@ export const createTemplateStore = (
       set((state) => ({
         background: {
           ...background,
-            zIndex: 1
         },
       })),
     updateCanvas: (canvas: Partial<Template["canvas"]>) =>
@@ -53,7 +52,6 @@ export const createTemplateStore = (
         canvas: {
           ...state.canvas,
           ...canvas,
-            zIndex: 1
         },
       })),
     updatePreviewSvg: (svg: string) => set({ previewSvg: svg }),

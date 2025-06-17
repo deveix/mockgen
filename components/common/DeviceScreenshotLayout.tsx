@@ -47,7 +47,6 @@ export function DeviceScreenshotLayout({
         style={{
           position: "relative",
           objectFit: "contain",
-          zIndex: 4,
         }}
       />
       {/* User screenshot */}
@@ -61,7 +60,6 @@ export function DeviceScreenshotLayout({
           top: screenshotTop,
           left: screenshotLeft,
           objectFit: "cover",
-          zIndex: 1,
           borderTopLeftRadius: screenshotBorderRadius,
           borderTopRightRadius: screenshotBorderRadius,
         }}

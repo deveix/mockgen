@@ -49,7 +49,7 @@ export function ScreenshotTemplateForm({
   // Initialize local state from store
   useEffect(() => {
     if (screenshot) {
-      // && screenshot.template.name !== "apple:app-screenshot"
+      // && screenshot.template.name !== "app-screenshot"
       const params = screenshot.template
         .params as AppScreenshotTemplate["params"]
       setLocalTitle(params.title.text as string)
@@ -60,7 +60,7 @@ export function ScreenshotTemplateForm({
   useEffect(() => {
     if (
       screenshot &&
-      // screenshot.template.name === "apple:app-screenshot" &&
+      // screenshot.template.name === "app-screenshot" &&
       debouncedTitle !== ""
     ) {
       const params = screenshot.template
@@ -79,14 +79,14 @@ export function ScreenshotTemplateForm({
   // Memoize params to avoid recalculating
   const params = useMemo(() => {
     if (!screenshot)
-      // || screenshot.template.name !== "apple:app-screenshot"
+      // || screenshot.template.name !== "app-screenshot"
       return null
     return screenshot.template.params as AppScreenshotTemplate["params"]
   }, [screenshot])
 
   if (
     !screenshot ||
-    // screenshot.template.name !== "apple:app-screenshot" ||
+    // screenshot.template.name !== "app-screenshot" ||
     !params
   ) {
     return null
@@ -178,7 +178,7 @@ export function ScreenshotTemplateForm({
               </Label>
               <div className="flex space-x-2 overflow-hidden">
                 <div className="min-w-0 flex-1">
-                  <imgSelector
+                  <ImageSelector
                     id={`logo-${screenshotId}`}
                     onChange={(v) =>
                       updateTemplateParams(screenshotId, {
@@ -200,7 +200,7 @@ export function ScreenshotTemplateForm({
                     </Button>
                   }
                 >
-                  <imgSettings
+                  <ImageSettings
                     width={params.logo?.width ?? 96}
                     height={params.logo?.height ?? 96}
                     onChangeWidth={(width) =>
@@ -232,7 +232,7 @@ export function ScreenshotTemplateForm({
             </Label>
             <div className="flex space-x-2 overflow-hidden">
               <div className="min-w-0 flex-1">
-                <imgSelector
+                <ImageSelector
                   id={`screenshot-${screenshotId}`}
                   onChange={(v) =>
                     updateTemplateParams(screenshotId, {
@@ -254,7 +254,7 @@ export function ScreenshotTemplateForm({
                   </Button>
                 }
               >
-                <imgSettings
+                <ImageSettings
                   width={params.screenshot?.width ?? 1000}
                   height={params.screenshot?.height ?? 1000}
                   onChangeWidth={(width) =>

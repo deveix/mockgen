@@ -157,10 +157,10 @@ const templates = [
   },
   {
     platform: "apple",
-    name: "apple:app-screenshot",
+    name: "app-screenshot",
     width: 1320,
     height: 2868,
-    skeleton: skeletons["apple:app-screenshot"],
+    skeleton: skeletons["app-screenshot"],
   },
   {
     platform: "apple",
@@ -193,10 +193,10 @@ const templates = [
   // Android
   {
     platform: "android",
-    name: "android:app-screenshot",
+    name: "app-screenshot",
     width: 1320,
     height: 2868,
-    skeleton: skeletons["android:app-screenshot"],
+    skeleton: skeletons["app-screenshot"],
   },
   {
     platform: "android",

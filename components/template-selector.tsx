@@ -225,10 +225,10 @@ const templates = [
   // Apple
   {
     platform: "apple",
-    name: "apple:app-screenshot",
+    name: "app-screenshot",
     width: 1320,
     height: 2868,
-    skeleton: skeletons["apple:app-screenshot"],
+    skeleton: skeletons["app-screenshot"],
   },
 
   {

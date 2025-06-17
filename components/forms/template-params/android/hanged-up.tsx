@@ -102,7 +102,7 @@ export function Form() {
               <Label htmlFor="logo">Logo</Label>
               <div className="flex space-x-2 overflow-hidden">
                 <div className="min-w-0 flex-1">
-                  <imgSelector
+                  <ImageSelector
                     id="logo"
                     onChange={(v) =>
                       template.updateParams({
@@ -124,7 +124,7 @@ export function Form() {
                     </Button>
                   }
                 >
-                  <imgSettings
+                  <ImageSettings
                     width={params.logo.width ?? 200}
                     height={params.logo.height ?? 200}
                     onChangeWidth={(width) =>
@@ -150,7 +150,7 @@ export function Form() {
 
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="screenshot">Screenshot</Label>
-              <imgSelector
+              <ImageSelector
                 id="screenshot"
                 onChange={(v) =>
                   template.updateParams({

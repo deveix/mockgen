@@ -173,7 +173,7 @@ export function Form() {
                 <Label htmlFor={`logo_${i}`}>
                   {getNumberWithOrdinal(i + 1)} Logo
                 </Label>
-                <imgSelector
+                <ImageSelector
                   id={`logo_${i}`}
                   onChange={(v) =>
                     template.updateParams({

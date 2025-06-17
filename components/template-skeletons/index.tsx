@@ -18,13 +18,13 @@ export const skeletons = {
   "x:header-logo": x.header.Logo,
 
   // Apple
-  "apple:app-screenshot": apple.AppScreenshot,
+  "app-screenshot": apple.AppScreenshot,
   "apple:tilted-left": apple.TiltedLeft,
   "apple:tilted-right": apple.TiltedRight,
   "apple:hanged-up": apple.HangedUp,
   "apple:rotated": apple.Rotated,
 
   // Android
-  "android:app-screenshot": android.AppScreenshot,
+  "app-screenshot": android.AppScreenshot,
   "android:hanged-up": android.HangedUp,
 }

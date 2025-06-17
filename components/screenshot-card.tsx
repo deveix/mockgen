@@ -32,10 +32,14 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
   )
 
   // Memoize expensive computations
-  const screenshotSrc = useMemo(() => {
-    return screenshot?.screenshot
-      ? URL.createObjectURL(screenshot.screenshot)
-      : null
+  const { screenshotSrc, width, height } = useMemo(() => {
+    return {
+      screenshotSrc: screenshot?.screenshot
+        ? URL.createObjectURL(screenshot.screenshot)
+        : null,
+      width: screenshot?.template.canvas.width || 0,
+      height: screenshot?.template.canvas.height || 0,
+    }
   }, [screenshot?.screenshot])
 
   const templateName = useMemo(() => {
@@ -43,7 +47,6 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
   }, [screenshot?.template.name])
 
   if (!screenshot) return null
-
   return (
     <div className="w-full">
       <Card className="h-full overflow-hidden">
@@ -55,6 +58,8 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
                   src={screenshotSrc}
                   alt="Screenshot preview"
                   className="h-full w-full object-cover"
+                  width={width}
+                  height={height}
                 />
               )}
             </div>
