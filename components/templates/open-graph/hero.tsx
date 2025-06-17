@@ -2,6 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { HeroTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
+import Image from "next/image"
 
 import { Watermark } from "../elements/watermark"
 
@@ -43,7 +44,7 @@ export const Template = ({
 
           filter: "brightness(100%) contrast(150%)",
           opacity: template.background.noise,
-          backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
+          backgroundImage: `url('/noise.svg')`,
           backgroundRepeat: "repeat",
         }}
       ></div>
@@ -127,12 +128,11 @@ export const Template = ({
             paddingLeft: "4rem",
           }}
         >
-          <img
+          <Image
             style={{
               borderRadius: "0.75rem",
             }}
-            src={template.params.image.url}
-          />
+            src={template.params.image.url} alt={""} />
         </div>
       )}
     </div>

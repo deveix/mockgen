@@ -227,9 +227,9 @@ export default function Home() {
             <Image
               src={src}
               alt="Preview"
-              fill
+              width={360}
+              height={640}
               className="rounded-lg object-contain"
-              sizes="90vw"
             />
           </div>
         </div>
@@ -344,7 +344,7 @@ export default function Home() {
 
         {/* Image Preview Modal */}
         {previewImage && (
-          <ImagePreviewModal
+          <imgPreviewModal
             src={previewImage}
             onClose={() => setPreviewImage(null)}
           />

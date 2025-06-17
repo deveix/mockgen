@@ -4,6 +4,7 @@ import * as android from "./android"
 import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
+import * as appScreenshot from "./app-screenshot"
 
 const templateNameSchema = z.union([
   // Open Graph
@@ -12,7 +13,7 @@ const templateNameSchema = z.union([
   z.literal("og:hero"),
   z.literal("og:notice"),
   z.literal("og:logos"),
-  z.literal("og:app-screenshot"),
+  z.literal("app-screenshot"),
 
   // X Header templates
   z.literal("x:header-basic"),
@@ -20,15 +21,16 @@ const templateNameSchema = z.union([
   z.literal("x:header-logo"),
 
   // Apple
-  z.literal("apple:app-screenshot"),
+
   z.literal("apple:tilted-left"),
   z.literal("apple:tilted-right"),
   z.literal("apple:hanged-up"),
   z.literal("apple:rotated"),
 
   // Android
-  z.literal("android:app-screenshot"),
+
   z.literal("android:hanged-up"),
+  z.literal("app-screenshot"),
 ])
 export type TemplateName = z.infer<typeof templateNameSchema>
 
@@ -39,7 +41,7 @@ export const templateSchema = z.discriminatedUnion("name", [
   og.heroTemplateSchema,
   og.noticeTemplateSchema,
   og.logosTemplateSchema,
-  og.appScreenshotTemplateSchema,
+
 
   // X Header templates
   x.header.basicTemplateSchema,
@@ -47,15 +49,18 @@ export const templateSchema = z.discriminatedUnion("name", [
   x.header.logoTemplateSchema,
 
   // Apple
-  apple.appScreenshotTemplateSchema,
+
   apple.tiltedLeftTemplateSchema,
   apple.tiltedRightTemplateSchema,
   apple.hangedUpTemplateSchema,
   apple.rotatedTemplateSchema,
 
   // Android
-  android.appScreenshotTemplateSchema,
+
+
   android.hangedUpTemplateSchema,
+  appScreenshot.appScreenshotTemplateSchema,
+
 ])
 export type Template = z.infer<typeof templateSchema>
 
@@ -66,7 +71,7 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "og:hero": og.heroTemplateDefault,
   "og:notice": og.noticeTemplateDefault,
   "og:logos": og.logosTemplateDefault,
-  "og:app-screenshot": og.appScreenshotTemplateDefault,
+
 
   // X Header templates
   "x:header-basic": x.header.basicTemplateDefault,
@@ -74,15 +79,20 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "x:header-logo": x.header.logoTemplateDefault,
 
   // Apple
-  "apple:app-screenshot": apple.appScreenshotTemplateDefault,
+
   "apple:tilted-left": apple.tiltedLeftTemplateDefault,
   "apple:tilted-right": apple.tiltedRightTemplateDefault,
   "apple:hanged-up": apple.hangedUpTemplateDefault,
   "apple:rotated": apple.rotatedTemplateDefault,
 
   // Android
-  "android:app-screenshot": android.appScreenshotTemplateDefault,
+
+
+
   "android:hanged-up": android.hangedUpTemplateDefault,
+  "app-screenshot": appScreenshot.appScreenshotTemplateDefault,
+
+
 }
 
-export * from "./android"
+export * from "./app-screenshot"

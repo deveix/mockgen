@@ -112,12 +112,12 @@ export function MultiUpload() {
         <div className="space-y-4">
           {/* Upload Area */}
           <div
-            className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
-              isDragOver
-                ? "border-primary bg-primary/5"
-                : "border-muted-foreground/25 hover:border-muted-foreground/50"
-            }`}
+            className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${isDragOver
+              ? "border-primary bg-primary/5"
+              : "border-muted-foreground/25 hover:border-muted-foreground/50"
+              }`}
             onDragOver={handleDragOver}
+            onDragEnter={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
@@ -143,7 +143,7 @@ export function MultiUpload() {
               </div>
               <Button
                 variant="outline"
-                // onClick={() => fileInputRef.current?.click()}
+              // onClick={() => fileInputRef.current?.click()}
               >
                 Browse Files
               </Button>

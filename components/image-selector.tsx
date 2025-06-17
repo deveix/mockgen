@@ -12,15 +12,28 @@ import {
 export function ImageSelector({
   id,
   onChange,
-  initialFileName,
+  url,
 }: {
   id: string
   onChange: (v: string | undefined) => void
-  initialFileName?: string
+  url?: string
 }) {
-  const [file, setFile] = useState<File | undefined>(
-    initialFileName ? new File([], initialFileName) : undefined
-  )
+  const [file, setFile] = useState<File | undefined>(() => {
+    if (url) {
+      // Check if it's a base64 string
+      if (url.startsWith("data:")) {
+        return new File([], "image.png") // Generic name for base64
+      }
+      try {
+        const urlObj = new URL(url)
+        const fileName = urlObj.pathname.split("/").pop()
+        return fileName ? new File([], fileName) : undefined
+      } catch (e) {
+        return undefined // Invalid URL, no file
+      }
+    }
+    return undefined
+  })
   const inputElement = useRef<HTMLInputElement>(null)
 
   function handleRemove() {

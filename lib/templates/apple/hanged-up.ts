@@ -29,7 +29,7 @@ export const hangedUpTemplateDefault: HangedUpTemplate = {
       color: "#222",
     },
     screenshot: {
-      url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
+      url: "/samples/screenshots/iphone-screenshot.png",
     },
   },
   background: {

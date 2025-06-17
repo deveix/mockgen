@@ -33,6 +33,7 @@ export default function MadeByMockGenPage() {
                 width={64}
                 height={64}
                 className="object-cover"
+                unoptimized={true}
               />
             </a>
             {/* App Info */}
@@ -69,9 +70,10 @@ export default function MadeByMockGenPage() {
                 <Image
                   src={`/examples/${num}.png`}
                   alt={`Qrosh screenshot ${num}`}
-                  fill
+                  width={200}
+                  height={400}
                   className="object-cover"
-                  sizes="(max-width: 768px) 20vw, 10vw"
+                  unoptimized={true}
                 />
               </div>
             ))}

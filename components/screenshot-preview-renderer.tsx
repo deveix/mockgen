@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import Image from "next/image"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import satori from "satori"
@@ -41,11 +41,11 @@ export default function ScreenshotPreviewRenderer({
     )
 
     // get the template component based on the currently selected template
-    const TemplateComp = templates[screenshot.template.name].Template
-
+    const TemplateComp = templates[screenshot.template.name] as React.ComponentType<any>
+    console.log("🧪 template debug", JSON.stringify(screenshot.template, null, 2))
+    console.log("🧪 props passed to satori:", <TemplateComp template={screenshot.template} renderWatermark={false} />);
     const svg = await satori(
       <TemplateComp
-        // @ts-ignore
         template={screenshot.template}
         renderWatermark={false}
       />,
@@ -58,7 +58,7 @@ export default function ScreenshotPreviewRenderer({
             name: f.family,
             weight: f.weight,
             data: fontBuffers[i],
-            style: "normal",
+            style: "normal"
           }
         }),
         async loadAdditionalAsset(languageCode, segment) {
@@ -106,6 +106,7 @@ export default function ScreenshotPreviewRenderer({
             ? `data:image/svg+xml;utf8,${encodeURIComponent(screenshot.previewSvg)}`
             : "/loading.svg"
         }
+        unoptimized
       />
     </AspectRatio>
   )

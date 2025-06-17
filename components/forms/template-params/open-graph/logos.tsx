@@ -173,7 +173,7 @@ export function Form() {
                 <Label htmlFor={`logo_${i}`}>
                   {getNumberWithOrdinal(i + 1)} Logo
                 </Label>
-                <ImageSelector
+                <imgSelector
                   id={`logo_${i}`}
                   onChange={(v) =>
                     template.updateParams({
@@ -183,9 +183,7 @@ export function Form() {
                       }),
                     })
                   }
-                  initialFileName={
-                    logo.url ? logo.url.split("/").pop() : undefined
-                  }
+                  url={logo.url}
                 />
               </div>
             ))}

@@ -1,5 +1,3 @@
 export * as appScreenshot from "./app-screenshot"
-export * as tiltedLeft from "./tilted-left"
-export * as tiltedRight from "./tilted-right"
+export * from "./AppleTemplateForm"
 export * as hangedUp from "./hanged-up"
-export * as rotated from "./rotated"

@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useCallback, useEffect } from "react"
 import Image from "next/image"
 import { useTemplateStore } from "@/providers/template-store-provider"
 import satori from "satori"
@@ -27,7 +27,7 @@ export default function PreviewRenderer() {
     )
 
     // get the template component based on the currently selected template
-    const TemplateComp = templates[template.name].Template
+    const TemplateComp = templates[template.name] as React.ComponentType<any>
 
     template.updatePreviewSvg(
       await satori(

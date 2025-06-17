@@ -48,7 +48,7 @@ export const basicTemplateDefault: BasicTemplate = {
       color: "#030712",
     },
     logo: {
-      url: absoluteUrl("/samples/logos/vercel.svg"),
+      url: "/samples/logos/vercel.svg",
     },
   },
   background: {

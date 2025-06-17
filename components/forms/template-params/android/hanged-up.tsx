@@ -102,7 +102,7 @@ export function Form() {
               <Label htmlFor="logo">Logo</Label>
               <div className="flex space-x-2 overflow-hidden">
                 <div className="min-w-0 flex-1">
-                  <ImageSelector
+                  <imgSelector
                     id="logo"
                     onChange={(v) =>
                       template.updateParams({
@@ -112,11 +112,7 @@ export function Form() {
                         },
                       })
                     }
-                    initialFileName={
-                      params.logo.url
-                        ? params.logo.url.split("/").pop()
-                        : undefined
-                    }
+                    url={params.logo.url}
                   />
                 </div>
                 <ResponsivePopover
@@ -128,7 +124,7 @@ export function Form() {
                     </Button>
                   }
                 >
-                  <ImageSettings
+                  <imgSettings
                     width={params.logo.width ?? 200}
                     height={params.logo.height ?? 200}
                     onChangeWidth={(width) =>
@@ -154,7 +150,7 @@ export function Form() {
 
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="screenshot">Screenshot</Label>
-              <ImageSelector
+              <imgSelector
                 id="screenshot"
                 onChange={(v) =>
                   template.updateParams({
@@ -163,11 +159,7 @@ export function Form() {
                     },
                   })
                 }
-                initialFileName={
-                  params.screenshot.url
-                    ? params.screenshot.url.split("/").pop()
-                    : "screenshot.png"
-                }
+                url={params.screenshot.url}
               />
             </div>
           </div>

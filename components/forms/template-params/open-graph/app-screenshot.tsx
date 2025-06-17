@@ -100,7 +100,7 @@ export function Form() {
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="logo">Logo</Label>
-              <ImageSelector
+              <imgSelector
                 id="logo"
                 onChange={(v) =>
                   template.updateParams({
@@ -109,15 +109,13 @@ export function Form() {
                     },
                   })
                 }
-                initialFileName={
-                  params.logo.url ? params.logo.url.split("/").pop() : undefined
-                }
+                url={params.logo.url}
               />
             </div>
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label htmlFor="screenshot">Screenshot</Label>
-              <ImageSelector
+              <imgSelector
                 id="screenshot"
                 onChange={(v) =>
                   template.updateParams({
@@ -126,11 +124,7 @@ export function Form() {
                     },
                   })
                 }
-                initialFileName={
-                  params.screenshot.url
-                    ? params.screenshot.url.split("/").pop()
-                    : "screenshot.png"
-                }
+                url={params.screenshot.url}
               />
             </div>
           </div>

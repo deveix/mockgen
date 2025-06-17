@@ -1,9 +1,8 @@
-import { patterns } from "@/lib/patterns"
-import { toBackgroundShorthand } from "@/lib/templates/elements/background"
-import { BasicTemplate } from "@/lib/templates/open-graph"
-import { absoluteUrl } from "@/lib/url"
 
+import { BasicTemplate } from "@/lib/templates/open-graph"
 import { Watermark } from "../elements/watermark"
+import { BackgroundContainer } from "../../common/BackgroundContainer"
+import Image from "next/image"
 
 export const Template = ({
   template,
@@ -12,45 +11,7 @@ export const Template = ({
   template: BasicTemplate
   renderWatermark: boolean
 }) => (
-  <div
-    style={{
-      width: template.canvas.width,
-      height: template.canvas.height,
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-      alignItems: "center",
-      textAlign: "center",
-      background: toBackgroundShorthand(template.background),
-    }}
-  >
-    <div
-      style={{
-        height: "100%",
-        width: "100%",
-        position: "absolute",
-        inset: 0,
-        filter: "brightness(100%) contrast(150%)",
-        opacity: template.background.noise,
-        backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
-        backgroundRepeat: "repeat",
-      }}
-    ></div>
-
-    {template.background.gridOverlay && (
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          position: "absolute",
-          backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
-          maskImage:
-            template.background.gridOverlay.blurRadius > 0
-              ? `radial-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) ${100 - template.background.gridOverlay.blurRadius}%)`
-              : "none",
-        }}
-      ></div>
-    )}
+  <BackgroundContainer canvas={template.canvas} background={template.background}>
 
     <div
       style={{
@@ -61,13 +22,12 @@ export const Template = ({
       }}
     >
       {template.params.logo.url && (
-        <img
+        <Image
           style={{
             width: "6rem",
             height: "6rem",
           }}
-          src={template.params.logo.url}
-        />
+          src={template.params.logo.url} alt={""} />
       )}
 
       <div
@@ -115,5 +75,5 @@ export const Template = ({
         }}
       />
     )}
-  </div>
+  </BackgroundContainer>
 )

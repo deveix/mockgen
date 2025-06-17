@@ -1,6 +1,9 @@
 "use client"
 
+
+import Image from "next/image"
 import React, { useMemo } from "react"
+
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { Cross2Icon } from "@radix-ui/react-icons"
 
@@ -48,7 +51,7 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
           <div className="flex items-center gap-3 overflow-hidden">
             <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border bg-muted">
               {screenshotSrc && (
-                <img
+                <Image
                   src={screenshotSrc}
                   alt="Screenshot preview"
                   className="h-full w-full object-cover"

@@ -30,10 +30,10 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
       color: "#222",
     },
     logo: {
-      url: absoluteUrl("/logo.svg"),
+      url: "/logo.svg",
     },
     screenshot: {
-      url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),
+      url: "/samples/screenshots/iphone-screenshot.png",
     },
   },
   background: {

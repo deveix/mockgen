@@ -2,8 +2,9 @@ import { patterns } from "@/lib/patterns"
 import { HangedUpTemplate as AndroidHangedUpTemplate } from "@/lib/templates/android/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-
+import Image from "next/image"
 import { Watermark } from "../elements/watermark"
+
 
 export function Template(props: {
   template: AndroidHangedUpTemplate
@@ -36,7 +37,7 @@ export function Template(props: {
           inset: 0,
           filter: "brightness(100%) contrast(150%)",
           opacity: template.background.noise,
-          backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
+          backgroundImage: `url("/noise.svg")`,
           backgroundRepeat: "repeat",
         }}
       ></div>
@@ -66,8 +67,8 @@ export function Template(props: {
         }}
       >
         {/* Device frame using android-frame SVG rotated upside down */}
-        <img
-          src={absoluteUrl("/mocks/android/android-frame.svg")}
+        <Image
+          src={"/mocks/android/android-frame.svg"}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -78,16 +79,17 @@ export function Template(props: {
         />
         {/* User screenshot */}
         {template.params.screenshot.url && (
-          <img
+          <Image
             src={template.params.screenshot.url}
             alt="App Screenshot"
+            width={screenshotWidth}
+            height={screenshotHeight}
             style={{
               position: "absolute",
               left: 35,
               right: 20,
               bottom: 30,
-              width: screenshotWidth,
-              height: screenshotHeight,
+
               objectFit: "cover",
               zIndex: 1,
               borderBottomLeftRadius: 80,

@@ -1,7 +1,6 @@
 import { patterns } from "@/lib/patterns"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { MinimalistTemplate } from "@/lib/templates/x/header"
-import { absoluteUrl } from "@/lib/url"
 
 import { Watermark } from "../../elements/watermark"
 
@@ -32,7 +31,7 @@ export const Template = ({
         inset: 0,
         filter: "brightness(100%) contrast(150%)",
         opacity: template.background.noise,
-        backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
+        backgroundImage: `url('/noise.svg')`,
         backgroundRepeat: "repeat",
       }}
     ></div>

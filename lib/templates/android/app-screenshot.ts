@@ -13,7 +13,7 @@ export const appScreenshotTemplateSchema = z.object({
     logo: imageSchema,
     title: textSchema,
     screenshot: imageSchema,
-    bottomPadding: z.string(),
+    bottomPadding: z.number().default(-150),
   }),
   background: backgroundSchema,
   canvas: canvasSchema,
@@ -31,14 +31,14 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
       color: "#222",
     },
     logo: {
-      url: absoluteUrl("/logo.svg"),
+      url: "/logo.svg",
       width: 200,
       height: 200,
     },
     screenshot: {
-      url: absoluteUrl("/samples/screenshots/android-screenshot.png"),
+      url: "/samples/screenshots/android-screenshot.png",
     },
-    bottomPadding: "-150",
+    bottomPadding: -150,
   },
   background: {
     type: "color",

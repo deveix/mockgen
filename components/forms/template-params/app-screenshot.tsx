@@ -1,5 +1,7 @@
+
 "use client"
-import { FontFamily, FontWeight } from "@/lib/fonts"
+import { FontFamily } from "@/lib/fonts"
+import { FontWeight } from "@/lib/fonts"
 
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
@@ -21,15 +23,13 @@ import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
-interface ScreenshotTemplateFormProps {
+interface AppScreenshotFormProps {
   screenshotId: number
 }
 
-export function ScreenshotTemplateForm({
-  screenshotId,
-}: ScreenshotTemplateFormProps) {
-  // More granular selector - only get what we need
+export function AppScreenshotForm({ screenshotId }: AppScreenshotFormProps) {
   const screenshot = useMultiTemplateStore(
     useCallback(
       (state) => state.getScreenshotById(screenshotId),
@@ -40,31 +40,19 @@ export function ScreenshotTemplateForm({
     (state) => state.updateTemplateParams
   )
 
-  // Local state for immediate UI feedback
   const [localTitle, setLocalTitle] = useState("")
-
-  // Debounced value that updates the store
   const debouncedTitle = useDebouncedValue(localTitle, 300)
 
-  // Initialize local state from store
   useEffect(() => {
     if (screenshot) {
-      // && screenshot.template.name !== "apple:app-screenshot"
-      const params = screenshot.template
-        .params as AppScreenshotTemplate["params"]
+      const params = screenshot.template.params as AppScreenshotTemplate["params"]
       setLocalTitle(params.title.text as string)
     }
-  }, [screenshot?.id]) // Only reset when screenshot ID changes
+  }, [screenshot?.id, screenshot])
 
-  // Update store when debounced value changes
   useEffect(() => {
-    if (
-      screenshot &&
-      // screenshot.template.name === "apple:app-screenshot" &&
-      debouncedTitle !== ""
-    ) {
-      const params = screenshot.template
-        .params as AppScreenshotTemplate["params"]
+    if (screenshot && debouncedTitle !== "") {
+      const params = screenshot.template.params as AppScreenshotTemplate["params"]
       if (params.title.text !== debouncedTitle) {
         updateTemplateParams(screenshotId, {
           title: {
@@ -76,19 +64,12 @@ export function ScreenshotTemplateForm({
     }
   }, [debouncedTitle, screenshot, screenshotId, updateTemplateParams])
 
-  // Memoize params to avoid recalculating
   const params = useMemo(() => {
-    if (!screenshot)
-      // || screenshot.template.name !== "apple:app-screenshot"
-      return null
+    if (!screenshot) return null
     return screenshot.template.params as AppScreenshotTemplate["params"]
   }, [screenshot])
 
-  if (
-    !screenshot ||
-    // screenshot.template.name !== "apple:app-screenshot" ||
-    !params
-  ) {
+  if (!screenshot || !params) {
     return null
   }
 
@@ -97,11 +78,37 @@ export function ScreenshotTemplateForm({
       <CardHeader className="pb-3">
         <CardTitle className="text-sm">Template Settings</CardTitle>
         <CardDescription className="text-xs">
-          Customize title and logo for this screenshot.
+          Customize title, screenshot, logo, and device for this template.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
+          {/* Device Selection */}
+          <div className="space-y-2">
+            <Label htmlFor={`device-${screenshotId}`} className="text-sm">
+              Device
+            </Label>
+            <RadioGroup
+              id={`device-${screenshotId}`}
+              value={params.device}
+              onValueChange={(value: "apple" | "android") =>
+                updateTemplateParams(screenshotId, {
+                  device: value,
+                })
+              }
+              className="flex space-x-4"
+            >
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="apple" id={`apple-${screenshotId}`} />
+                <Label htmlFor={`apple-${screenshotId}`}>Apple</Label>
+              </div>
+              <div className="flex items-center space-x-2">
+                <RadioGroupItem value="android" id={`android-${screenshotId}`} />
+                <Label htmlFor={`android-${screenshotId}`}>Android</Label>
+              </div>
+            </RadioGroup>
+          </div>
+
           {/* Title Input with local state */}
           <div className="space-y-2">
             <Label htmlFor={`title-${screenshotId}`} className="text-sm">
@@ -143,7 +150,7 @@ export function ScreenshotTemplateForm({
                       title: {
                         ...params.title,
                         text: localTitle, // Use current local state
-                        fontSize,
+                        fontSize: fontSize.toString(),
                       },
                     })
                   }
@@ -152,7 +159,7 @@ export function ScreenshotTemplateForm({
                       title: {
                         ...params.title,
                         text: localTitle, // Use current local state
-                        fontWeight,
+                        fontWeight: fontWeight.toString(),
                       },
                     })
                   }
@@ -170,16 +177,36 @@ export function ScreenshotTemplateForm({
             </div>
           </div>
 
+          {/* Screenshot Input */}
+          <div className="space-y-2">
+            <Label htmlFor={`screenshot-${screenshotId}`} className="text-sm">
+              Screenshot
+            </Label>
+            <ImageSelector
+              id={`screenshot-${screenshotId}`}
+              url={params.screenshot.url}
+              onChange={(url) =>
+                updateTemplateParams(screenshotId, {
+                  screenshot: {
+                    ...params.screenshot,
+                    url: url ?? "",
+                  },
+                })
+              }
+            />
+          </div>
+
           {/* Logo Input */}
-          {screenshot.template.name === "app-screenshot" && (screenshot.template as AppScreenshotTemplate).params.device === "apple" && (
+          {params.device === "apple" && (
             <div className="space-y-2">
               <Label htmlFor={`logo-${screenshotId}`} className="text-sm">
                 Logo
               </Label>
               <div className="flex space-x-2 overflow-hidden">
                 <div className="min-w-0 flex-1">
-                  <imgSelector
+                  <ImageSelector
                     id={`logo-${screenshotId}`}
+                    url={params.logo?.url}
                     onChange={(v) =>
                       updateTemplateParams(screenshotId, {
                         logo: {
@@ -188,7 +215,6 @@ export function ScreenshotTemplateForm({
                         },
                       })
                     }
-                    url={params.logo?.url}
                   />
                 </div>
                 <ResponsivePopover
@@ -200,14 +226,14 @@ export function ScreenshotTemplateForm({
                     </Button>
                   }
                 >
-                  <imgSettings
+                  <ImageSettings
                     width={params.logo?.width ?? 96}
                     height={params.logo?.height ?? 96}
                     onChangeWidth={(width) =>
                       updateTemplateParams(screenshotId, {
                         logo: {
                           ...params.logo,
-                          width: width ?? 96,
+                          width: width,
                         },
                       })
                     }
@@ -215,7 +241,7 @@ export function ScreenshotTemplateForm({
                       updateTemplateParams(screenshotId, {
                         logo: {
                           ...params.logo,
-                          height: height ?? 96,
+                          height: height,
                         },
                       })
                     }
@@ -224,62 +250,10 @@ export function ScreenshotTemplateForm({
               </div>
             </div>
           )}
-
-          {/* Screenshot Input */}
-          <div className="space-y-2">
-            <Label htmlFor={`screenshot-${screenshotId}`} className="text-sm">
-              Screenshot
-            </Label>
-            <div className="flex space-x-2 overflow-hidden">
-              <div className="min-w-0 flex-1">
-                <imgSelector
-                  id={`screenshot-${screenshotId}`}
-                  onChange={(v) =>
-                    updateTemplateParams(screenshotId, {
-                      screenshot: {
-                        ...(params.screenshot ?? {}),
-                        url: v ?? "",
-                      },
-                    })
-                  }
-                  url={params.screenshot?.url}
-                />
-              </div>
-              <ResponsivePopover
-                title="Screenshot Settings"
-                description="Customize the screenshot size."
-                trigger={
-                  <Button variant="outline" size="icon" className="h-9 w-9">
-                    <MixerHorizontalIcon className="h-3 w-3" />
-                  </Button>
-                }
-              >
-                <imgSettings
-                  width={params.screenshot?.width ?? 1000}
-                  height={params.screenshot?.height ?? 1000}
-                  onChangeWidth={(width) =>
-                    updateTemplateParams(screenshotId, {
-                      screenshot: {
-                        ...params.screenshot,
-                        width: width ?? 1000,
-                      },
-                    })
-                  }
-                  onChangeHeight={(height) =>
-                    updateTemplateParams(screenshotId, {
-                      screenshot: {
-                        ...params.screenshot,
-                        height: height ?? 1000,
-                      },
-                    })
-                  }
-                />
-              </ResponsivePopover>
-            </div>
-          </div>
-
         </div>
       </CardContent>
     </Card>
   )
 }
+
+export const Form = AppScreenshotForm

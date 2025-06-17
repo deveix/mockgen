@@ -1,8 +1,6 @@
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { AppScreenshotTemplate } from "@/lib/templates/open-graph"
-import { absoluteUrl } from "@/lib/url"
-
-import { Watermark } from "../elements/watermark"
+import Image from "next/image"
 
 export function Template(props: {
   template: AppScreenshotTemplate
@@ -25,7 +23,7 @@ export function Template(props: {
         textAlign: "center",
       }}
     >
-      <img
+      <Image
         src={template.params.logo.url}
         alt="Logo"
         style={{
@@ -58,8 +56,8 @@ export function Template(props: {
         }}
       >
         {/* Device frame placeholder (replace with your SVG/PNG) */}
-        <img
-          src={absoluteUrl("/iphone-frame.svg")}
+        <Image
+          src={"/mocks/iphone-frame.svg"}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -70,7 +68,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        {/* <img
+        {/* <Image
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{

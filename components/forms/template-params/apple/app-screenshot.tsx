@@ -12,10 +12,10 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
+import { ImageSettings } from "../../image-settings"
 
 export function Form() {
   const template = useTemplateStore((state) => state)
@@ -113,11 +113,7 @@ export function Form() {
                         },
                       })
                     }
-                    initialFileName={
-                      params.logo.url
-                        ? params.logo.url.split("/").pop()
-                        : undefined
-                    }
+                    url={params.logo.url}
                   />
                 </div>
                 <ResponsivePopover
@@ -164,11 +160,7 @@ export function Form() {
                     },
                   })
                 }
-                initialFileName={
-                  params.screenshot.url
-                    ? params.screenshot.url.split("/").pop()
-                    : "screenshot.png"
-                }
+                url={params.screenshot.url}
               />
             </div>
 
@@ -180,7 +172,8 @@ export function Form() {
                 type="number"
                 onChange={(e) =>
                   template.updateParams({
-                    bottomPadding: e.target.value,
+                    bottomPadding: 0,
+                    //  bottomPadding: e.target.value,
                   })
                 }
               />

@@ -2,6 +2,7 @@ import * as android from "./android"
 import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
+import * as appScreenshot from "./AppScreenshotTemplate"
 
 export const templates = {
   // Open Graph
@@ -10,7 +11,7 @@ export const templates = {
   "og:hero": og.hero,
   "og:image-right": og.imageRight,
   "og:logos": og.logos,
-  "og:app-screenshot": og.appScreenshot,
+
 
   // X Header templates
   "x:header-basic": x.header.basic,
@@ -18,15 +19,16 @@ export const templates = {
   "x:header-logo": x.header.logo,
 
   // Apple
-  "apple:app-screenshot": apple.appScreenshot,
+
   "apple:tilted-left": apple.tiltedLeft,
   "apple:tilted-right": apple.tiltedRight,
   "apple:hanged-up": apple.hangedUp,
   "apple:rotated": apple.rotated,
 
   // Android
-  "android:app-screenshot": android.appScreenshot,
+
   "android:hanged-up": android.hangedUp,
+  "app-screenshot": appScreenshot.AppScreenshotTemplate,
 }
 
 export * from "./android"

@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
@@ -110,11 +109,7 @@ export function Form() {
                     },
                   })
                 }
-                initialFileName={
-                  params.screenshot.url
-                    ? params.screenshot.url.split("/").pop()
-                    : "screenshot.png"
-                }
+                url={params.screenshot.url}
               />
             </div>
           </div>

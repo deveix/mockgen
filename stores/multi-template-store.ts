@@ -54,17 +54,15 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
 
         // Apple templates in rotation order
         let appleTemplates: TemplateName[] = [
-          "apple:app-screenshot",
+          "app-screenshot",
           "apple:tilted-left",
           "apple:tilted-right",
           "apple:hanged-up",
           "apple:rotated",
-          "android:app-screenshot",
-          "android:hanged-up",
         ]
 
         if (state.selectedPlatform === "android") {
-          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+          appleTemplates = ["app-screenshot", "android:hanged-up"]
         }
 
         // Get the template based on current count (rotate through templates)
@@ -187,7 +185,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
       set((state) => {
         // templates in rotation order
         let appleTemplates: TemplateName[] = [
-          "apple:app-screenshot",
+          "app-screenshot",
           "apple:tilted-left",
           "apple:tilted-right",
           "apple:hanged-up",
@@ -195,7 +193,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
         ]
 
         if (platform === "android") {
-          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+          appleTemplates = ["app-screenshot", "android:hanged-up"]
         }
 
         const updatedScreenshots = state.screenshots.map(

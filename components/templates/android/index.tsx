@@ -1,2 +1,1 @@
-export * as appScreenshot from "./app-screenshot"
-export * as hangedUp from "./hanged-up"
+export { Template as hangedUp } from "./hanged-up"

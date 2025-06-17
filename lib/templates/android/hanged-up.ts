@@ -30,12 +30,12 @@ export const hangedUpTemplateDefault: HangedUpTemplate = {
       color: "#222",
     },
     logo: {
-      url: absoluteUrl("/logo.svg"),
+      url: "/logo.svg",
       width: 200,
       height: 200,
     },
     screenshot: {
-      url: absoluteUrl("/samples/screenshots/android-screenshot.png"),
+      url: "/samples/screenshots/android-screenshot.png",
     },
   },
   background: {
