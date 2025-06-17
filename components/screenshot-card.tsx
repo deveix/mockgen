@@ -46,12 +46,14 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
       <Card className="h-full overflow-hidden">
         <CardHeader className="pb-4">
           <div className="flex items-center gap-3 overflow-hidden">
-            <div className="h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border bg-muted">
+            <div className="size-12 shrink-0 overflow-hidden rounded-lg border bg-muted">
               {screenshotSrc && (
                 <Image
                   src={screenshotSrc}
                   alt="Screenshot preview"
-                  className="h-full w-full object-cover"
+                  className="size-full object-cover"
+                  width={screenshot.template.canvas.width}
+                  height={screenshot.template.canvas.height}
                 />
               )}
             </div>
@@ -66,10 +68,10 @@ export const ScreenshotCard = React.memo(function ScreenshotCard({
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
+              className="size-8 shrink-0 p-0 text-muted-foreground hover:text-destructive"
               onClick={() => removeScreenshot(screenshot.id)}
             >
-              <Cross2Icon className="h-4 w-4" />
+              <Cross2Icon className="size-4" />
             </Button>
           </div>
         </CardHeader>

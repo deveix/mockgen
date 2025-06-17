@@ -39,13 +39,15 @@ export default function ScreenshotPreviewRenderer({
     const fontBuffers = await Promise.all(
       fontsResponses.map((res) => res.arrayBuffer())
     )
-
     // get the template component based on the currently selected template
-    const TemplateComp = templates[screenshot.template.name].Template
+    const templateEntry = templates[screenshot.template.name] as {
+      Template: React.ComponentType<{ template: typeof screenshot.template; renderWatermark: boolean }>
+    }
+    const TemplateComp = templateEntry.Template
 
     const svg = await satori(
       <TemplateComp
-        // @ts-ignore
+        template={screenshot.template}
         renderWatermark={false}
       />,
       {
@@ -97,7 +99,7 @@ export default function ScreenshotPreviewRenderer({
       <Image
         alt="Preview"
         priority
-        className="h-full w-full rounded-md border object-contain"
+        className="size-full rounded-md border object-contain"
         width={screenshot.template.canvas.width}
         height={screenshot.template.canvas.height}
         src={

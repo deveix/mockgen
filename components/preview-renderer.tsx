@@ -71,7 +71,7 @@ export default function PreviewRenderer() {
       <Image
         alt="Preview"
         priority
-        className="h-full w-full object-contain"
+        className="size-full object-contain"
         width={template.canvas.width}
         height={template.canvas.height}
         src={

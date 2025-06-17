@@ -25,7 +25,7 @@ export default function MadeByMockGenPage() {
               href="https://getqrosh.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="h-16 w-16 flex-shrink-0 overflow-hidden rounded-2xl bg-muted/20 shadow-sm"
+              className="size-16 shrink-0 overflow-hidden rounded-2xl bg-muted/20 shadow-sm"
             >
               <Image
                 src="/examples/logo.png"
@@ -36,7 +36,7 @@ export default function MadeByMockGenPage() {
               />
             </a>
             {/* App Info */}
-            <div className="flex min-w-0 flex-grow flex-col">
+            <div className="flex min-w-0 grow flex-col">
               <a
                 href="https://getqrosh.com"
                 target="_blank"

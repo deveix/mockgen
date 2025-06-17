@@ -1,0 +1,33 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  check-tools:
+    uses: ./.github/workflows/check-tools.ci.yml
+    secrets: inherit
+
+  release:
+    runs-on: ubuntu-latest
+    needs: check-tools
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'yarn'
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
+      - name: Zip build
+        run: |
+          VERSION=$(echo $GITHUB_REF | sed 's|refs/tags/v||')
+          zip -r build-$VERSION.zip .next public package.json yarn.lock
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build-*.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

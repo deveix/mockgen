@@ -143,27 +143,27 @@ function MultiTemplateContent({
           <CardContent className="space-y-4">
             <div className="grid gap-2 text-sm">
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
+                <div className="size-2 rounded-full bg-primary" />
                 <span>
                   Upload multiple iOS and Android app screenshots simultaneously
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
+                <div className="size-2 rounded-full bg-primary" />
                 <span>
                   Professional App Store templates optimized for iOS App Store
                   and Google Play Store
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
+                <div className="size-2 rounded-full bg-primary" />
                 <span>
                   Customize titles, colors, and device frames for iPhone and
                   Android devices
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="h-2 w-2 rounded-full bg-primary" />
+                <div className="size-2 rounded-full bg-primary" />
                 <span>
                   Download high-quality PNG app store assets as ZIP file
                 </span>
@@ -320,7 +320,7 @@ export default function Home() {
               className={`flex flex-col items-center rounded-lg border px-4 py-2 transition-colors ${selectedPlatform === "apple" ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
               onClick={() => setSelectedPlatform("apple")}
             >
-              <AppleLogo className="mb-1 h-8 w-8" />
+              <AppleLogo className="mb-1 size-8" />
               <span
                 className={`font-medium ${selectedPlatform === "apple" ? "text-primary" : "text-muted-foreground"}`}
               >
@@ -331,7 +331,7 @@ export default function Home() {
               className={`flex flex-col items-center rounded-lg border px-4 py-2 transition-colors ${selectedPlatform === "android" ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
               onClick={() => setSelectedPlatform("android")}
             >
-              <GooglePlayLogo className="mb-1 h-8 w-8" />
+              <GooglePlayLogo className="mb-1 size-8" />
               <span
                 className={`font-medium ${selectedPlatform === "android" ? "text-primary" : "text-muted-foreground"}`}
               >

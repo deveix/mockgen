@@ -50,17 +50,19 @@ export function DraggableUploadItem({
       <div
         {...attributes}
         {...listeners}
-        className="flex h-6 w-6 cursor-grab items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground active:cursor-grabbing"
+        className="flex size-6 cursor-grab items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-accent-foreground active:cursor-grabbing"
       >
-        <DragHandleDots2Icon className="h-3 w-3" />
+        <DragHandleDots2Icon className="size-3" />
       </div>
 
-      <div className="h-10 w-10 flex-shrink-0 overflow-hidden rounded border bg-muted">
+      <div className="size-10 shrink-0 overflow-hidden rounded border bg-muted">
         {screenshot.screenshot && (
           <Image
             src={URL.createObjectURL(screenshot.screenshot)}
             alt="Screenshot preview"
-            className="h-full w-full object-cover"
+            className="size-full object-cover"
+            width={screenshot.template.canvas.width}
+            height={screenshot.template.canvas.height}
           />
         )}
       </div>
@@ -75,10 +77,10 @@ export function DraggableUploadItem({
       <Button
         variant="ghost"
         size="sm"
-        className="h-8 w-8 flex-shrink-0 p-0 text-muted-foreground hover:text-destructive"
+        className="size-8 shrink-0 p-0 text-muted-foreground hover:text-destructive"
         onClick={() => removeScreenshot(screenshot.id)}
       >
-        <Cross2Icon className="h-4 w-4" />
+        <Cross2Icon className="size-4" />
       </Button>
     </div>
   )

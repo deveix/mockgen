@@ -251,7 +251,7 @@ export default function ScreenshotTemplateSelector({
               .map((t) => (
                 <CarouselItem
                   key={t.name}
-                  className="flex-shrink-0 basis-24 pl-2"
+                  className="shrink-0 basis-24 pl-2"
                 >
                   <RadioGroupItem
                     value={t.name}

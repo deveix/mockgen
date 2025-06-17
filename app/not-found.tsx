@@ -24,7 +24,7 @@ export default function NotFound() {
           <Button className="w-full" asChild>
             <Link href="/">
               Go to Homepage
-              <ArrowRightIcon className="ml-2 h-4 w-4" />
+              <ArrowRightIcon className="ml-2 size-4" />
             </Link>
           </Button>
         </CardFooter>

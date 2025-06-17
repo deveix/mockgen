@@ -1,22 +1,18 @@
 "use client"
 
-import { createContext, useContext, useRef, type ReactNode } from "react"
+import { createContext, PropsWithChildren, useContext, useRef } from "react"
 import {
   createTemplateStore,
   type TemplateStore,
 } from "@/stores/template-store"
 import { useStore, type StoreApi } from "zustand"
 
-export const TemplateStoreContext =
+const TemplateStoreContext =
   createContext<StoreApi<TemplateStore> | null>(null)
-
-export interface TemplateStoreProviderProps {
-  children: ReactNode
-}
 
 export const TemplateStoreProvider = ({
   children,
-}: TemplateStoreProviderProps) => {
+}: PropsWithChildren) => {
   const storeRef = useRef<StoreApi<TemplateStore>>(undefined)
   if (!storeRef.current) {
     storeRef.current = createTemplateStore()

@@ -41,7 +41,7 @@ export function CopyApiRequestButton() {
       <DropdownMenuTrigger asChild>
         <Button>
           Copy Request
-          <ChevronDownIcon className="ml-2 h-4 w-4" />
+          <ChevronDownIcon className="ml-2 size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-40">

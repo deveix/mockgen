@@ -158,7 +158,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6 lg:px-8">
             <div className="flex items-center space-x-4">
               <div>
                 <Link href="/">
@@ -253,7 +253,7 @@ export default async function RootLayout({
               {/* Right section - Status indicator (Desktop only) */}
               <div className="hidden items-center gap-x-2 md:inline-flex">
                 <svg
-                  className="h-2 w-2 fill-green-400"
+                  className="size-2 fill-green-400"
                   viewBox="0 0 6 6"
                   aria-hidden="true"
                 >

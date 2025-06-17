@@ -53,7 +53,7 @@ export function Form() {
                   description="Customize the title font."
                   trigger={
                     <Button variant="outline" size="icon">
-                      <MixerHorizontalIcon className="h-4 w-4" />
+                      <MixerHorizontalIcon className="size-4" />
                     </Button>
                   }
                 >

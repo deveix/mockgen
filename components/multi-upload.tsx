@@ -132,7 +132,7 @@ export function MultiUpload() {
             />
 
             <div className="space-y-4">
-              <UploadIcon className="mx-auto h-12 w-12 text-muted-foreground" />
+              <UploadIcon className="mx-auto size-12 text-muted-foreground" />
               <div>
                 <p className="text-lg font-medium">
                   Drop your screenshots here, or click to browse

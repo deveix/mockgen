@@ -37,9 +37,9 @@ export function DraggableScreenshotCard({
       <div
         {...attributes}
         {...listeners}
-        className="absolute left-2 top-2 z-10 flex h-8 w-8 cursor-grab items-center justify-center rounded border bg-background/80 shadow-sm hover:bg-accent hover:text-accent-foreground active:cursor-grabbing"
+        className="absolute left-2 top-2 z-10 flex size-8 cursor-grab items-center justify-center rounded border bg-background/80 shadow-sm hover:bg-accent hover:text-accent-foreground active:cursor-grabbing"
       >
-        <DragHandleDots2Icon className="h-4 w-4" />
+        <DragHandleDots2Icon className="size-4" />
       </div>
 
       {/* Screenshot Card */}

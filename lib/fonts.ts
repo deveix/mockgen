@@ -194,7 +194,7 @@ export function getFontUrl({
 
 // getFontsFromTemplate returns a list of fonts used in a template
 export function getFontsFromTemplate(template: Template["params"]) {
-  let fonts: { family: FontFamily; weight: FontWeight }[] = []
+  const fonts: { family: FontFamily; weight: FontWeight }[] = []
 
   for (const [_key, value] of Object.entries(template)) {
     if (

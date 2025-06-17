@@ -85,12 +85,12 @@ export default function SaveImageButton() {
             strokeWidth="2"
             strokeLinecap="round"
             strokeLinejoin="round"
-            className="mr-2 h-4 w-4 animate-spin"
+            className="mr-2 size-4 animate-spin"
           >
             <path d="M21 12a9 9 0 1 1-6.219-8.56" />
           </svg>
         ) : (
-          <DownloadIcon className="mr-2 h-4 w-4" />
+          <DownloadIcon className="mr-2 size-4" />
         )}
         <span>Save Image</span>
       </Button>
