@@ -93,7 +93,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using tilted-right SVG */}
-        <Image
+        <img
           src={absoluteUrl("/mocks/iphone-tilted-right.svg")}
           alt="Device Frame"
           style={{
@@ -104,7 +104,7 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <Image
+        <img
           src={template.params.screenshot.url}
           alt="App Screenshot"
           style={{
@@ -124,7 +124,7 @@ export function Template(props: {
         />
 
         {/* Device frame using tilted-right SVG */}
-        {/* <Image
+        {/* <img
           src={absoluteUrl("/mocks/dynamic-island.svg")}
           alt="Device Frame"
           style={{

@@ -127,7 +127,7 @@ export const Template = ({
             paddingLeft: "4rem",
           }}
         >
-          <Image
+          <img
             style={{
               borderRadius: "0.75rem",
             }}

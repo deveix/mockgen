@@ -61,7 +61,7 @@ export const Template = ({
       }}
     >
       {template.params.logo.url && (
-        <Image
+        <img
           style={{
             width: "6rem",
             height: "6rem",

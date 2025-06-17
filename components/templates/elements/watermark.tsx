@@ -13,7 +13,7 @@ export function Watermark({ style }: Props) {
         ...style,
       }}
     >
-      <Image
+      <img
         src={absoluteUrl("/assets/watermark.svg")}
         alt="mockgen.click"
         style={{

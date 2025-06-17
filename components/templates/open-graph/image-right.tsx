@@ -62,7 +62,7 @@ export const Template = ({
           paddingLeft: "2rem",
         }}
       >
-        <Image
+        <img
           style={{
             height: "4rem",
             width: "4rem",
@@ -151,7 +151,7 @@ export const Template = ({
             flexGrow: 0,
           }}
         >
-          <Image
+          <img
             style={{
               borderRadius: "0.75rem",
             }}

@@ -64,7 +64,7 @@ export function Template(props: {
         }}
       >
         {/* Device frame using iphone-up SVG rotated upside down */}
-        <Image
+        <img
           src={absoluteUrl("/mocks/iphone-up.svg")}
           alt="Device Frame"
           style={{
@@ -76,7 +76,7 @@ export function Template(props: {
         />
         {/* User screenshot */}
         {template.params.screenshot.url && (
-          <Image
+          <img
             src={template.params.screenshot.url}
             alt="App Screenshot"
             style={{

@@ -45,7 +45,8 @@ export default function ScreenshotPreviewRenderer({
 
     const svg = await satori(
       <TemplateComp
-        // @ts-ignore
+        // @ts-expect-error need to fix this type
+        template={screenshot.template}
         renderWatermark={false}
       />,
       {
@@ -94,9 +95,8 @@ export default function ScreenshotPreviewRenderer({
         screenshot.template.canvas.width / screenshot.template.canvas.height
       }
     >
-      <Image
+      <img
         alt="Preview"
-        priority
         className="h-full w-full rounded-md border object-contain"
         width={screenshot.template.canvas.width}
         height={screenshot.template.canvas.height}

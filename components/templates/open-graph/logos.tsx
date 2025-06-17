@@ -116,7 +116,7 @@ export const Template = ({
       {template.params.logos.map(
         (logo, i) =>
           logo.url && (
-            <Image
+            <img
               key={i}
               style={{
                 height: "6rem",
