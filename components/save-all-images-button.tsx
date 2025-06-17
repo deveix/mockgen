@@ -7,38 +7,12 @@ import JSZip from "jszip"
 
 import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-
-function initResvgWorker() {
-  if (typeof window === "undefined") return
-
-  const worker = new Worker(new URL("./resvg-worker.ts", import.meta.url))
-
-  const pending = new Map()
-  worker.onmessage = (e) => {
-    const { _id, url } = e.data
-    const resolve = pending.get(_id)
-    if (resolve) {
-      resolve(url)
-      pending.delete(_id)
-    }
-  }
-
-  return async (msg: object) => {
-    const _id = Math.random()
-    worker.postMessage({
-      ...msg,
-      _id,
-    })
-    return new Promise((resolve) => {
-      pending.set(_id, resolve)
-    })
-  }
-}
+import { useResvgWorker } from "@/hooks/use-resvg-worker"
 
 export default function SaveAllImagesButton() {
   const screenshots = useMultiTemplateStore((state) => state.screenshots)
   const [isGenerating, setIsGenerating] = useState(false)
-  const renderPNG = initResvgWorker()
+  const renderPNG = useResvgWorker()
 
   const handleSaveAll = async () => {
     if (screenshots.length === 0) return

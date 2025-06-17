@@ -1,5 +1,17 @@
 # MockGen
 
+<p>
+  <a href="https://github.com/deveix/mockgen/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/deveix/mockgen?style=flat-square" alt="License: MIT" />
+  </a>
+  <a href="https://github.com/deveix/mockgen/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/deveix/mockgen/ci.yml?branch=main&style=flat-square" alt="Build Status" />
+  </a>
+  <a href="https://github.com/deveix/mockgen/releases">
+    <img src="https://img.shields.io/github/v/release/deveix/mockgen?style=flat-square&label=latest" alt="Latest Release" />
+  </a>
+</p>
+
 <div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin-bottom: 16px;">
   <a href="https://mockgen.click/" target="_blank">
     <img src="public/samples/logos/imgsrc.png" alt="MockGen Logo" width="300" />
