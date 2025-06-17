@@ -33,13 +33,16 @@ function initResvgWorker() {
   }
 }
 
-const renderPNG = initResvgWorker()
-
 export default function SaveImageButton() {
   const { canvas, previewSvg } = useTemplateStore((state) => state)
   const [pngDownloadUrl, setPngDownloadUrl] = useState<string>()
   const [generatingPng, setGeneratingPng] = useState(false)
   const pngAnchorElement = useRef<HTMLAnchorElement>(null)
+  const [renderPNG, setRenderPNG] = useState<ReturnType<typeof initResvgWorker>>()
+
+  useEffect(() => {
+    setRenderPNG(() => initResvgWorker())
+  }, [])
 
   useEffect(() => {
     if (pngDownloadUrl) {
