@@ -2,7 +2,7 @@ import { patterns } from "@/lib/patterns"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { LogosTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
-
+import Image from "next/image"
 import { Watermark } from "../elements/watermark"
 
 export const Template = ({
@@ -123,7 +123,7 @@ export const Template = ({
                 width: "6rem",
               }}
               src={logo.url}
-            />
+              alt={"Logo"} />
           )
       )}
     </div>

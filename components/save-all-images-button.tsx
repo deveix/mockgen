@@ -1,51 +1,18 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import { DownloadIcon } from "@radix-ui/react-icons"
 import JSZip from "jszip"
+import { useResvgWorker } from "@/hooks/use-resvg-worker"
 
 import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-function initResvgWorker() {
-  if (typeof window === "undefined") return
-
-  const worker = new Worker(
-    new URL("../components/resvg-worker.ts", import.meta.url)
-  )
-
-  const pending = new Map()
-  worker.onmessage = (e) => {
-    const { _id, url } = e.data
-    const resolve = pending.get(_id)
-    if (resolve) {
-      resolve(url)
-      pending.delete(_id)
-    }
-  }
-
-  return async (msg: object) => {
-    const _id = Math.random()
-    worker.postMessage({
-      ...msg,
-      _id,
-    })
-    return new Promise((resolve) => {
-      pending.set(_id, resolve)
-    })
-  }
-}
-
 export default function SaveAllImagesButton() {
   const screenshots = useMultiTemplateStore((state) => state.screenshots)
   const [isGenerating, setIsGenerating] = useState(false)
-  const [renderPNG, setRenderPNG] = useState<ReturnType<typeof initResvgWorker>>()
-
-  // S'assure que le worker est initialisé côté client uniquement
-  useEffect(() => {
-    setRenderPNG(() => initResvgWorker())
-  }, [])
+  const renderPNG = useResvgWorker()
 
   const handleSaveAll = async () => {
     if (screenshots.length === 0) return
@@ -53,12 +20,9 @@ export default function SaveAllImagesButton() {
     try {
       setIsGenerating(true)
 
-      // Create a zip file
       const zip = new JSZip()
 
-      // Process each screenshot
       for (const screenshot of screenshots) {
-        // Check if SVG exists and has content
         if (
           !screenshot.previewSvg ||
           screenshot.previewSvg.trim().length === 0
@@ -70,7 +34,6 @@ export default function SaveAllImagesButton() {
         }
 
         try {
-          // Ensure renderPNG is available
           if (!renderPNG) {
             console.log("PNG renderer not available")
             continue
@@ -86,7 +49,6 @@ export default function SaveAllImagesButton() {
 
           let base64Data: string
 
-          // Handle both blob URLs and data URLs
           if (pngResult.startsWith("blob:")) {
             // Convert blob URL to base64
             const response = await fetch(pngResult)
