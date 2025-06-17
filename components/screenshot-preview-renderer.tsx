@@ -44,7 +44,7 @@ export default function ScreenshotPreviewRenderer({
       Template: React.ComponentType<{ template: typeof screenshot.template; renderWatermark: boolean }>
     }
     const TemplateComp = templateEntry.Template
-
+    console.log("Rendering SVG for screenshot:", screenshot)
     const svg = await satori(
       <TemplateComp
         template={screenshot.template}
