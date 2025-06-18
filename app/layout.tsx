@@ -1,16 +1,15 @@
 import "./globals.css"
 
 import type { Metadata } from "next"
-import Image from "next/image"
 import Link from "next/link"
 import Script from "next/script"
-import { MultiTemplateStoreProvider } from "@/providers/multi-template-store-provider"
-import { TemplateStoreProvider } from "@/providers/template-store-provider"
 import { Analytics } from "@vercel/analytics/react"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import { GeistMono } from "geist/font/mono"
 import { GeistSans } from "geist/font/sans"
 
+import { MultiTemplateStoreProvider } from "@/providers/multi-template-store-provider"
+import { TemplateStoreProvider } from "@/providers/template-store-provider"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/sonner"
@@ -95,7 +94,6 @@ export const metadata: Metadata = {
   },
 }
 
-// Structured Data for SEO
 const structuredData = {
   "@context": "https://schema.org",
   "@type": "WebApplication",
@@ -137,6 +135,27 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const madeByMockgenLink = (
+    <Button variant="link" asChild>
+      <Link href="/leaderboard">Made by Mockgen</Link>
+    </Button>
+  )
+
+  const footerNavItems = [
+    <Button key="home" variant="link" className="px-0 md:px-4" asChild>
+      <Link href="/">Home</Link>
+    </Button>,
+    <XFollowButton
+      key="x-follow"
+      username="aykasem001"
+      size="small"
+      className="md:inline-flex md:items-center"
+    />,
+    <Button key="leaderboard" variant="link" className="px-0 md:px-4" asChild>
+      <Link href="/leaderboard">Made by Mockgen</Link>
+    </Button>,
+  ]
+
   return (
     <html
       lang="en"
@@ -158,57 +177,37 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
-            <div className="flex items-center space-x-4">
-              <div>
-                <Link href="/">
-                  <img
-                    className="block dark:hidden"
-                    src="/logo.svg"
-                    alt="MockGen Logo - App Store Screenshot Generator"
-                    width={36}
-                    height={36}
-                  />
-                </Link>
+          <nav className="mx-auto flex max-w-7xl items-center justify-between p-4 sm:px-6 lg:px-8">
+            <Link href="/" aria-label="MockGen Home">
+              <img
+                className="block dark:hidden"
+                src="/logo.svg"
+                alt="MockGen Logo"
+                width={36}
+                height={36}
+              />
+              <img
+                className="hidden dark:block"
+                src="/logo_dark.svg"
+                alt="MockGen Logo"
+                width={36}
+                height={36}
+              />
+            </Link>
 
-                <Link href="/">
-                  <img
-                    className="hidden dark:block"
-                    src="/logo_dark.svg"
-                    alt="MockGen Logo - App Store Screenshot Generator"
-                    width={36}
-                    height={36}
-                  />
-                </Link>
-              </div>
-            </div>
-
-            <div className="hidden space-x-2 sm:flex">
+            <div className="hidden items-center space-x-2 sm:flex">
               <XFollowButton
                 username="aykasem001"
                 size="medium"
                 className="flex items-center"
               />
-
-              <Button variant="link" asChild>
-                <Link href="/leaderboard">Made by Mockgen</Link>
-              </Button>
-
-              {/* <Button variant="link">
-                <Link href="mailto:aykasem001@gmail.com">Support</Link>
-              </Button> */}
-
+              {madeByMockgenLink}
               <ModeToggle />
             </div>
 
-            {/* Mobile navigation */}
-            <div className="flex space-x-2 sm:hidden">
+            <div className="flex items-center space-x-2 sm:hidden">
               <ModeToggle />
-
-              <Button variant="link" asChild>
-                <Link href="/leaderboard">Made by Mockgen</Link>
-              </Button>
-
+              {madeByMockgenLink}
               <MobileNav />
             </div>
           </nav>
@@ -222,38 +221,19 @@ export default async function RootLayout({
           <Separator />
 
           <footer className="mx-auto max-w-7xl px-2 py-6 sm:px-6 lg:px-8">
-            <div className="flex flex-col items-center gap-4 md:flex-row md:justify-between md:gap-0">
-              {/* Left section - Logo and Navigation */}
-              <div className="flex flex-col items-center gap-3 md:flex-row md:items-center md:space-x-2">
+            <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
+              <div className="flex flex-col items-center gap-3 md:flex-row md:space-x-2">
                 <div className="font-mono font-semibold">
                   <Link href="https://mockgen.click">.mockgen</Link>
                 </div>
-
                 <div className="flex flex-col items-center gap-2 md:flex-row md:items-center">
-                  <Button variant="link" className="px-0 md:px-4" asChild>
-                    <Link href="/">Home</Link>
-                  </Button>
-
-                  {/* <Button variant="link" className="px-0 md:px-4" asChild>
-                    <Link href="mailto:aykasem001@gmail.com">Support</Link>
-                  </Button> */}
-
-                  <XFollowButton
-                    username="aykasem001"
-                    size="small"
-                    className="md:inline-flex md:items-center"
-                  />
-
-                  <Button variant="link" className="px-0 md:px-4" asChild>
-                    <Link href="/leaderboard">Made by Mockgen</Link>
-                  </Button>
+                  {footerNavItems}
                 </div>
               </div>
 
-              {/* Right section - Status indicator (Desktop only) */}
               <div className="hidden items-center gap-x-2 md:inline-flex">
                 <svg
-                  className="h-2 w-2 fill-green-400"
+                  className="size-2 fill-green-400"
                   viewBox="0 0 6 6"
                   aria-hidden="true"
                 >

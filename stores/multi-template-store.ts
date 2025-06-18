@@ -59,12 +59,13 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           "apple:tilted-right",
           "apple:hanged-up",
           "apple:rotated",
-          "android:app-screenshot",
-          "android:hanged-up",
         ]
 
         if (state.selectedPlatform === "android") {
-          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+          appleTemplates = [
+          "android:app-screenshot",
+          "android:hanged-up",
+        ]
         }
 
         // Get the template based on current count (rotate through templates)
@@ -102,6 +103,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
 
           const newTemplate = templateDefaults[templateName]
           // Preserve screenshot URL if the new template supports it
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const screenshotUrl = (s.template.params as any).screenshot?.url
 
           return {
@@ -110,6 +112,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
               ...newTemplate,
               params: {
                 ...newTemplate.params,
+                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 ...(screenshotUrl && (newTemplate.params as any).screenshot
                   ? {
                       screenshot: { url: screenshotUrl },
@@ -120,6 +123,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
           }
         }),
       })),
+     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     updateTemplateParams: (id: number, params: any) =>
       set((state) => ({
         screenshots: state.screenshots.map((s) =>
@@ -186,6 +190,7 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
     reapplyTemplatesByOrder: (platform?: "apple" | "android") =>
       set((state) => {
         // templates in rotation order
+        // Apple templates in rotation order
         let appleTemplates: TemplateName[] = [
           "apple:app-screenshot",
           "apple:tilted-left",
@@ -195,9 +200,11 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
         ]
 
         if (platform === "android") {
-          appleTemplates = ["android:app-screenshot", "android:hanged-up"]
+          appleTemplates = [
+          "android:app-screenshot",
+          "android:hanged-up",
+        ]
         }
-
         const updatedScreenshots = state.screenshots.map(
           (screenshot, index) => {
             const templateIndex = index % appleTemplates.length

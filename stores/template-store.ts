@@ -41,7 +41,7 @@ export const createTemplateStore = (
           }) as Partial<TemplateState>
       ),
     setBackground: (background: Template["background"]) =>
-      set((state) => ({
+      set(() => ({
         background: {
           ...background,
         },

@@ -118,8 +118,8 @@ export function ScreenshotTemplateForm({
                 title="Font Settings"
                 description="Customize the title font."
                 trigger={
-                  <Button variant="outline" size="icon" className="h-9 w-9">
-                    <MixerHorizontalIcon className="h-3 w-3" />
+                  <Button variant="outline" size="icon" className="size-9">
+                    <MixerHorizontalIcon className="size-3" />
                   </Button>
                 }
               >
@@ -198,8 +198,8 @@ export function ScreenshotTemplateForm({
                   title="Logo Settings"
                   description="Customize the logo size."
                   trigger={
-                    <Button variant="outline" size="icon" className="h-9 w-9">
-                      <MixerHorizontalIcon className="h-3 w-3" />
+                    <Button variant="outline" size="icon" className="size-9">
+                      <MixerHorizontalIcon className="size-3" />
                     </Button>
                   }
                 >

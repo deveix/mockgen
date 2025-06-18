@@ -122,7 +122,7 @@ export function TextSettings({
           >
             <div className="flex flex-wrap gap-1">
               {textColors.map((color) => (
-                <div key={color} className="h-9 min-h-9 w-9 min-w-9">
+                <div key={color} className="size-9 min-h-9 min-w-9">
                   <RadioGroupItem
                     value={color}
                     id={color}
