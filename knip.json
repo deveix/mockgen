@@ -1,13 +1,10 @@
 {
-    "entry": [
-        "app/**/*.tsx",
-        "app/**/*.ts",
-        "components/**/*.tsx",
-        "components/**/*.ts",
-        "lib/**/*.ts",
-        "hooks/**/*.ts",
-        "hooks/**/*.tsx",
-        "stores/**/*.ts"
+    "project": [
+        "app/**/*",
+        "components/**/*",
+        "lib/**/*",
+        "hooks/**/*",
+        "stores/**/*"
     ],
     "ignore": [
         "**/*.d.ts",
