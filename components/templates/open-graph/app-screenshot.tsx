@@ -2,14 +2,11 @@ import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { AppScreenshotTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
 
-import Image from 'next/image'
+
 export function Template(props: {
   template: AppScreenshotTemplate
-  renderWatermark: boolean
 }) {
-  const { template, renderWatermark } = props
-  const screenshotWidth = template.canvas.width - 40 // 20px left + 20px right
-  const screenshotHeight = template.canvas.height - 80 // 40px top + 40px bottom
+  const { template } = props
   return (
     <div
       style={{

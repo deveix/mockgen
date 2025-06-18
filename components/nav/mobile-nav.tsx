@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
+
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"

@@ -1,11 +1,9 @@
 "use client"
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 
 import { TemplateName } from "@/lib/templates"
-import { formatTemplateName } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
   Carousel,
   CarouselContent,
@@ -13,118 +11,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { skeletons } from "@/components/template-skeletons"
-
-import {
-  AppleLogo,
-  BlogLogo,
-  FacebookLogo,
-  GooglePlayLogo,
-  LinkedInLogo,
-  OpenGraphLogo,
-  ProductHunt,
-  TwitterLogo,
-} from "./icons"
-
-type Platform =
-  | "open-graph"
-  | "apple"
-  | "android"
-  | "blog"
-  | "facebook"
-  | "x"
-  | "linkedin"
-  | "product-hunt"
-
-interface PlatformProps {
-  label: string
-  icon: (props: React.ComponentProps<"svg">) => React.JSX.Element
-}
-
-interface TemplateFilter {
-  platform: Platform
-  label: string
-  width: number
-  height: number
-}
-
-const templateFilters: TemplateFilter[] = [
-  {
-    platform: "apple",
-    label: "App Screenshot",
-    width: 1320,
-    height: 2868,
-  },
-  {
-    platform: "android",
-    label: "App Screenshot",
-    width: 1320,
-    height: 2868,
-  },
-  //   {
-  //     platform: "open-graph",
-  //     label: "Open Graph Protocol",
-  //     width: 1200,
-  //     height: 630,
-  //   },
-  //   {
-  //     platform: "x",
-  //     label: "Twitter/X Header",
-  //     width: 1500,
-  //     height: 500,
-  //   },
-]
-
-const platforms: Partial<Record<Platform, PlatformProps>> = {
-  apple: {
-    label: "Apple",
-    icon: AppleLogo,
-  },
-  android: {
-    label: "Android",
-    icon: GooglePlayLogo,
-  },
-  //   "open-graph": {
-  //     label: "Open Graph",
-  //     icon: OpenGraphLogo,
-  //   },
-  //   blog: {
-  //     label: "Blog",
-  //     icon: BlogLogo,
-  //   },
-  //   facebook: {
-  //     label: "Facebook",
-  //     icon: FacebookLogo,
-  //   },
-  //   x: {
-  //     label: "Twitter/X",
-  //     icon: TwitterLogo,
-  //   },
-  //   linkedin: {
-  //     label: "LinkedIn",
-  //     icon: LinkedInLogo,
-  //   },
-  //   "product-hunt": {
-  //     label: "Product Hunt",
-  //     icon: ProductHunt,
-  //   },
-}
-
-const templateFiltersByPlatform = templateFilters.reduce(
-  (acc, filter) => ({
-    ...acc,
-    [filter.platform]: [...(acc[filter.platform] || []), filter],
-  }),
-  {} as Record<Platform, TemplateFilter[]>
-)
 
 const templates = [
   {

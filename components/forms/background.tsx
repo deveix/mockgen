@@ -13,7 +13,6 @@ import {
   BorderAllIcon,
   DotsHorizontalIcon,
   GridIcon,
-  LockClosedIcon,
   ValueNoneIcon,
 } from "@radix-ui/react-icons"
 

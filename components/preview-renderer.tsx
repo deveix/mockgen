@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import Image from "next/image"
+
 import { useTemplateStore } from "@/providers/template-store-provider"
 import satori from "satori"
 
@@ -71,7 +71,7 @@ export default function PreviewRenderer() {
     <AspectRatio ratio={12 / 9}>
       <img
         alt="Preview"
-        className="h-full w-full object-contain"
+        className="size-full object-contain"
         width={template.canvas.width}
         height={template.canvas.height}
         src={

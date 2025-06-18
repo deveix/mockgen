@@ -3,7 +3,7 @@ import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { BasicTemplate } from "@/lib/templates/open-graph"
 import { absoluteUrl } from "@/lib/url"
 
-import Image from 'next/image'
+
 import { Watermark } from "../elements/watermark"
 
 export const Template = ({

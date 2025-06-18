@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo } from "react"
-import Image from "next/image"
+
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import satori from "satori"
 
@@ -98,7 +98,7 @@ export default function ScreenshotPreviewRenderer({
     >
       <img
         alt="Preview"
-        className="h-full w-full rounded-md border object-contain"
+        className="size-full rounded-md border object-contain"
         width={screenshot.template.canvas.width}
         height={screenshot.template.canvas.height}
         src={

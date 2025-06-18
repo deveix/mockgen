@@ -1,7 +1,7 @@
 import "./globals.css"
 
 import type { Metadata } from "next"
-import Image from "next/image"
+
 import Link from "next/link"
 import Script from "next/script"
 import { MultiTemplateStoreProvider } from "@/providers/multi-template-store-provider"

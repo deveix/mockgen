@@ -2,13 +2,12 @@ import { patterns } from "@/lib/patterns"
 import { HangedUpTemplate } from "@/lib/templates/apple/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-import Image from 'next/image'
+
 
 export function Template(props: {
   template: HangedUpTemplate
-  renderWatermark: boolean
 }) {
-  const { template, renderWatermark } = props
+  const { template } = props
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2

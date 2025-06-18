@@ -6,7 +6,7 @@ This project uses several GitHub Actions workflows to automate code quality, del
 
 This workflow runs on every push or pull request to the main branch. It includes:
 
-- **Lint**: Checks code quality with ESLint and Prettier.
+- **Lint**: Checks code quality with ESLint.
 - **Type-check**: Runs TypeScript type checking.
 - **Tests**: Runs unit tests with vites and generates a coverage report.
 - **Knip**: Check for unused exports and files

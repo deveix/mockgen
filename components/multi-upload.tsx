@@ -16,9 +16,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable"
-import { Cross2Icon, UploadIcon } from "@radix-ui/react-icons"
+import { UploadIcon } from "@radix-ui/react-icons"
 
-import { formatTemplateName } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -36,7 +35,6 @@ export function MultiUpload() {
     screenshots,
     addScreenshot,
     clearAll,
-    removeScreenshot,
     reorderScreenshots,
     reapplyTemplatesByOrder,
   } = useMultiTemplateStore((state) => state)
@@ -112,11 +110,10 @@ export function MultiUpload() {
         <div className="space-y-4">
           {/* Upload Area */}
           <div
-            className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${
-              isDragOver
+            className={`relative rounded-lg border-2 border-dashed p-8 text-center transition-colors ${isDragOver
                 ? "border-primary bg-primary/5"
                 : "border-muted-foreground/25 hover:border-muted-foreground/50"
-            }`}
+              }`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -143,7 +140,7 @@ export function MultiUpload() {
               </div>
               <Button
                 variant="outline"
-                // onClick={() => fileInputRef.current?.click()}
+              // onClick={() => fileInputRef.current?.click()}
               >
                 Browse Files
               </Button>

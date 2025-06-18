@@ -5,32 +5,30 @@ import * as apple from "./apple"
 import * as og from "./open-graph"
 import * as x from "./x"
 
-const templateNameSchema = z.union([
+export type TemplateName =
   // Open Graph
-  z.literal("og:image-right"),
-  z.literal("og:basic"),
-  z.literal("og:hero"),
-  z.literal("og:notice"),
-  z.literal("og:logos"),
-  z.literal("og:app-screenshot"),
+  | "og:image-right"
+  | "og:basic"
+  | "og:hero"
+  | "og:notice"
+  | "og:logos"
+  | "og:app-screenshot"
 
   // X Header templates
-  z.literal("x:header-basic"),
-  z.literal("x:header-minimalist"),
-  z.literal("x:header-logo"),
+  | "x:header-basic"
+  | "x:header-minimalist"
+  | "x:header-logo"
 
   // Apple
-  z.literal("apple:app-screenshot"),
-  z.literal("apple:tilted-left"),
-  z.literal("apple:tilted-right"),
-  z.literal("apple:hanged-up"),
-  z.literal("apple:rotated"),
+  | "apple:app-screenshot"
+  | "apple:tilted-left"
+  | "apple:tilted-right"
+  | "apple:hanged-up"
+  | "apple:rotated"
 
   // Android
-  z.literal("android:app-screenshot"),
-  z.literal("android:hanged-up"),
-])
-export type TemplateName = z.infer<typeof templateNameSchema>
+  | "android:app-screenshot"
+  | "android:hanged-up";
 
 export const templateSchema = z.discriminatedUnion("name", [
   // Open Graph

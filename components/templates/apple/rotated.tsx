@@ -2,13 +2,12 @@ import { patterns } from "@/lib/patterns"
 import { RotatedTemplate } from "@/lib/templates/apple/rotated"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-import Image from 'next/image'
+
 
 export function Template(props: {
   template: RotatedTemplate
-  renderWatermark: boolean
 }) {
-  const { template, renderWatermark } = props
+  const { template } = props
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width
   const screenshotHeight = screenshotWidth * 1.8

@@ -1,10 +1,8 @@
 "use client"
 
 import { useEffect, useMemo, useState } from "react"
-import Image from "next/image"
-import Link from "next/link"
+
 import {
-  MultiTemplateStoreProvider,
   useMultiTemplateStore,
 } from "@/providers/multi-template-store-provider"
 import {
@@ -21,9 +19,6 @@ import {
   SortableContext,
   sortableKeyboardCoordinates,
 } from "@dnd-kit/sortable"
-import { InfoCircledIcon } from "@radix-ui/react-icons"
-
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -31,18 +26,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+
 import { Separator } from "@/components/ui/separator"
 import { DraggableScreenshotCard } from "@/components/draggable-screenshot-card"
 import { GlobalBackgroundForm } from "@/components/global-background-form"
 import { AppleLogo, GooglePlayLogo } from "@/components/icons"
 import { MultiUpload } from "@/components/multi-upload"
-import { PlatformIcons } from "@/components/platform-icons"
 import SaveAllImagesButton from "@/components/save-all-images-button"
 
 function MultiTemplateContent({

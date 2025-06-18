@@ -20,7 +20,6 @@ import { ResponsivePopover } from "@/components/responsive-popover"
 export function Form() {
   const template = useTemplateStore((state) => state)
   const params = template.params as AppScreenshotTemplate["params"]
-  const background = template.background as AppScreenshotTemplate["background"]
 
   return (
     <Card>

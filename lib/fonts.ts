@@ -196,7 +196,7 @@ export function getFontUrl({
 export function getFontsFromTemplate(template: Template["params"]) {
   const fonts: { family: FontFamily; weight: FontWeight }[] = []
 
-  for (const [_key, value] of Object.entries(template)) {
+  for (const [_, value] of Object.entries(template)) {
     if (
       value && // ensure the value is non-null
       typeof value === "object" &&
