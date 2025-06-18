@@ -1,18 +1,16 @@
 import { patterns } from "@/lib/patterns"
-import { AppScreenshotTemplate } from "@/lib/templates/apple"
+import { TiltedRightTemplate } from "@/lib/templates/apple/tilted-right"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-import Image from 'next/image'
+
 
 export function Template(props: {
-  template: AppScreenshotTemplate
-  renderWatermark: boolean
+  template: TiltedRightTemplate
 }) {
-  const { template, renderWatermark } = props
+  const { template } = props
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
-
   return (
     <div
       style={{
@@ -54,7 +52,6 @@ export function Template(props: {
           }}
         ></div>
       )}
-
       <div
         style={{
           fontSize: template.params.title.fontSize,
@@ -64,8 +61,9 @@ export function Template(props: {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "flex-end",
-          bottom: Number(template.params.bottomPadding) ?? 0,
+          justifyContent: "center",
+          flex: 1,
+          top: 120,
         }}
       >
         <p
@@ -74,40 +72,27 @@ export function Template(props: {
             fontWeight: template.params.title.fontWeight,
             fontSize: `${template.params.title.fontSize}px`,
             color: template.params.title.color,
-            marginLeft: 100,
-            marginRight: 100,
+            marginLeft: 150,
+            marginRight: 150,
             lineHeight: 1.2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 40,
           }}
         >
-          {template.params.logo.url && <img
-            src={template.params.logo.url}
-            alt="Logo"
-            style={{
-              width: template.params.logo.width,
-              height: template.params.logo.height,
-              position: "relative",
-            }}
-          />}
           {template.params.title.text}
         </p>
       </div>
       <div
         style={{
-          width: screenshotWidth + 120,
-          height: screenshotHeight + 120,
+          width: screenshotWidth + 325,
+          height: screenshotHeight,
           display: "flex",
-          bottom: Number(template.params.bottomPadding) ?? 0,
           overflow: "hidden",
+          top: 200,
+          position: "relative",
         }}
       >
-        {/* Device frame placeholder (replace with your SVG/PNG) */}
+        {/* Device frame using tilted-right SVG */}
         <img
-          src={absoluteUrl("/mocks/iphone-frame.svg")}
+          src={absoluteUrl("/mocks/iphone-tilted-right.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -122,17 +107,35 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 90,
-            left: 65,
+            top: 100,
+            left: 200,
             right: 20,
             width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 140,
-            borderTopRightRadius: 140,
+            borderTopLeftRadius: 160,
+            borderTopRightRadius: 160,
+            transform: "rotate(8deg) skewX(8deg) skewY(-2deg)",
+            transformOrigin: "center center",
           }}
         />
+
+        {/* Device frame using tilted-right SVG */}
+        {/* <img
+          src={absoluteUrl("/mocks/dynamic-island.svg")}
+          alt="Device Frame"
+          style={{
+            position: "absolute",
+            top: 110,
+            left: 590,
+            width: 300, // 500
+            height: 120, // 200
+            zIndex: 8,
+            transform: "rotate(10deg) skewX(8deg) skewY(-2deg)",
+            transformOrigin: "center center",
+          }}
+        /> */}
       </div>
       {/* {renderWatermark && <Watermark style={{ bottom: 16, right: 16 }} />} */}
     </div>

@@ -1,18 +1,16 @@
 import { patterns } from "@/lib/patterns"
-import { AppScreenshotTemplate as AndroidAppScreenshotTemplate } from "@/lib/templates/android/app-screenshot"
+import { TiltedLeftTemplate } from "@/lib/templates/apple/tilted-left"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-import Image from "next/image"
+
 
 export function Template(props: {
-  template: AndroidAppScreenshotTemplate
-  renderWatermark: boolean
+  template: TiltedLeftTemplate
 }) {
-  const { template, renderWatermark } = props
+  const { template } = props
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
-
   return (
     <div
       style={{
@@ -46,7 +44,7 @@ export function Template(props: {
             height: "100%",
             width: "100%",
             position: "absolute",
-            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern as keyof typeof patterns].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
+            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
             maskImage:
               template.background.gridOverlay.blurRadius > 0
                 ? `radial-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) ${100 - template.background.gridOverlay.blurRadius}%)`
@@ -54,7 +52,6 @@ export function Template(props: {
           }}
         ></div>
       )}
-
       <div
         style={{
           fontSize: template.params.title.fontSize,
@@ -64,8 +61,9 @@ export function Template(props: {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "flex-start",
-          bottom: (Number(template.params.bottomPadding) ?? 0) + 50,
+          justifyContent: "center",
+          flex: 1,
+          top: 120,
         }}
       >
         <p
@@ -74,14 +72,9 @@ export function Template(props: {
             fontWeight: template.params.title.fontWeight,
             fontSize: `${template.params.title.fontSize}px`,
             color: template.params.title.color,
-            marginLeft: 100,
-            marginRight: 100,
+            marginLeft: 150,
+            marginRight: 150,
             lineHeight: 1.2,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 40,
           }}
         >
           {template.params.title.text}
@@ -89,16 +82,16 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth + 80,
-          height: screenshotHeight + 80,
+          width: screenshotWidth + 160,
+          height: screenshotHeight,
           display: "flex",
-          bottom: Number(template.params.bottomPadding) ?? 0,
           overflow: "hidden",
+          top: 200,
         }}
       >
-        {/* Device frame placeholder (replace with your SVG/PNG) */}
+        {/* Device frame using tilted-left SVG */}
         <img
-          src={absoluteUrl("/mocks/android/android-frame.svg")}
+          src={absoluteUrl("/mocks/iphone-tilted-left.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -113,15 +106,17 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 35,
-            left: 35,
+            top: 98,
+            left: 70,
             right: 20,
             width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 80,
-            borderTopRightRadius: 80,
+            borderTopLeftRadius: 120,
+            borderTopRightRadius: 120,
+            transform: "rotate(7deg) skewX(7deg) skewY(-10deg)",
+            transformOrigin: "center center",
           }}
         />
       </div>

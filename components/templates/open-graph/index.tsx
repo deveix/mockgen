@@ -1,6 +1,0 @@
-export * as basic from "./basic"
-export * as hero from "./hero"
-export * as imageRight from "./image-right"
-export * as logos from "./logos"
-export * as notice from "./notice"
-export * as appScreenshot from "./app-screenshot"

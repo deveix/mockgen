@@ -1,18 +1,17 @@
+"use client"
 import { patterns } from "@/lib/patterns"
-import { HangedUpTemplate as AndroidHangedUpTemplate } from "@/lib/templates/android/hanged-up"
+import { HangedUpTemplate } from "@/lib/templates/apple/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
-import Image from "next/image"
+
 
 export function Template(props: {
-  template: AndroidHangedUpTemplate
-  renderWatermark: boolean
+  template: HangedUpTemplate
 }) {
-  const { template, renderWatermark } = props
+  const { template } = props
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
-
   return (
     <div
       style={{
@@ -46,7 +45,7 @@ export function Template(props: {
             height: "100%",
             width: "100%",
             position: "absolute",
-            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern as keyof typeof patterns].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
+            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
             maskImage:
               template.background.gridOverlay.blurRadius > 0
                 ? `radial-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) ${100 - template.background.gridOverlay.blurRadius}%)`
@@ -56,17 +55,16 @@ export function Template(props: {
       )}
       <div
         style={{
-          width: screenshotWidth + 70,
+          width: screenshotWidth + 80,
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
           position: "relative",
-          top: -100,
         }}
       >
-        {/* Device frame using android-frame SVG rotated upside down */}
+        {/* Device frame using iphone-up SVG rotated upside down */}
         <img
-          src={absoluteUrl("/mocks/android/android-frame.svg")}
+          src={absoluteUrl("/mocks/iphone-up.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -82,15 +80,15 @@ export function Template(props: {
             alt="App Screenshot"
             style={{
               position: "absolute",
-              left: 35,
+              left: 40,
               right: 20,
-              bottom: 30,
+              bottom: 80,
               width: screenshotWidth,
               height: screenshotHeight,
               objectFit: "cover",
               zIndex: 1,
-              borderBottomLeftRadius: 80,
-              borderBottomRightRadius: 80,
+              borderBottomLeftRadius: 150,
+              borderBottomRightRadius: 150,
               transformOrigin: "center center",
             }}
           />

@@ -52,10 +52,3 @@ export function XFollowButton({
     </Link>
   )
 }
-
-// Extend window object to include twttr
-declare global {
-  interface Window {
-    twttr: any
-  }
-}

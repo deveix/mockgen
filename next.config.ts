@@ -32,11 +32,11 @@ const nextConfig: NextConfig = {
     return config;
   },
   // Remove console logs in production except errors
-  compiler: {
-   /*  removeConsole: {
+  compiler: process.env.NODE_ENV === 'production' ? {
+    removeConsole: {
       exclude: ['error'],
-    }, */
-  },
+    },
+  } : {},
 
   // Headers for better SEO and security
   async headers() {

@@ -1,18 +1,16 @@
 import { patterns } from "@/lib/patterns"
-import { TiltedRightTemplate } from "@/lib/templates/apple/tilted-right"
+import { RotatedTemplate } from "@/lib/templates/apple/rotated"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
-import Image from 'next/image'
-export function Template(props: {
-  template: TiltedRightTemplate
-  renderWatermark: boolean
-}) {
-  const { template, renderWatermark } = props
-  // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width * 0.8
-  const screenshotHeight = screenshotWidth * 2.2
 
+export function Template(props: {
+  template: RotatedTemplate
+}) {
+  const { template } = props
+  // 1:2 aspect ratio
+  const screenshotWidth = template.canvas.width
+  const screenshotHeight = screenshotWidth * 1.8
   return (
     <div
       style={{
@@ -84,17 +82,16 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth + 325,
+          width: screenshotWidth,
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
           top: 200,
-          position: "relative",
         }}
       >
-        {/* Device frame using tilted-right SVG */}
+        {/* Device frame using iphone-right-left SVG */}
         <img
-          src={absoluteUrl("/mocks/iphone-tilted-right.svg")}
+          src={absoluteUrl("/mocks/iphone-right-left.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -109,35 +106,19 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 100,
-            left: 200,
+            top: 170,
+            left: 180,
             right: 20,
-            width: screenshotWidth,
+            width: screenshotWidth - 330,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 160,
-            borderTopRightRadius: 160,
-            transform: "rotate(8deg) skewX(8deg) skewY(-2deg)",
+            borderTopLeftRadius: 155,
+            borderTopRightRadius: 155,
+            transform: "rotate(6.5deg) skewX(-2deg) skewY(6deg)",
             transformOrigin: "center center",
           }}
         />
-
-        {/* Device frame using tilted-right SVG */}
-        {/* <img
-          src={absoluteUrl("/mocks/dynamic-island.svg")}
-          alt="Device Frame"
-          style={{
-            position: "absolute",
-            top: 110,
-            left: 590,
-            width: 300, // 500
-            height: 120, // 200
-            zIndex: 8,
-            transform: "rotate(10deg) skewX(8deg) skewY(-2deg)",
-            transformOrigin: "center center",
-          }}
-        /> */}
       </div>
       {/* {renderWatermark && <Watermark style={{ bottom: 16, right: 16 }} />} */}
     </div>
