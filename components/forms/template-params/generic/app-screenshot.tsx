@@ -1,7 +1,7 @@
 import { useTemplateStore } from "@/providers/template-store-provider"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
-import { HeroTemplate } from "@/lib/templates/open-graph"
+import { AppScreenshotTemplate } from "@/lib/templates/apple/app-screenshot"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -12,92 +12,25 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
 
 export function Form() {
   const template = useTemplateStore((state) => state)
-  const params = template.params as HeroTemplate["params"]
-
+  const params = template.params as AppScreenshotTemplate["params"]
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Template Properties</CardTitle>
+        <CardTitle>App Screenshot Properties</CardTitle>
         <CardDescription>
-          Customize your image by changing the properties.
+          Customize your screenshot template properties.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form>
           <div className="grid w-full items-center gap-4">
-            <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="tag">Tag</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="tag"
-                  value={params.tag.text}
-                  onChange={(e) =>
-                    template.updateParams({
-                      tag: {
-                        ...params.tag,
-                        text: e.target.value,
-                      },
-                    })
-                  }
-                />
-
-                <ResponsivePopover
-                  title="Font Settings"
-                  description="Customize the tag font."
-                  trigger={
-                    <Button variant="outline" size="icon">
-                      <MixerHorizontalIcon className="size-4" />
-                    </Button>
-                  }
-                >
-                  <TextSettings
-                    fontFamily={params.tag.fontFamily}
-                    fontSize={params.tag.fontSize}
-                    fontWeight={params.tag.fontWeight}
-                    color={params.tag.color}
-                    onChangeFontFamily={(fontFamily) =>
-                      template.updateParams({
-                        tag: {
-                          ...params.tag,
-                          fontFamily,
-                        },
-                      })
-                    }
-                    onChangeFontSize={(fontSize) =>
-                      template.updateParams({
-                        tag: {
-                          ...params.tag,
-                          fontSize,
-                        },
-                      })
-                    }
-                    onChangeFontWeight={(fontWeight) =>
-                      template.updateParams({
-                        tag: {
-                          ...params.tag,
-                          fontWeight,
-                        },
-                      })
-                    }
-                    onChangeColor={(color) =>
-                      template.updateParams({
-                        tag: {
-                          ...params.tag,
-                          color,
-                        },
-                      })
-                    }
-                  />
-                </ResponsivePopover>
-              </div>
-            </div>
-
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="title">Title</Label>
               <div className="flex space-x-2">
@@ -113,7 +46,6 @@ export function Form() {
                     })
                   }
                 />
-
                 <ResponsivePopover
                   title="Font Settings"
                   description="Customize the title font."
@@ -165,22 +97,89 @@ export function Form() {
               </div>
             </div>
 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="image">Image</Label>
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="logo">Logo</Label>
+              <div className="flex space-x-2 overflow-hidden">
+                <div className="min-w-0 flex-1">
+                  <ImageSelector
+                    id="logo"
+                    onChange={(v) =>
+                      template.updateParams({
+                        logo: {
+                          ...(params.logo ?? {}),
+                          url: v ?? "",
+                        },
+                      })
+                    }
+                    initialFileName={
+                      params.logo.url
+                        ? params.logo.url.split("/").pop()
+                        : undefined
+                    }
+                  />
+                </div>
+                <ResponsivePopover
+                  title="Logo Settings"
+                  description="Customize the logo."
+                  trigger={
+                    <Button variant="outline" size="icon">
+                      <MixerHorizontalIcon className="size-4" />
+                    </Button>
+                  }
+                >
+                  <ImageSettings
+                    width={params.logo.width ?? 200}
+                    height={params.logo.height ?? 200}
+                    onChangeWidth={(width) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          width: width ?? 200,
+                        },
+                      })
+                    }
+                    onChangeHeight={(height) =>
+                      template.updateParams({
+                        logo: {
+                          ...params.logo,
+                          height: height ?? 200,
+                        },
+                      })
+                    }
+                  />
+                </ResponsivePopover>
+              </div>
+            </div>
+
+            <div className="grid w-full items-center gap-1.5">
+              <Label htmlFor="screenshot">Screenshot</Label>
               <ImageSelector
-                id="image"
+                id="screenshot"
                 onChange={(v) =>
                   template.updateParams({
-                    image: {
-                      ...params.image,
+                    screenshot: {
                       url: v ?? "",
                     },
                   })
                 }
                 initialFileName={
-                  params.image.url
-                    ? params.image.url.split("/").pop()
-                    : undefined
+                  params.screenshot.url
+                    ? params.screenshot.url.split("/").pop()
+                    : "screenshot.png"
+                }
+              />
+            </div>
+
+            <div className="grid w-full max-w-sm items-center gap-1.5">
+              <Label htmlFor="bottomPadding">Bottom Padding</Label>
+              <Input
+                id="bottomPadding"
+                value={params.bottomPadding}
+                type="number"
+                onChange={(e) =>
+                  template.updateParams({
+                    bottomPadding: e.target.value,
+                  })
                 }
               />
             </div>

@@ -1,32 +1,24 @@
-import * as android from "./android"
-import * as apple from "./apple"
-import * as og from "./open-graph"
 import * as x from "./x"
+import * as generic from "./generic"
 
 export const templates = {
-  // Open Graph
-  "og:basic": og.basic,
-  "og:notice": og.notice,
-  "og:hero": og.hero,
-  "og:image-right": og.imageRight,
-  "og:logos": og.logos,
-  "og:app-screenshot": og.appScreenshot,
-
   // Apple
-  "apple:app-screenshot": apple.appScreenshot,
-  "apple:tilted-left": apple.tiltedLeft,
-  "apple:tilted-right": apple.tiltedRight,
-  "apple:hanged-up": apple.hangedUp,
-  "apple:rotated": apple.rotated,
+  "apple:app-screenshot": generic.AppScreenshot,
+  "apple:tilted-left": generic.TiltedLeft,
+  "apple:tilted-right": generic.TiltedRight,
+  "apple:hanged-up": generic.HangedUp,
+  "apple:rotated": generic.Rotated,
+
+  // Android
+  "android:app-screenshot": generic.AppScreenshot,
+  "android:tilted-left": generic.TiltedLeft,
+  "android:tilted-right": generic.TiltedRight,
+  "android:hanged-up": generic.HangedUp,
+  "android:rotated": generic.Rotated,
 
   // X Header templates
   "x:header-basic": x.header.basic,
   "x:header-minimalist": x.header.minimalist,
   "x:header-logo": x.header.logo,
-
-  // Android
-  "android:app-screenshot": android.appScreenshot,
-  "android:hanged-up": android.hangedUp,
 }
 
-export * from "./android"

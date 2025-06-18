@@ -1,7 +1,7 @@
 import { useTemplateStore } from "@/providers/template-store-provider"
 import { MixerHorizontalIcon } from "@radix-ui/react-icons"
 
-import { BasicTemplate } from "@/lib/templates/open-graph"
+import { BasicTemplate } from "@/lib/templates/default"
 import { Button } from "@/components/ui/button"
 import {
   Card,

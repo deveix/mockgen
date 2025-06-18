@@ -1,17 +1,17 @@
 import { patterns } from "@/lib/patterns"
-import { RotatedTemplate } from "@/lib/templates/apple/rotated"
+import { AppScreenshotTemplate } from "@/lib/templates/apple"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
 
 export function Template(props: {
-  template: RotatedTemplate
+  template: AppScreenshotTemplate
 }) {
   const { template } = props
   // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width
-  const screenshotHeight = screenshotWidth * 1.8
-
+  const screenshotWidth = template.canvas.width * 0.8
+  const screenshotHeight = screenshotWidth * 2.2
+  const isAndroid = template.name.startsWith("android:")
   return (
     <div
       style={{
@@ -53,6 +53,7 @@ export function Template(props: {
           }}
         ></div>
       )}
+
       <div
         style={{
           fontSize: template.params.title.fontSize,
@@ -62,9 +63,8 @@ export function Template(props: {
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
-          flex: 1,
-          top: 120,
+          justifyContent: isAndroid ? "flex-start" : "flex-end",
+          bottom: Number(template.params.bottomPadding) ?? isAndroid ? 50 : 0,
         }}
       >
         <p
@@ -73,26 +73,40 @@ export function Template(props: {
             fontWeight: template.params.title.fontWeight,
             fontSize: `${template.params.title.fontSize}px`,
             color: template.params.title.color,
-            marginLeft: 150,
-            marginRight: 150,
+            marginLeft: 100,
+            marginRight: 100,
             lineHeight: 1.2,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: 40,
           }}
         >
+          <img
+            src={template.params.logo.url}
+            alt="Logo"
+            style={{
+              width: template.params.logo.width,
+              height: template.params.logo.height,
+              position: "relative",
+            }}
+          />
           {template.params.title.text}
         </p>
       </div>
       <div
         style={{
-          width: screenshotWidth,
-          height: screenshotHeight,
+          width: screenshotWidth + (isAndroid ? 80 : 120),
+          height: screenshotHeight + (isAndroid ? 80 : 120),
           display: "flex",
+          bottom: Number(template.params.bottomPadding) ?? 0,
           overflow: "hidden",
-          top: 200,
         }}
       >
-        {/* Device frame using iphone-right-left SVG */}
+        {/* Device frame placeholder (replace with your SVG/PNG) */}
         <img
-          src={absoluteUrl("/mocks/iphone-right-left.svg")}
+          src={absoluteUrl(`/mocks/${isAndroid ? 'android' : 'iphone'}-frame.svg`)}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -102,22 +116,21 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
+        <h1>ZER</h1>
         <img
           src={template.params.screenshot.url}
-          alt="App Screenshot"
+          alt="App Screenshotzer"
           style={{
             position: "absolute",
-            top: 170,
-            left: 180,
+            top: isAndroid ? 35 : 90,
+            left: isAndroid ? 35 : 65,
             right: 20,
-            width: screenshotWidth - 330,
+            width: screenshotWidth,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 155,
-            borderTopRightRadius: 155,
-            transform: "rotate(6.5deg) skewX(-2deg) skewY(6deg)",
-            transformOrigin: "center center",
+            borderTopLeftRadius: isAndroid ? 80 : 140,
+            borderTopRightRadius: isAndroid ? 80 : 140,
           }}
         />
       </div>
