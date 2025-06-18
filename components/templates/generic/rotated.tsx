@@ -1,17 +1,16 @@
 import { patterns } from "@/lib/patterns"
-import { TiltedLeftTemplate } from "@/lib/templates/apple/tilted-left"
+import { RotatedTemplate } from "@/lib/templates/apple/rotated"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
 
 export function Template(props: {
-  template: TiltedLeftTemplate
+  template: RotatedTemplate
 }) {
   const { template } = props
   // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width * 0.8
-  const screenshotHeight = screenshotWidth * 2.2
-
+  const screenshotWidth = template.canvas.width
+  const screenshotHeight = screenshotWidth * 1.8
   return (
     <div
       style={{
@@ -83,16 +82,16 @@ export function Template(props: {
       </div>
       <div
         style={{
-          width: screenshotWidth + 160,
+          width: screenshotWidth,
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
           top: 200,
         }}
       >
-        {/* Device frame using tilted-left SVG */}
+        {/* Device frame using iphone-right-left SVG */}
         <img
-          src={absoluteUrl("/mocks/iphone-tilted-left.svg")}
+          src={absoluteUrl("/mocks/iphone-right-left.svg")}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -107,16 +106,16 @@ export function Template(props: {
           alt="App Screenshot"
           style={{
             position: "absolute",
-            top: 98,
-            left: 70,
+            top: 170,
+            left: 180,
             right: 20,
-            width: screenshotWidth,
+            width: screenshotWidth - 330,
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
-            borderTopLeftRadius: 120,
-            borderTopRightRadius: 120,
-            transform: "rotate(7deg) skewX(7deg) skewY(-10deg)",
+            borderTopLeftRadius: 155,
+            borderTopRightRadius: 155,
+            transform: "rotate(6.5deg) skewX(-2deg) skewY(6deg)",
             transformOrigin: "center center",
           }}
         />

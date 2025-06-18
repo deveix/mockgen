@@ -14,7 +14,6 @@ self.onmessage = (e) => {
   })
   const image = renderer.render()
   const pngBuffer = image.asPng()
-  console.log(`Rendered PNG of size: ${pngBuffer} bytes`)
   const url = URL.createObjectURL(new Blob([pngBuffer], { type: "image/png" }))
   self.postMessage({ _id, url })
 }

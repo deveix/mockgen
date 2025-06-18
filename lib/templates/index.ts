@@ -2,18 +2,9 @@ import { z } from "zod"
 
 import * as android from "./android"
 import * as apple from "./apple"
-import * as og from "./open-graph"
 import * as x from "./x"
 
 export type TemplateName =
-  // Open Graph
-  | "og:image-right"
-  | "og:basic"
-  | "og:hero"
-  | "og:notice"
-  | "og:logos"
-  | "og:app-screenshot"
-
   // X Header templates
   | "x:header-basic"
   | "x:header-minimalist"
@@ -28,16 +19,9 @@ export type TemplateName =
 
   // Android
   | "android:app-screenshot"
-  | "android:hanged-up";
+  | "android:hanged-up"
 
 export const templateSchema = z.discriminatedUnion("name", [
-  // Open Graph
-  og.imageRightTemplateSchema,
-  og.basicTemplateSchema,
-  og.heroTemplateSchema,
-  og.noticeTemplateSchema,
-  og.logosTemplateSchema,
-  og.appScreenshotTemplateSchema,
 
   // X Header templates
   x.header.basicTemplateSchema,
@@ -58,14 +42,6 @@ export const templateSchema = z.discriminatedUnion("name", [
 export type Template = z.infer<typeof templateSchema>
 
 export const templateDefaults: Record<TemplateName, Template> = {
-  // Open Graph
-  "og:image-right": og.imageRightTemplateDefault,
-  "og:basic": og.basicTemplateDefault,
-  "og:hero": og.heroTemplateDefault,
-  "og:notice": og.noticeTemplateDefault,
-  "og:logos": og.logosTemplateDefault,
-  "og:app-screenshot": og.appScreenshotTemplateDefault,
-
   // X Header templates
   "x:header-basic": x.header.basicTemplateDefault,
   "x:header-minimalist": x.header.minimalistTemplateDefault,
@@ -82,5 +58,3 @@ export const templateDefaults: Record<TemplateName, Template> = {
   "android:app-screenshot": android.appScreenshotTemplateDefault,
   "android:hanged-up": android.hangedUpTemplateDefault,
 }
-
-export * from "./android"

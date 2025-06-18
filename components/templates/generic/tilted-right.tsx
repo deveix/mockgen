@@ -11,7 +11,6 @@ export function Template(props: {
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
-
   return (
     <div
       style={{
