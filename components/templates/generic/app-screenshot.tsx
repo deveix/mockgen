@@ -64,7 +64,7 @@ export function Template(props: {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: isAndroid ? "flex-start" : "flex-end",
-          bottom: Number(template.params.bottomPadding) ?? isAndroid ? 50 : 0,
+          bottom: Number(template.params.bottomPadding) ?? (isAndroid ? 50 : 0),
         }}
       >
         <p
