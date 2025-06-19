@@ -10,8 +10,5 @@ export const skeletons = {
 
   // Android
   "android:app-screenshot": generic.AppScreenshot,
-  "android:tilted-left": generic.TiltedLeft,
-  "android:tilted-right": generic.TiltedRight,
   "android:hanged-up": generic.HangedUp,
-  "android:rotated": generic.Rotated,
 }

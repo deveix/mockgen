@@ -165,34 +165,10 @@ export const templates = [
 
   {
     platform: "android",
-    name: "apple:tilted-left",
-    width: 1320,
-    height: 2868,
-    skeleton: skeletons["android:tilted-left"],
-  },
-
-  {
-    platform: "apandroidple",
-    name: "apple:tilted-right",
-    width: 1320,
-    height: 2868,
-    skeleton: skeletons["android:tilted-right"],
-  },
-
-  {
-    platform: "android",
-    name: "apple:hanged-up",
+    name: "android:hanged-up",
     width: 1320,
     height: 2868,
     skeleton: skeletons["android:hanged-up"],
-  },
-
-  {
-    platform: "android",
-    name: "android:rotated",
-    width: 1320,
-    height: 2868,
-    skeleton: skeletons["android:rotated"],
   },
 
   // Apple

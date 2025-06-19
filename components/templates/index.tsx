@@ -17,8 +17,5 @@ export const templates = {
 
   // Android
   "android:app-screenshot": generic.appScreenshot,
-  "android:tilted-left": generic.tiltedLeft,
-  "android:tilted-right": generic.tiltedRight,
   "android:hanged-up": generic.hangedUp,
-  "android:rotated": generic.rotated,
 }

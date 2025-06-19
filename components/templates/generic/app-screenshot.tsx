@@ -116,7 +116,6 @@ export function Template(props: {
           }}
         />
         {/* User screenshot */}
-        <h1>ZER</h1>
         <img
           src={template.params.screenshot.url}
           alt="App Screenshotzer"
@@ -129,6 +128,8 @@ export function Template(props: {
             height: screenshotHeight,
             objectFit: "cover",
             zIndex: 1,
+            borderBottomLeftRadius: isAndroid ? 80 : 150,
+            borderBottomRightRadius: isAndroid ? 80 : 150,
             borderTopLeftRadius: isAndroid ? 80 : 140,
             borderTopRightRadius: isAndroid ? 80 : 140,
           }}

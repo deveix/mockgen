@@ -4,6 +4,31 @@ import { HangedUpTemplate } from "@/lib/templates/apple/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
+function getScreenshotPosition(template: HangedUpTemplate) {
+  const isAndroid = template.name.startsWith("android:")
+  const pos: { [key: string]: number } = {}
+  const fields = ["left", "right", "top", "bottom"]
+  if (template.params.screenshot) {
+    for (const field of fields) {
+      const value = (template.params.screenshot as Record<string, unknown>)[field]
+      if (typeof value === "number" && value !== 0) {
+        pos[field] = value
+      }
+    }
+  }
+  if (Object.keys(pos).length === 0) {
+    pos.left = isAndroid ? 35 : 40
+    pos.right = 20
+    pos.bottom = isAndroid ? 30 : 80
+  }
+  return pos
+}
+
+/**
+ * 
+ * This file have a lot in common with the other templates, it will be interesting to see how much are in common
+ * 
+ */
 
 export function Template(props: {
   template: HangedUpTemplate
@@ -12,6 +37,9 @@ export function Template(props: {
   // 1:2 aspect ratio
   const screenshotWidth = template.canvas.width * 0.8
   const screenshotHeight = screenshotWidth * 2.2
+  const isAndroid = template.name.startsWith("android:")
+  const screenshotPosition = getScreenshotPosition(template)
+
   return (
     <div
       style={{
@@ -55,16 +83,18 @@ export function Template(props: {
       )}
       <div
         style={{
-          width: screenshotWidth + 80,
+          width: screenshotWidth + (isAndroid ? 70 : 80),
           height: screenshotHeight,
           display: "flex",
           overflow: "hidden",
           position: "relative",
+          top: -100,
         }}
       >
         {/* Device frame using iphone-up SVG rotated upside down */}
+        { /* ToDo: use the complete frame on every template to simplify mocks management */}
         <img
-          src={absoluteUrl("/mocks/iphone-up.svg")}
+          src={absoluteUrl(`/mocks/${isAndroid ? 'android-frame.svg' : 'iphone-up.svg'}`)}
           alt="Device Frame"
           style={{
             width: "100%",
@@ -80,16 +110,14 @@ export function Template(props: {
             alt="App Screenshot"
             style={{
               position: "absolute",
-              left: 40,
-              right: 20,
-              bottom: 80,
               width: screenshotWidth,
               height: screenshotHeight,
               objectFit: "cover",
               zIndex: 1,
-              borderBottomLeftRadius: 150,
-              borderBottomRightRadius: 150,
+              borderBottomLeftRadius: isAndroid ? 80 : 150,
+              borderBottomRightRadius: isAndroid ? 80 : 150,
               transformOrigin: "center center",
+              ...screenshotPosition,
             }}
           />
         )}
