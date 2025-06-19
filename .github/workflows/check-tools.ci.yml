@@ -12,7 +12,7 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
       - id: cache-key
         run: echo "key=$(date +'%Y-%m-%d')-$(cat yarn.lock | shasum | cut -d' ' -f1)" >> $GITHUB_OUTPUT
