@@ -227,7 +227,7 @@ export default function Home() {
             <img
               src={src}
               alt="Preview"
-              className="rounded-lg object-contain"
+              className="h-full w-full rounded-lg object-contain"
               sizes="90vw"
             />
           </div>
