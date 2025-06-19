@@ -170,7 +170,7 @@ export function ScreenshotTemplateForm({
           </div>
 
           {/* Logo Input */}
-          {screenshot.template.name === "apple:app-screenshot" && (
+          {["apple:app-screenshot", "android:app-screenshot"].includes(screenshot.template.name) && (
             <div className="space-y-2">
               <Label htmlFor={`logo-${screenshotId}`} className="text-sm">
                 Logo
