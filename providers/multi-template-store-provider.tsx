@@ -1,6 +1,6 @@
 "use client"
 
-import { createContext, useContext, useRef, type ReactNode } from "react"
+import { createContext, PropsWithChildren, useContext, useRef } from "react"
 import {
   createMultiTemplateStore,
   type MultiTemplateStore,
@@ -10,13 +10,10 @@ import { useStore, type StoreApi } from "zustand"
 const MultiTemplateStoreContext =
   createContext<StoreApi<MultiTemplateStore> | null>(null)
 
-export interface MultiTemplateStoreProviderProps {
-  children: ReactNode
-}
 
 export const MultiTemplateStoreProvider = ({
   children,
-}: MultiTemplateStoreProviderProps) => {
+}: PropsWithChildren) => {
   const storeRef = useRef<StoreApi<MultiTemplateStore>>(undefined)
   if (!storeRef.current) {
     storeRef.current = createMultiTemplateStore()

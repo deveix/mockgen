@@ -1,0 +1,21 @@
+{
+    "project": [
+        "app/**/*",
+        "components/**/*",
+        "lib/**/*",
+        "hooks/**/*",
+        "stores/**/*"
+    ],
+    "ignore": [
+        "**/*.d.ts",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/__tests__/**"
+    ],
+    "ignoreDependencies": [
+        "eslint",
+        "eslint-config-next"
+    ]
+}

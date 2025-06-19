@@ -118,8 +118,8 @@ export function ScreenshotTemplateForm({
                 title="Font Settings"
                 description="Customize the title font."
                 trigger={
-                  <Button variant="outline" size="icon" className="h-9 w-9">
-                    <MixerHorizontalIcon className="h-3 w-3" />
+                  <Button variant="outline" size="icon" className="size-9">
+                    <MixerHorizontalIcon className="size-3" />
                   </Button>
                 }
               >
@@ -170,7 +170,7 @@ export function ScreenshotTemplateForm({
           </div>
 
           {/* Logo Input */}
-          {screenshot.template.name === "apple:app-screenshot" && (
+          {["apple:app-screenshot", "android:app-screenshot"].includes(screenshot.template.name) && (
             <div className="space-y-2">
               <Label htmlFor={`logo-${screenshotId}`} className="text-sm">
                 Logo
@@ -198,8 +198,8 @@ export function ScreenshotTemplateForm({
                   title="Logo Settings"
                   description="Customize the logo size."
                   trigger={
-                    <Button variant="outline" size="icon" className="h-9 w-9">
-                      <MixerHorizontalIcon className="h-3 w-3" />
+                    <Button variant="outline" size="icon" className="size-9">
+                      <MixerHorizontalIcon className="size-3" />
                     </Button>
                   }
                 >

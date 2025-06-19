@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
+
 import { HamburgerMenuIcon } from "@radix-ui/react-icons"
 
 import { Button } from "@/components/ui/button"
@@ -21,7 +21,7 @@ export function MobileNav() {
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild>
         <Button variant="ghost" size="icon">
-          <HamburgerMenuIcon className="h-6 w-6" />
+          <HamburgerMenuIcon className="size-6" />
         </Button>
       </SheetTrigger>
       <SheetContent>

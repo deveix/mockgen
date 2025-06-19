@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useMemo } from "react"
-import Image from "next/image"
+
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
 import satori from "satori"
 
@@ -39,13 +39,14 @@ export default function ScreenshotPreviewRenderer({
     const fontBuffers = await Promise.all(
       fontsResponses.map((res) => res.arrayBuffer())
     )
-
     // get the template component based on the currently selected template
-    const TemplateComp = templates[screenshot.template.name].Template
+    const templateEntry = templates[screenshot.template.name] as {
+      Template: React.ComponentType<{ template: typeof screenshot.template; renderWatermark: boolean }>
+    }
+    const TemplateComp = templateEntry.Template
 
     const svg = await satori(
       <TemplateComp
-        // @ts-expect-error need to fix this type
         template={screenshot.template}
         renderWatermark={false}
       />,
@@ -97,7 +98,7 @@ export default function ScreenshotPreviewRenderer({
     >
       <img
         alt="Preview"
-        className="h-full w-full rounded-md border object-contain"
+        className="size-full rounded-md border object-contain"
         width={screenshot.template.canvas.width}
         height={screenshot.template.canvas.height}
         src={

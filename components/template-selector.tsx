@@ -154,72 +154,21 @@ const templateFiltersByPlatform = templateFilters.reduce(
   {} as Record<Platform, TemplateFilter[]>
 )
 
-const templates = [
-  // Open Graph
-  // {
-  //   platform: "open-graph",
-  //   name: "og:image-right",
-  //   width: 1200,
-  //   height: 630,
-  //   skeleton: skeletons["og:image-right"],
-  // },
-  // {
-  //   platform: "open-graph",
-  //   name: "og:hero",
-  //   width: 1200,
-  //   height: 630,
-  //   skeleton: skeletons["og:hero"],
-  // },
-  // {
-  //   platform: "open-graph",
-  //   name: "og:logos",
-  //   width: 1200,
-  //   height: 630,
-  //   skeleton: skeletons["og:logos"],
-  // },
-  // {
-  //   platform: "open-graph",
-  //   name: "og:basic",
-  //   width: 1200,
-  //   height: 630,
-  //   skeleton: skeletons["og:basic"],
-  // },
-  // {
-  //   platform: "open-graph",
-  //   name: "og:notice",
-  //   width: 1200,
-  //   height: 630,
-  //   skeleton: skeletons["og:notice"],
-  // },
+export const templates = [
   {
-    platform: "open-graph",
-    name: "og:app-screenshot",
-    width: 1200,
-    height: 630,
-    skeleton: skeletons["og:app-screenshot"],
+    platform: "android",
+    name: "android:app-screenshot",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["android:app-screenshot"],
   },
 
-  // Twitter/X Header
   {
-    platform: "x",
-    name: "x:header-minimalist",
-    width: 1500,
-    height: 500,
-    skeleton: skeletons["x:header-minimalist"],
-  },
-  {
-    platform: "x",
-    name: "x:header-basic",
-    width: 1500,
-    height: 500,
-    skeleton: skeletons["x:header-basic"],
-  },
-  {
-    platform: "x",
-    name: "x:header-logo",
-    width: 1500,
-    height: 500,
-    skeleton: skeletons["x:header-logo"],
+    platform: "android",
+    name: "android:hanged-up",
+    width: 1320,
+    height: 2868,
+    skeleton: skeletons["android:hanged-up"],
   },
 
   // Apple

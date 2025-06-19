@@ -1,15 +1,32 @@
-# MockGen
 
-<div style="display: flex; justify-content: center; align-items: center; gap: 32px; margin-bottom: 16px;">
-  <a href="https://mockgen.click/" target="_blank">
-    <img src="public/samples/logos/imgsrc.png" alt="MockGen Logo" width="300" />
+<p>
+  <a href="https://github.com/deveix/mockgen/blob/main/LICENSE">
+    <img src="https://img.shields.io/github/license/deveix/mockgen?style=flat-square" alt="License: MIT" />
   </a>
-  <a href="https://mockgen.click/" target="_blank">
-    <img src="public/samples/logos/demo-logo.png" alt="Demo MockGen" width="200" />
+  <a href="https://github.com/deveix/mockgen/actions">
+    <img src="https://img.shields.io/github/actions/workflow/status/deveix/mockgen/ci.yml?branch=main&style=flat-square" alt="Build Status" />
   </a>
+  <a href="https://github.com/deveix/mockgen/releases">
+    <img src="https://img.shields.io/github/v/release/deveix/mockgen?style=flat-square&label=latest" alt="Latest Release" />
+  </a>
+</p>
+
+<div style="display: flex; justify-content: flex-start; align-items: center; gap: 32px; margin-bottom: 16px;">
+  <a href="https://mockgen.click/" target="_blank">
+    <img src="public/samples/logos/imgsrc.png" alt="MockGen Logo" width="100" />
+  </a>
+ <h1>Mockgen</h1>
 </div>
 
+
+
 Easily generate modern App Store & Google Play screenshots with customizable mockups.
+
+[Try me!](https://mockgen.click/)
+
+  <a href="https://mockgen.click/" target="_blank">
+    <img src="public/samples/logos/live-demo.gif" alt="Demo MockGen" width="200" />
+  </a>
 
 ## Features
 
@@ -27,9 +44,11 @@ Easily generate modern App Store & Google Play screenshots with customizable moc
 Create a `.env.local` file by copying and filling the file env.example
 
 ```
-NEXT_PUBLIC_BASE_URL=http://localhost:3000
-NEXT_PUBLIC_API_URL=http://localhost:3000/api
+NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000
+NEXT_PUBLIC_API_URL=http://0.0.0.0:3000/api
 ```
+
+** To ensure proper image upload use `http://0.0.0.0:3000` instead of `http://localhost:3000` **
 
 Install dependencies and start the app:
 

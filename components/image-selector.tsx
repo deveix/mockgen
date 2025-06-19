@@ -71,7 +71,7 @@ export function ImageSelector({
             className="w-full justify-start space-x-1 overflow-hidden"
           >
             <span>{file?.name ? "File:" : "Choose Image:"}</span>
-            <span className="overflow-hidden overflow-ellipsis font-mono font-normal">
+            <span className="overflow-hidden text-ellipsis font-mono font-normal">
               {file?.name || "(No file chosen)"}
             </span>
           </Button>
@@ -82,11 +82,11 @@ export function ImageSelector({
           }}
         >
           <DropdownMenuItem onSelect={handleSelect}>
-            <FileIcon className="mr-1 h-4 w-4" />
+            <FileIcon className="mr-1 size-4" />
             <span>Select a file</span>
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={handleRemove}>
-            <Cross2Icon className="mr-1 h-4 w-4" />
+            <Cross2Icon className="mr-1 size-4" />
             <span>Remove</span>
           </DropdownMenuItem>
         </DropdownMenuContent>

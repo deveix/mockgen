@@ -305,7 +305,7 @@ export function GlobalBackgroundForm() {
                           id="global-gradient-color-1"
                           type="color"
                           defaultValue="#000000"
-                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                          className="size-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
                         />
                       </div>
                       <div className="flex-1">
@@ -331,7 +331,7 @@ export function GlobalBackgroundForm() {
                           id="global-gradient-color-2"
                           type="color"
                           defaultValue="#ffffff"
-                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                          className="size-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
                         />
                       </div>
                     </div>
@@ -400,7 +400,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-top"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowUpIcon className="h-4 w-4" />
+                          <ArrowUpIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -414,7 +414,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-top-right"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowTopRightIcon className="h-4 w-4" />
+                          <ArrowTopRightIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -428,7 +428,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-right"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowRightIcon className="h-4 w-4" />
+                          <ArrowRightIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -442,7 +442,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-bottom-right"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowBottomRightIcon className="h-4 w-4" />
+                          <ArrowBottomRightIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -456,7 +456,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-bottom"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowDownIcon className="h-4 w-4" />
+                          <ArrowDownIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -470,7 +470,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-bottom-left"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowBottomLeftIcon className="h-4 w-4" />
+                          <ArrowBottomLeftIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -484,7 +484,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-left"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowLeftIcon className="h-4 w-4" />
+                          <ArrowLeftIcon className="size-4" />
                         </Label>
                       </div>
 
@@ -498,7 +498,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-to-top-left"
                           className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ArrowTopLeftIcon className="h-4 w-4" />
+                          <ArrowTopLeftIcon className="size-4" />
                         </Label>
                       </div>
                     </div>
@@ -523,7 +523,7 @@ export function GlobalBackgroundForm() {
                 >
                   <div className="flex flex-wrap gap-1">
                     {solidColors.map((color) => (
-                      <div key={color} className="h-9 min-h-9 w-9 min-w-9">
+                      <div key={color} className="size-9 min-h-9 min-w-9">
                         <RadioGroupItem
                           value={color}
                           id={`global-${color}`}
@@ -561,7 +561,7 @@ export function GlobalBackgroundForm() {
                           id="global-custom-color"
                           type="color"
                           defaultValue="#000000"
-                          className="h-8 w-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
+                          className="size-8 cursor-pointer rounded border-2 border-muted hover:border-primary"
                           onInput={(e) => {
                             const preview = document.getElementById(
                               "custom-color-preview"
@@ -669,7 +669,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-none"
                           className="flex cursor-pointer flex-col items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <ValueNoneIcon className="h-5 w-5" />
+                          <ValueNoneIcon className="size-5" />
                           <span className="mt-1 text-xs">None</span>
                         </Label>
                       </div>
@@ -684,7 +684,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-grid"
                           className="flex cursor-pointer flex-col items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <GridIcon className="h-5 w-5" />
+                          <GridIcon className="size-5" />
                           <span className="mt-1 text-xs">Grid</span>
                         </Label>
                       </div>
@@ -699,7 +699,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-graph-paper"
                           className="flex cursor-pointer flex-col items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <BorderAllIcon className="h-5 w-5" />
+                          <BorderAllIcon className="size-5" />
                           <span className="mt-1 text-xs">Graph</span>
                         </Label>
                       </div>
@@ -714,7 +714,7 @@ export function GlobalBackgroundForm() {
                           htmlFor="global-dots"
                           className="flex cursor-pointer flex-col items-center rounded-md border-2 border-muted bg-popover p-2 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
                         >
-                          <DotsHorizontalIcon className="h-5 w-5" />
+                          <DotsHorizontalIcon className="size-5" />
                           <span className="mt-1 text-xs">Dots</span>
                         </Label>
                       </div>
@@ -744,7 +744,7 @@ export function GlobalBackgroundForm() {
                   >
                     <div className="flex flex-wrap gap-1">
                       {gridOverlayColors.map((color) => (
-                        <div key={color} className="h-9 min-h-9 w-9 min-w-9">
+                        <div key={color} className="size-9 min-h-9 min-w-9">
                           <RadioGroupItem
                             value={color}
                             id={`global-overlay-${color}`}
@@ -790,7 +790,7 @@ export function GlobalBackgroundForm() {
                         } as GridOverlayParams,
                       })
                     }}
-                    className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                    className="[&_[role=slider]]:size-4"
                     aria-label="Opacity"
                   />
                 </div>
@@ -822,7 +822,7 @@ export function GlobalBackgroundForm() {
                         } as GridOverlayParams,
                       })
                     }}
-                    className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                    className="[&_[role=slider]]:size-4"
                     aria-label="Blur"
                   />
                 </div>
@@ -852,7 +852,7 @@ export function GlobalBackgroundForm() {
                         noise: v[0],
                       })
                     }
-                    className="[&_[role=slider]]:h-4 [&_[role=slider]]:w-4"
+                    className="[&_[role=slider]]:size-4"
                     aria-label="Noise"
                   />
                 </div>

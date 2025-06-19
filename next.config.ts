@@ -26,11 +26,11 @@ const nextConfig: NextConfig = {
   },
 
   // Remove console logs in production except errors
-  compiler: {
+  compiler: process.env.NODE_ENV === 'production' ? {
     removeConsole: {
       exclude: ['error'],
     },
-  },
+  } : {},
 
   // Headers for better SEO and security
   async headers() {

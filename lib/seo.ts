@@ -97,6 +97,7 @@ export function generateMetadata({
 // Generate structured data for different page types
 export function generateStructuredData(
   type: "WebApplication" | "Article" | "Organization",
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   data: any
 ) {
   const baseStructuredData = {
