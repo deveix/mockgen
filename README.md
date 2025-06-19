@@ -46,7 +46,10 @@ Create a `.env.local` file by copying and filling the file env.example
 ```
 NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000
 NEXT_PUBLIC_API_URL=http://0.0.0.0:3000/api
+GOOGLE_FONT_API_KEY=YOUR_API_KEY 
 ```
+
+Google font is only needed to fetch the fonts, not needed for deployement
 
 ** To ensure proper image upload use `http://0.0.0.0:3000` instead of `http://localhost:3000` **
 
@@ -58,6 +61,13 @@ yarn dev
 ```
 
 ## Build & Production
+
+### Sync Font
+You can fetch the top X fonts of google fonts. By default it take the top 1 hundred
+
+```shell
+yarn get-fonts [--max 42] [--subset arabic]
+```
 
 To build for production:
 
