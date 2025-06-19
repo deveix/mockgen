@@ -888,6 +888,13 @@
   resolved "https://registry.npmjs.org/@radix-ui/rect/-/rect-1.1.1.tgz"
   integrity sha512-HPwpGIzkl28mWyZqG52jiqDJ12waP11Pa1lGoiyUkIEuMLBP0oeK/C89esbXrxsky5we7dfd8U58nm0SgAWpVw==
 
+"@remotion/google-fonts@^4.0.315":
+  version "4.0.315"
+  resolved "https://registry.yarnpkg.com/@remotion/google-fonts/-/google-fonts-4.0.315.tgz#60971d73bdf9efb80072dcd60148403e8d9bfe28"
+  integrity sha512-mIW6v34R61KZCJqKUV/ujT3TpUuyvLV/4z6fQkoiLpf5euJoDcyOhoNmFtWpci8xUYVA2ovQzt5UgIr8tuNBFA==
+  dependencies:
+    remotion "4.0.315"
+
 "@resvg/resvg-wasm@^2.6.2":
   version "2.6.2"
   resolved "https://registry.npmjs.org/@resvg/resvg-wasm/-/resvg-wasm-2.6.2.tgz"
@@ -3319,6 +3326,11 @@ react-dom@19.0.0:
   dependencies:
     scheduler "^0.25.0"
 
+react-fontpicker-ts@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-fontpicker-ts/-/react-fontpicker-ts-1.2.0.tgz#ed82a30eb01bf043cbf2295e3c1a855614f7dfef"
+  integrity sha512-IRpNyTm3WRqR1SBiFCAEvAD52b/Htgo8gI5vNtSVHYRPMbPt1SDPkNMSCkujHMLmP/hCjD/6ZzfFcpdYF1gRqQ==
+
 react-is@^16.13.1:
   version "16.13.1"
   resolved "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
@@ -3425,6 +3437,11 @@ regexp.prototype.flags@^1.5.3, regexp.prototype.flags@^1.5.4:
     get-proto "^1.0.1"
     gopd "^1.2.0"
     set-function-name "^2.0.2"
+
+remotion@4.0.315:
+  version "4.0.315"
+  resolved "https://registry.yarnpkg.com/remotion/-/remotion-4.0.315.tgz#f4cc0e5b7ade66bd60159da80c50989e1d53019d"
+  integrity sha512-dU9Elt9BGKq18PXfgjCD3cADj98W8LY7x7gc/viH4P8oQuBacUDYbaDD9rUfA4FWOWqiQxZpxY1nbPhlby5Ruw==
 
 resolve-from@^4.0.0:
   version "4.0.0"

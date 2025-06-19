@@ -55,13 +55,12 @@ export default function ScreenshotPreviewRenderer({
     if (!screenshot) return
     const fonts = getFontsFromTemplate(screenshot.template.params)
     const fontsResponses = await Promise.all(
-      fonts.map((f) =>
-        fetch(getFontUrl({ family: f.family, weight: f.weight }))
+      fonts.map((f) => (
+
+        { family: f.family, weight: f.weight })
       )
     )
-    const fontBuffers = await Promise.all(
-      fontsResponses.map((res) => res.arrayBuffer())
-    )
+
     const templateEntry = templates[screenshot.template.name] as {
       Template: React.ComponentType<{ template: typeof screenshot.template; renderWatermark: boolean }>
     }
@@ -70,7 +69,6 @@ export default function ScreenshotPreviewRenderer({
     // On retire le champ texte principal
     const textFieldKey = Object.keys(templateSansTexte.params).find(key => {
       const val = templateSansTexte.params[key] as Record<string, unknown>
-      console.log('Checking field:', key, val)
       return (
         val &&
         typeof val === "object" &&
@@ -102,7 +100,7 @@ export default function ScreenshotPreviewRenderer({
         name: f.family,
         weight: f.weight,
         fontSize: f.fontSize,
-        data: fontBuffers[i],
+        data: f.data,
         style: "normal",
       })),
       async loadAdditionalAsset(languageCode, segment) {
@@ -129,9 +127,6 @@ export default function ScreenshotPreviewRenderer({
     screenshot?.template.canvas,
   ])
 
-  console.log('RENDERING PREVIEW', { screenshot })
-  // Récupération des dimensions et position du mock selon le template (exemple Android)
-  // Valeurs par défaut si non trouvées
   const mockConfig = (() => {
     if (screenshot?.template.name === "android:app-screenshot") {
       const width = (screenshot.template.canvas.width ?? 400) * 0.8
@@ -163,7 +158,8 @@ export default function ScreenshotPreviewRenderer({
   }, [screenshotId])
   if (!screenshot) return null
 
-  function getMainTextField(params: Record<string, unknown>) {
+  const getMainTextField = (params: Record<string, unknown>) => {
+
     for (const key of Object.keys(params)) {
       const val = params[key] as Record<string, unknown>
       if (
@@ -187,21 +183,15 @@ export default function ScreenshotPreviewRenderer({
     return null
   }
 
-  // Pour le template Apple, on applique la même largeur et centrage que le HTML
   let textWidth = mockConfig.width
   let textX = textPos.x
   let textY = textPos.y
   if (screenshot?.template.name === "apple:app-screenshot") {
-    textWidth = mockConfig.width - 200 // marginLeft + marginRight (100px chacun)
+    textWidth = mockConfig.width - 200
     textX = (mockConfig.width - textWidth) / 2 + textPos.x
     textY = textPos.y
   }
 
-  const positions = [
-    'left-top', 'center-top', 'right-top', '--',
-    'left-middle', 'center-middle', 'right-middle', '--',
-    'left-bottom', 'center-bottom', 'right-bottom'
-  ];
   const [textState, setTextState] = useState({ x: textX, y: textY, rotation: 0, width: textWidth, height: undefined as number | undefined })
   useEffect(() => {
     setTextState({ x: textX, y: textY, rotation: 0, width: textWidth, height: undefined })
@@ -247,6 +237,7 @@ export default function ScreenshotPreviewRenderer({
             {/* Texte draggable */}
             {screenshot && (() => {
               const textField = getMainTextField(screenshot.template.params)
+              console.log('Text field:', { textField })
               if (!textField) return null
               return (
                 <DraggableTemplateText
@@ -262,7 +253,6 @@ export default function ScreenshotPreviewRenderer({
                 />
               )
             })()}
-            {/* Image mock draggable, position/dimensions liées au template */}
             {screenshot?.previewSvg && (
               <>
                 <ImageKonva

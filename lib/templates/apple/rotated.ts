@@ -25,7 +25,7 @@ export const rotatedTemplateDefault: RotatedTemplate = {
       text: "A super helpful app feature goes here",
       fontFamily: "poppins",
       fontWeight: 700,
-      fontSize: 110,
+      fontSize: 30,
       color: "#222",
     },
     screenshot: {

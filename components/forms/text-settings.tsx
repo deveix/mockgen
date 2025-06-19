@@ -16,6 +16,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { FontPicker } from "../font-picker"
 
 interface TextSettingsProps {
   fontFamily: FontFamily
@@ -57,23 +58,7 @@ export function TextSettings({
       <div className="grid gap-2">
         <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="font-family">Font family</Label>
-          <Select
-            value={fontFamily}
-            onValueChange={(v) => onChangeFontFamily(v as FontFamily)}
-          >
-            <SelectTrigger id="font-family" className="col-span-2 h-8">
-              <SelectValue placeholder="Select a font" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {supportedFonts.map(({ value, label }) => (
-                  <SelectItem key={value} value={value}>
-                    {label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+          <FontPicker handleChange={onChangeFontFamily} />
         </div>
 
         <div className="grid grid-cols-3 items-center gap-4">
@@ -141,6 +126,6 @@ export function TextSettings({
           </RadioGroup>
         </div>
       </div>
-    </div>
+    </div >
   )
 }

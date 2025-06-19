@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useEffect } from "react"
 import { Text } from "react-konva"
 
 export function DraggableTemplateText({
@@ -22,13 +22,16 @@ export function DraggableTemplateText({
     width: number
     onDragEnd: (pos: { x: number; y: number }) => void
 }) {
+    useEffect(() => {
+
+    }, [fontFamily, fontWeight])
     return (
         <Text
             text={text}
             x={x}
             y={y}
             fontSize={fontSize}
-            fontFamily={fontFamily}
+            fontFamily={`${fontFamily}`}
             fontStyle={fontWeight >= 700 ? "bold" : "normal"}
             fill={color}
             width={width}

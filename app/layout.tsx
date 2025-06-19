@@ -1,4 +1,5 @@
 import "./globals.css"
+import 'react-fontpicker-ts/dist/index.css'
 
 import type { Metadata } from "next"
 import Link from "next/link"

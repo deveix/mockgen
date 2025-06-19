@@ -52,7 +52,6 @@ export function toBackgroundShorthand(
     | "transparent"
 ) {
   if (background === "transparent") {
-    console.log("Using transparent background")
     return 'transparent'
   }
   if (background.type === "color") {
