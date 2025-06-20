@@ -24,7 +24,7 @@ export const hangedUpTemplateDefault: HangedUpTemplate = {
   params: {
     title: {
       text: "A super helpful app feature goes here",
-      fontFamily: "poppins",
+      fontFamily: "Poppins",
       fontWeight: 700,
       fontSize: 25,
       color: "#222",

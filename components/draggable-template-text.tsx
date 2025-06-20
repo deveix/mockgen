@@ -1,17 +1,7 @@
-import React, { useEffect } from "react"
+import React, { forwardRef, useEffect } from "react"
 import { Text } from "react-konva"
 
-export function DraggableTemplateText({
-    text,
-    x,
-    y,
-    fontSize,
-    fontFamily,
-    fontWeight,
-    color,
-    width,
-    onDragEnd,
-}: {
+export const DraggableTemplateText = forwardRef<any, {
     text: string
     x: number
     y: number
@@ -21,23 +11,48 @@ export function DraggableTemplateText({
     color: string
     width: number
     onDragEnd: (pos: { x: number; y: number }) => void
-}) {
-    useEffect(() => {
-
-    }, [fontFamily, fontWeight])
-    return (
-        <Text
-            text={text}
-            x={x}
-            y={y}
-            fontSize={fontSize}
-            fontFamily={`${fontFamily}`}
-            fontStyle={fontWeight >= 700 ? "bold" : "normal"}
-            fill={color}
-            width={width}
-            draggable
-            onDragEnd={e => onDragEnd({ x: e.target.x(), y: e.target.y() })}
-            align="center"
-        />
-    )
-}
+    draggable?: boolean
+    onClick?: () => void
+    onTap?: () => void
+}>(
+    (
+        {
+            text,
+            x,
+            y,
+            fontSize,
+            fontFamily,
+            fontWeight,
+            color,
+            width,
+            onDragEnd,
+            draggable = false,
+            onClick,
+            onTap,
+        },
+        ref
+    ) => {
+        useEffect(() => {
+            console.log("KANVA Loading font:", fontFamily, "Weight:", fontWeight)
+        }, [fontFamily, fontWeight])
+        return (
+            <Text
+                ref={ref}
+                text={text}
+                x={x * 0.75}
+                y={y}
+                fontSize={fontSize}
+                fontFamily={`${fontFamily}`}
+                fontStyle={fontWeight >= 700 ? "bold" : "normal"}
+                fill={color}
+                width={width * 2}
+                draggable={draggable}
+                onDragEnd={e => onDragEnd({ x: e.target.x(), y: e.target.y() })}
+                align="center"
+                onClick={onClick}
+                onTap={onTap}
+            />
+        )
+    }
+)
+DraggableTemplateText.displayName = "DraggableTemplateText"

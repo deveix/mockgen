@@ -1,9 +1,3 @@
-import {
-  FontFamily,
-  FontWeight,
-  fontWeights,
-  supportedFonts,
-} from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -16,11 +10,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { FontPicker } from "../font-picker"
+import { useEffect, useState } from "react"
+import {
+  FontWeight,
+  fontWeights,
+  getAvailableFontsFromAPI,
+  getFontUrl,
+} from "@/lib/fonts"
 
 interface TextSettingsProps {
-  fontFamily: FontFamily
-  onChangeFontFamily: (fontFamily: FontFamily) => void
+  fontFamily: string
+  onChangeFontFamily: (fontFamily: string) => void
   fontWeight: FontWeight
   onChangeFontWeight: (fontWeight: FontWeight) => void
   fontSize: number
@@ -53,12 +53,77 @@ export function TextSettings({
   onChangeColor,
   className,
 }: TextSettingsProps) {
+  const [subset, setSubset] = useState<string>("latin")
+  const [fonts, setFonts] = useState<any[]>([])
+  const [loadingFonts, setLoadingFonts] = useState(false)
+
+  useEffect(() => {
+    setLoadingFonts(true)
+    getAvailableFontsFromAPI(subset, 100).then((f) => {
+      setFonts(f)
+      setLoadingFonts(false)
+    })
+  }, [subset])
+
+  // Charge dynamiquement la font sélectionnée côté client
+  useEffect(() => {
+    if (!fontFamily || !fontWeight) return
+    getFontUrl({ family: fontFamily, weight: fontWeight }).then((fontUrl) => {
+      if (!fontUrl) return
+      const fontName = fontFamily.replace(/-/g, ' ')
+      const styleId = `dynamic-font-${fontFamily}-${fontWeight}`
+      // Supprime l'ancien style si déjà injecté
+      const oldStyle = document.getElementById(styleId)
+      if (oldStyle) oldStyle.remove()
+      // Crée la règle @font-face
+      const style = document.createElement('style')
+      style.id = styleId
+      style.innerHTML = `@font-face { font-family: '${fontName}'; src: url('${fontUrl}') format('woff2'); font-weight: ${fontWeight}; font-display: swap; }`
+      document.head.appendChild(style)
+    })
+  }, [fontFamily, fontWeight, subset])
+
+  const weights: number[] = Array.isArray(fonts.find((f) => f.value === fontFamily)?.weights)
+    ? Array.from(new Set(fonts.find((f) => f.value === fontFamily)?.weights as number[]))
+    : [];
+
   return (
     <div className={cn("grid gap-4", className)}>
       <div className="grid gap-2">
         <div className="grid grid-cols-3 items-center gap-4">
+          <Label htmlFor="subset">Subset</Label>
+          <Select value={subset} onValueChange={setSubset}>
+            <SelectTrigger id="subset" className="col-span-2 h-8">
+              <SelectValue placeholder="Subset" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem value="latin">Latin</SelectItem>
+                <SelectItem value="arabic">Arabic</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="grid grid-cols-3 items-center gap-4">
           <Label htmlFor="font-family">Font family</Label>
-          <FontPicker handleChange={onChangeFontFamily} />
+          <Select
+            value={fontFamily}
+            onValueChange={onChangeFontFamily}
+            disabled={loadingFonts}
+          >
+            <SelectTrigger id="font-family" className="col-span-2 h-8">
+              <SelectValue placeholder="Select a font" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                {fonts.map((f) => (
+                  <SelectItem key={f.value} value={f.value}>
+                    {f.label}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
         </div>
 
         <div className="grid grid-cols-3 items-center gap-4">
@@ -68,17 +133,17 @@ export function TextSettings({
             onValueChange={(v) =>
               onChangeFontWeight(parseInt(v as string) as FontWeight)
             }
+            disabled={loadingFonts || weights.length === 0}
           >
             <SelectTrigger id="font-weight" className="col-span-2 h-8">
               <SelectValue placeholder="Select a weight" />
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
-                {supportedFonts
-                  .find((f) => f.value === fontFamily)
-                  ?.weights.map((weight) => (
+                {weights.length > 0 &&
+                  weights.map((weight: number) => (
                     <SelectItem key={weight} value={weight.toString()}>
-                      {fontWeights[weight]}
+                      {fontWeights[weight as keyof typeof fontWeights] ?? weight}
                     </SelectItem>
                   ))}
               </SelectGroup>

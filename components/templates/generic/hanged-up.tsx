@@ -4,47 +4,63 @@ import { HangedUpTemplate } from "@/lib/templates/apple/hanged-up"
 import { toBackgroundShorthand } from "@/lib/templates/elements/background"
 import { absoluteUrl } from "@/lib/url"
 
-function getScreenshotPosition(template: HangedUpTemplate) {
+// Coords et taille réelle du PNG pour iPhone 15 Black Mockup
+const FRAME_WIDTH = 1419  // largeur réelle du PNG
+const FRAME_HEIGHT = 2796 // hauteur réelle du PNG
+const SCREENSHOT_COORDS = [[120, 120], [1299, 120], [1299, 2676], [120, 2676]]
+
+function getScreenshotPosition(template: HangedUpTemplate, frameDisplayWidth: number, frameDisplayHeight: number) {
+  // Par défaut, Android non supporté dans cette démo
+  // (Adapte la logique si tu veux le même calcul pour Android)
   const isAndroid = template.name.startsWith("android:")
-  const pos: { [key: string]: number } = {}
-  const fields = ["left", "right", "top", "bottom"]
-  if (template.params.screenshot) {
-    for (const field of fields) {
-      const value = (template.params.screenshot as Record<string, unknown>)[field]
-      if (typeof value === "number" && value !== 0) {
-        pos[field] = value
-      }
+  if (isAndroid) {
+    // Pour Android, remplace par tes propres valeurs ou une autre fonction
+    return {
+      left: 35,
+      top: 0,
+      width: frameDisplayWidth - 55, // à adapter selon ton PNG Android
+      height: frameDisplayHeight - 30,
+      borderRadius: 80,
     }
   }
-  if (Object.keys(pos).length === 0) {
-    pos.left = isAndroid ? 35 : 40
-    pos.right = 20
-    pos.bottom = isAndroid ? 30 : 80
-  }
-  return pos
+
+  // Calcul du scaling (important !)
+  const scaleX = frameDisplayWidth / FRAME_WIDTH
+  const scaleY = frameDisplayHeight / FRAME_HEIGHT
+
+  // Extraction des coordonnées écran (rectangle)
+  const [topLeft, topRight, bottomRight] = SCREENSHOT_COORDS
+  const left = topLeft[0] * scaleX
+  const top = topLeft[1] * scaleY
+  const width = (topRight[0] - topLeft[0]) * scaleX
+  const height = (bottomRight[1] - topRight[1]) * scaleY
+  const borderRadius = 80 * scaleX // À ajuster si besoin selon le visuel de ton frame
+
+  return { left, top, width, height, borderRadius }
 }
 
 /**
  * 
- * This file have a lot in common with the other templates, it will be interesting to see how much are in common
+ * This file has a lot in common with the other templates, it will be interesting to see how much are in common
  * 
  */
-
-export function Template(props: {
-  template: HangedUpTemplate
-}) {
+export function Template(props: { template: HangedUpTemplate }) {
   const { template } = props
-  // 1:2 aspect ratio
-  const screenshotWidth = template.canvas.width * 0.8
-  const screenshotHeight = screenshotWidth * 2.2
   const isAndroid = template.name.startsWith("android:")
-  const screenshotPosition = getScreenshotPosition(template)
+
+  // On choisit une taille d'affichage pour la frame (par exemple 800px de large)
+  // ou adapte selon template.canvas.width/height si nécessaire
+  const FRAME_DISPLAY_WIDTH = template.canvas.width
+  const FRAME_DISPLAY_HEIGHT = template.canvas.height
+
+  // Calcul dynamique de la position/size du screenshot
+  const screenshotPos = getScreenshotPosition(template, FRAME_DISPLAY_WIDTH, FRAME_DISPLAY_HEIGHT)
 
   return (
     <div
       style={{
-        width: template.canvas.width,
-        height: template.canvas.height,
+        width: FRAME_DISPLAY_WIDTH,
+        height: FRAME_DISPLAY_HEIGHT,
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -64,6 +80,7 @@ export function Template(props: {
           opacity: template.background.noise,
           backgroundImage: `url('${absoluteUrl("/noise.svg")}')`,
           backgroundRepeat: "repeat",
+          display: "flex",
         }}
       ></div>
 
@@ -73,61 +90,77 @@ export function Template(props: {
             height: "100%",
             width: "100%",
             position: "absolute",
-            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({ color: template.background.gridOverlay.color, opacity: template.background.gridOverlay.opacity })}')`,
+            backgroundImage: `url('${patterns[template.background.gridOverlay.pattern].svg({
+              color: template.background.gridOverlay.color,
+              opacity: template.background.gridOverlay.opacity
+            })}')`,
             maskImage:
               template.background.gridOverlay.blurRadius > 0
                 ? `radial-gradient(rgb(0, 0, 0) 0%, rgba(0, 0, 0, 0) ${100 - template.background.gridOverlay.blurRadius}%)`
                 : "none",
+            display: "flex",
           }}
         ></div>
       )}
       <div
         style={{
-          width: screenshotWidth + (isAndroid ? 70 : 80),
-          height: screenshotHeight,
+          width: FRAME_DISPLAY_WIDTH,
+          height: FRAME_DISPLAY_HEIGHT,
           display: "flex",
           overflow: "hidden",
           position: "relative",
-          top: -100,
+          justifyContent: "center",
+          alignItems: "center",
         }}
       >
-        {/* Device frame using iphone-up SVG rotated upside down */}
-        { /* ToDo: use the complete frame on every template to simplify mocks management */}
+        {/* Screenshot container avec placement précis */}
+        <div
+          style={{
+            position: "absolute",
+            width: screenshotPos.width + 2,
+            height: screenshotPos.height + 2,
+            left: screenshotPos.left,
+            top: screenshotPos.top,
+            zIndex: 2,
+            overflow: "hidden",
+            borderRadius: screenshotPos.borderRadius,
+            pointerEvents: "none",
+            display: "flex",
+          }}
+        >
+          {template.params.screenshot.url && (
+            <img
+              src={template.params.screenshot.url}
+              alt="App Screenshot"
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+                borderRadius: screenshotPos.borderRadius,
+                display: "block",
+              }}
+            />
+          )}
+        </div>
+        {/* Frame PNG (device) */}
         <img
-          src={absoluteUrl(`/mocks/${isAndroid ? 'android-frame.svg' : 'iphone-up.svg'}`)}
+          src={absoluteUrl(`/mocks/${isAndroid ? 'android-frame.svg' : 'iphone-15-frame.png'}`)}
           alt="Device Frame"
           style={{
             width: "100%",
             height: "100%",
             display: "flex",
             zIndex: 4,
+            position: "relative",
           }}
         />
-        {/* User screenshot */}
-        {template.params.screenshot.url && (
-          <img
-            src={template.params.screenshot.url}
-            alt="App Screenshot"
-            style={{
-              position: "absolute",
-              width: screenshotWidth,
-              height: screenshotHeight,
-              objectFit: "cover",
-              zIndex: 1,
-              borderBottomLeftRadius: isAndroid ? 80 : 150,
-              borderBottomRightRadius: isAndroid ? 80 : 150,
-              transformOrigin: "center center",
-              ...screenshotPosition,
-            }}
-          />
-        )}
       </div>
       <div
         style={{
-          fontSize: template.params.title.fontSize,
-          fontWeight: template.params.title.fontWeight,
-          color: template.params.title.color,
-          fontFamily: template.params.title.fontFamily,
+          fontSize: template.params.title.fontSize as number,
+          fontWeight: template.params.title.fontWeight as import("@/lib/fonts").FontWeight,
+          color: template.params.title.color as string,
+          fontFamily: template.params.title.fontFamily as string,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -137,16 +170,16 @@ export function Template(props: {
       >
         <p
           style={{
-            fontFamily: template.params.title.fontFamily,
-            fontWeight: template.params.title.fontWeight,
+            fontFamily: template.params.title.fontFamily as string,
+            fontWeight: template.params.title.fontWeight as import("@/lib/fonts").FontWeight,
             fontSize: `${template.params.title.fontSize}px`,
-            color: template.params.title.color,
+            color: template.params.title.color as string,
             marginLeft: 150,
             marginRight: 150,
             lineHeight: 1.2,
           }}
         >
-          {template.params.title.text}
+          {template.params.title.text as string}
         </p>
       </div>
       {/* {renderWatermark && <Watermark style={{ bottom: 16, right: 16 }} />} */}

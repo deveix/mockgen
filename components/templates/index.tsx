@@ -1,13 +1,6 @@
 import * as generic from "./generic"
-import * as x from "./x"
 
 export const templates = {
-
-  // X Header templates
-  "x:header-basic": x.header.basic,
-  "x:header-minimalist": x.header.minimalist,
-  "x:header-logo": x.header.logo,
-
   // Apple
   "apple:app-screenshot": generic.appScreenshot,
   "apple:tilted-left": generic.tiltedLeft,

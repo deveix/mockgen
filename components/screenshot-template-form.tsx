@@ -20,6 +20,7 @@ import { ImageSettings } from "@/components/forms/image-settings"
 import { TextSettings } from "@/components/forms/text-settings"
 import { ImageSelector } from "@/components/image-selector"
 import { ResponsivePopover } from "@/components/responsive-popover"
+import { FontWeight } from "@/lib/fonts"
 
 interface ScreenshotTemplateFormProps {
   screenshotId: number
@@ -51,7 +52,7 @@ export function ScreenshotTemplateForm({
       // && screenshot.template.name !== "apple:app-screenshot"
       const params = screenshot.template
         .params as AppScreenshotTemplate["params"]
-      setLocalTitle(params.title.text)
+      setLocalTitle(String(params.title.text))
     }
   }, [screenshot?.id]) // Only reset when screenshot ID changes
 
@@ -75,7 +76,6 @@ export function ScreenshotTemplateForm({
     }
   }, [debouncedTitle, screenshot, screenshotId, updateTemplateParams])
 
-  // Memoize params to avoid recalculating
   const params = useMemo(() => {
     if (!screenshot)
       // || screenshot.template.name !== "apple:app-screenshot"
@@ -124,11 +124,12 @@ export function ScreenshotTemplateForm({
                 }
               >
                 <TextSettings
-                  fontFamily={params.title.fontFamily}
-                  fontSize={params.title.fontSize}
-                  fontWeight={params.title.fontWeight}
-                  color={params.title.color}
-                  onChangeFontFamily={(fontFamily) =>
+                  fontFamily={params.title.fontFamily as string}
+                  fontSize={params.title.fontSize as number}
+                  fontWeight={params.title.fontWeight as FontWeight}
+                  color={params.title.color as string}
+                  onChangeFontFamily={(fontFamily) => {
+                    console.log("Changing font family:", fontFamily)
                     updateTemplateParams(screenshotId, {
                       title: {
                         ...params.title,
@@ -136,7 +137,7 @@ export function ScreenshotTemplateForm({
                         fontFamily,
                       },
                     })
-                  }
+                  }}
                   onChangeFontSize={(fontSize) =>
                     updateTemplateParams(screenshotId, {
                       title: {
