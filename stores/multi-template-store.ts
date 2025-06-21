@@ -34,6 +34,12 @@ export interface MultiTemplateActions {
 
 export type MultiTemplateStore = MultiTemplateState & MultiTemplateActions
 
+export interface MultiTemplateStoreWithRefs extends MultiTemplateStore {
+  stageRefs: Record<number, React.RefObject<any>>
+  registerStageRef: (id: number, ref: React.RefObject<any>) => void
+  unregisterStageRef: (id: number) => void
+}
+
 export const defaultInitState: MultiTemplateState = {
   screenshots: [],
   selectedPlatform: "apple",
@@ -41,8 +47,19 @@ export const defaultInitState: MultiTemplateState = {
 
 export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
   const state = initState || defaultInitState
-  return createStore<MultiTemplateStore>()((set, get) => ({
+  return createStore<MultiTemplateStoreWithRefs>()((set, get) => ({
     ...state,
+    stageRefs: {},
+    registerStageRef: (id, ref) =>
+      set((store) => ({
+        stageRefs: { ...store.stageRefs, [id]: ref },
+      })),
+    unregisterStageRef: (id) =>
+      set((store) => {
+        const refs = { ...store.stageRefs }
+        delete refs[id]
+        return { stageRefs: refs }
+      }),
     // Selector helpers for performance optimization
     getScreenshotById: (id: number) => {
       return get().screenshots.find((s) => s.id === id)
@@ -63,9 +80,9 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
 
         if (state.selectedPlatform === "android") {
           appleTemplates = [
-          "android:app-screenshot",
-          "android:hanged-up",
-        ]
+            "android:app-screenshot",
+            "android:hanged-up",
+          ]
         }
 
         // Get the template based on current count (rotate through templates)
@@ -112,32 +129,32 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
               ...newTemplate,
               params: {
                 ...newTemplate.params,
-                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 ...(screenshotUrl && (newTemplate.params as any).screenshot
                   ? {
-                      screenshot: { url: screenshotUrl },
-                    }
+                    screenshot: { url: screenshotUrl },
+                  }
                   : {}),
               },
             } as Template,
           }
         }),
       })),
-     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     updateTemplateParams: (id: number, params: any) =>
       set((state) => ({
         screenshots: state.screenshots.map((s) =>
           s.id === id
             ? {
-                ...s,
-                template: {
-                  ...s.template,
-                  params: {
-                    ...s.template.params,
-                    ...params,
-                  },
+              ...s,
+              template: {
+                ...s.template,
+                params: {
+                  ...s.template.params,
+                  ...params,
                 },
-              }
+              },
+            }
             : s
         ),
       })),
@@ -149,12 +166,12 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
         screenshots: state.screenshots.map((s) =>
           s.id === id
             ? {
-                ...s,
-                template: {
-                  ...s.template,
-                  background,
-                },
-              }
+              ...s,
+              template: {
+                ...s.template,
+                background,
+              },
+            }
             : s
         ),
       })),
@@ -201,9 +218,9 @@ export const createMultiTemplateStore = (initState?: MultiTemplateState) => {
 
         if (platform === "android") {
           appleTemplates = [
-          "android:app-screenshot",
-          "android:hanged-up",
-        ]
+            "android:app-screenshot",
+            "android:hanged-up",
+          ]
         }
         const updatedScreenshots = state.screenshots.map(
           (screenshot, index) => {

@@ -4,11 +4,12 @@ import { createContext, PropsWithChildren, useContext, useRef } from "react"
 import {
   createMultiTemplateStore,
   type MultiTemplateStore,
+  type MultiTemplateStoreWithRefs,
 } from "@/stores/multi-template-store"
 import { useStore, type StoreApi } from "zustand"
 
 const MultiTemplateStoreContext =
-  createContext<StoreApi<MultiTemplateStore> | null>(null)
+  createContext<StoreApi<MultiTemplateStoreWithRefs> | null>(null)
 
 
 export const MultiTemplateStoreProvider = ({
@@ -27,7 +28,7 @@ export const MultiTemplateStoreProvider = ({
 }
 
 export const useMultiTemplateStore = <T,>(
-  selector: (store: MultiTemplateStore) => T
+  selector: (store: MultiTemplateStoreWithRefs) => T
 ): T => {
   const multiTemplateStoreContext = useContext(MultiTemplateStoreContext)
 

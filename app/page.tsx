@@ -208,12 +208,13 @@ const PlatformButton = ({
   const isActive = selectedPlatform === platform
   return (
     <button
-      className={`flex flex-col items-center rounded-lg border px-4 py-2 transition-colors ${isActive ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
+      className={`flex flex-col items-center justify-center rounded-lg border transition-colors aspect-square min-w-[96px] min-h-[96px] max-w-[96px] max-h-[96px] px-4 py-4 ${isActive ? "border-primary bg-primary/10" : "border-muted bg-background hover:bg-muted"}`}
+      style={{ width: 96, height: 96 }}
       onClick={onClick}
     >
       {children}
       <span
-        className={`font-medium ${isActive ? "text-primary" : "text-muted-foreground"}`}
+        className={`font-medium mt-1 ${isActive ? "text-primary" : "text-muted-foreground"}`}
       >
         {platform === "apple" ? "Apple" : "Android"}
       </span>
@@ -251,13 +252,14 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          <div className="flex gap-2 overflow-x-auto pb-2" style={{ scrollbarWidth: 'thin' }}>
             {[1, 2, 3, 4, 5].map((num) => (
-              <ExampleImageCard
-                key={num}
-                num={num}
-                onClick={() => setPreviewImage(`/examples/${num}.png`)}
-              />
+              <div key={num} style={{ minWidth: 120, maxWidth: 260, flex: 'auto' }}>
+                <ExampleImageCard
+                  num={num}
+                  onClick={() => setPreviewImage(`/examples/${num}.png`)}
+                />
+              </div>
             ))}
           </div>
           <p className="text-center text-sm text-muted-foreground">

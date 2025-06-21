@@ -18,7 +18,12 @@ async function downloadImage(url, dest) {
 }
 
 async function main() {
-  const devices = JSON.parse(fs.readFileSync(DEVICES_FILE, "utf-8"));
+  const devicesData = JSON.parse(fs.readFileSync(DEVICES_FILE, "utf-8"));
+  const devices = devicesData.devices.filter(
+    (device) =>
+      device.device_type === "Android" ||
+      (device.device_type === "iOS" && device.meta_title.includes("iPhone"))
+  );
   if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR);
 
   for (const device of devices) {

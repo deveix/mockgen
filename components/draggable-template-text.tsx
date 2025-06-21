@@ -1,7 +1,7 @@
-import React, { forwardRef, useEffect } from "react"
+import React, { forwardRef } from "react"
 import { Text } from "react-konva"
 
-export const DraggableTemplateText = forwardRef<any, {
+export type DraggableTemplateTextProps = {
     text: string
     x: number
     y: number
@@ -14,7 +14,9 @@ export const DraggableTemplateText = forwardRef<any, {
     draggable?: boolean
     onClick?: () => void
     onTap?: () => void
-}>(
+}
+
+export const DraggableTemplateText = forwardRef<any, DraggableTemplateTextProps>(
     (
         {
             text,
@@ -31,28 +33,24 @@ export const DraggableTemplateText = forwardRef<any, {
             onTap,
         },
         ref
-    ) => {
-        useEffect(() => {
-            console.log("KANVA Loading font:", fontFamily, "Weight:", fontWeight)
-        }, [fontFamily, fontWeight])
-        return (
-            <Text
-                ref={ref}
-                text={text}
-                x={x * 0.75}
-                y={y}
-                fontSize={fontSize}
-                fontFamily={`${fontFamily}`}
-                fontStyle={fontWeight >= 700 ? "bold" : "normal"}
-                fill={color}
-                width={width * 2}
-                draggable={draggable}
-                onDragEnd={e => onDragEnd({ x: e.target.x(), y: e.target.y() })}
-                align="center"
-                onClick={onClick}
-                onTap={onTap}
-            />
-        )
-    }
+    ) => (
+        <Text
+            ref={ref}
+            text={text}
+            x={x * 0.75}
+            y={y}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+            fontStyle={fontWeight >= 700 ? "bold" : "normal"}
+            fill={color}
+            width={width * 2}
+            draggable={draggable}
+            onDragEnd={e => onDragEnd({ x: e.target.x(), y: e.target.y() })}
+            align="center"
+            onClick={onClick}
+            onTap={onTap}
+        />
+    )
 )
+
 DraggableTemplateText.displayName = "DraggableTemplateText"

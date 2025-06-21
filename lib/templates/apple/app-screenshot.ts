@@ -32,8 +32,8 @@ export const appScreenshotTemplateDefault: AppScreenshotTemplate = {
     },
     logo: {
       url: absoluteUrl("/logo.svg"),
-      width: 200,
-      height: 200,
+      width: 100,
+      height: 100,
     },
     screenshot: {
       url: absoluteUrl("/samples/screenshots/iphone-screenshot.png"),

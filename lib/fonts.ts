@@ -41,14 +41,14 @@ export async function getFontUrl({
     family: string
     weight: number
 }): Promise<string | null> {
-    if (!GOOGLE_FONTS_API_KEY) return null
+    if (!GOOGLE_FONTS_API_KEY) throw new Error("Missing GOOGLE_FONTS_API_KEY in .env")
     const url = `https://www.googleapis.com/webfonts/v1/webfonts?family=${encodeURIComponent(family)}&key=${GOOGLE_FONTS_API_KEY}`
     console.log("Fetching font data from URL:", url)
     try {
         const res = await fetch(url)
         if (!res.ok) return null
         const data = await res.json()
-        const item = data.items?.[0]
+        const item = data.items?.find((item: any) => item.family === family)
         if (!item || !item.files) return null
         const variantKey = String(weight)
         let fontUrl = item.files[variantKey]
@@ -68,6 +68,14 @@ type SupportedFont = {
     subset: string
 }
 
+export type GoogleFontsAPIItem = {
+    family: string;
+    variants: string[];
+    subsets: string[];
+    files: Record<string, string>;
+    [key: string]: any;
+};
+
 async function getAvailableFontsFromAPI(
     subset: string = "latin",
     maxFonts: number = 100
@@ -79,15 +87,20 @@ async function getAvailableFontsFromAPI(
     if (!resp.ok) throw new Error(`Google Fonts API error: ${resp.statusText}`)
     const data: any = await resp.json()
     console.log("Available fonts data:", { data })
-    return (data.items as any[])
-        .filter((f: any) => f.subsets.includes(subset))
+    return (data.items as GoogleFontsAPIItem[])
+        .filter((f: GoogleFontsAPIItem) => f.subsets.includes(subset))
         .slice(0, maxFonts)
-        .map((f: any) => ({
+        .map((f: GoogleFontsAPIItem) => ({
             value: f.family,
             label: f.family,
             weights: (f.variants as string[])
-                .map((v: string) => parseInt(v.replace(/[^0-9]/g, "")))
-                .filter((n: number) => !!n),
+                .map((v: string) => {
+                    if (v === "regular" || v === "italic") return 400;
+                    const match = v.match(/^(\d+)/);
+                    if (match) return parseInt(match[1], 10);
+                    return NaN;
+                })
+                .filter((n: number) => Number.isFinite(n)),
             subset,
         }))
 }
@@ -96,31 +109,22 @@ export { getAvailableFontsFromAPI }
 
 
 export function getFontsFromTemplate(template: Template["params"]) {
-    const fonts: { family: string; weight: FontWeight }[] = []
-
-    for (const [_, value] of Object.entries(template)) {
+    const fontMap = new Map<string, FontWeight>()
+    for (const value of Object.values(template)) {
         if (
-            value && // ensure the value is non-null
+            value &&
             typeof value === "object" &&
             "fontFamily" in value &&
             "fontWeight" in value
         ) {
-            // dedupe based on font weight and family
-            if (
-                fonts.find(
-                    (font) =>
-                        font.family === value.fontFamily && font.weight === value.fontWeight
-                )
-            ) {
-                continue
+            const key = `${value.fontFamily}__${value.fontWeight}`
+            if (!fontMap.has(key)) {
+                fontMap.set(key, value.fontWeight as FontWeight)
             }
-
-            fonts.push({
-                family: value.fontFamily as string,
-                weight: value.fontWeight as FontWeight,
-            })
         }
     }
-
-    return fonts
+    return Array.from(fontMap.entries()).map(([k, weight]) => {
+        const family = k.split("__")[0]
+        return { family, weight }
+    })
 }

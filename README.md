@@ -1,4 +1,3 @@
-
 <p>
   <a href="https://github.com/deveix/mockgen/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/deveix/mockgen?style=flat-square" alt="License: MIT" />
@@ -17,8 +16,6 @@
   </a>
  <h1>Mockgen</h1>
 </div>
-
-
 
 Easily generate modern App Store & Google Play screenshots with customizable mockups.
 
@@ -46,7 +43,7 @@ Create a `.env.local` file by copying and filling the file env.example
 ```
 NEXT_PUBLIC_BASE_URL=http://0.0.0.0:3000
 NEXT_PUBLIC_API_URL=http://0.0.0.0:3000/api
-GOOGLE_FONT_API_KEY=YOUR_API_KEY 
+GOOGLE_FONT_API_KEY=YOUR_API_KEY
 ```
 
 Google font is only needed to fetch the fonts, not needed for deployement
@@ -63,6 +60,7 @@ yarn dev
 ## Build & Production
 
 ### Sync Font
+
 You can fetch the top X fonts of google fonts. By default it take the top 1 hundred
 
 ```shell
@@ -92,5 +90,11 @@ yarn start
 - `public/`: static assets (icons, images, examples)
 - `stores/`: state management (template stores)
 - `types/`: TypeScript types
+
+## Configuration requise pour les polices Google
+
+Pour utiliser les fonctions de récupération de polices Google (ex : getAvailableFontsFromAPI, getFontUrl), vous devez définir la variable d'environnement `GOOGLE_FONTS_API_KEY` dans votre fichier `.env.local`.
+
+Si cette clé est absente, une erreur explicite sera levée.
 
 MIT License

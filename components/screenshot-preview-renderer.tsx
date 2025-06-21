@@ -1,60 +1,46 @@
 "use client"
 
-import React, {
-  useRef,
-  useState,
-  useLayoutEffect,
-  useMemo,
-  useEffect,
-  useCallback,
-} from "react"
+import React, { useRef, useState, useLayoutEffect, useMemo, useEffect, createContext, useContext } from "react"
 import { useMultiTemplateStore } from "@/providers/multi-template-store-provider"
-import satori from "satori"
+import { useSatoriPreview } from "@/hooks/use-satori-preview"
 import dynamic from "next/dynamic"
-import { getFontsFromTemplate, getFontUrl } from "@/lib/fonts"
-import { getIconCode, loadEmoji } from "@/lib/twemoji"
 import { AspectRatio } from "@/components/ui/aspect-ratio"
-import { templates } from "./templates"
-import { PreviewBackground } from "./preview-background"
 import { DraggableTemplateText } from "./draggable-template-text"
+import { useScreenshotLayout } from "@/hooks/use-screenshot-layout"
+import { useEditorState } from "@/hooks/use-editor-state"
+import type Konva from "konva"
+import { SelectableLayer } from "@/components/selectable-layer"
+import { DraggableComponent } from "@/components/dragable-component"
+import { KonvaBackgroundLayer } from "@/components/konva-background-layer"
 
 const Stage = dynamic(() => import("react-konva").then(mod => mod.Stage), { ssr: false })
-import { Layer, Image as ImageKonva, Transformer } from "react-konva"
+import { Image as ImageKonva } from "react-konva"
 
 interface ScreenshotPreviewRendererProps {
   screenshotId: number
+  stageRef?: React.Ref<any>
 }
 
-const getMainTextField = (params: Record<string, unknown> | undefined) => {
-  if (!params) return null
-  for (const key of Object.keys(params)) {
-    const val = params[key] as Record<string, unknown>
-    if (
-      val &&
-      typeof val === "object" &&
-      "text" in val && typeof val.text === "string" &&
-      "fontFamily" in val && typeof val.fontFamily === "string" &&
-      "fontWeight" in val && typeof val.fontWeight === "number" &&
-      "fontSize" in val && typeof val.fontSize === "number" &&
-      "color" in val && typeof val.color === "string"
-    ) {
-      console.log("Main text field found:", key, val)
-      return val as {
-        text: string
-        fontFamily: string
-        fontWeight: number
-        fontSize: number
-        color: string
-      }
-    }
-  }
-  return null
-}
+export const ExportContext = createContext(false)
+export const useExportContext = () => useContext(ExportContext)
 
 export default function ScreenshotPreviewRenderer({
   screenshotId,
+  stageRef,
 }: ScreenshotPreviewRendererProps) {
-  const { screenshots, updatePreviewSvg } = useMultiTemplateStore(state => state)
+  const screenshots = useMultiTemplateStore(state => state.screenshots)
+  const updatePreviewSvg = useMultiTemplateStore(state => state.updatePreviewSvg)
+  const registerStageRef = useMultiTemplateStore(state => state.registerStageRef)
+  const unregisterStageRef = useMultiTemplateStore(state => state.unregisterStageRef)
+
+  // On force l'utilisation d'un objet ref pour l'enregistrement dans le store
+  const localStageRef = useRef<any>(null)
+  // On n'utilise que localStageRef pour le store, même si un stageRef externe est passé pour d'autres usages
+  useEffect(() => {
+    registerStageRef?.(screenshotId, localStageRef)
+    return () => unregisterStageRef?.(screenshotId)
+  }, [screenshotId, registerStageRef, unregisterStageRef])
+  const effectiveStageRef = stageRef || localStageRef
 
   const screenshot = useMemo(
     () => screenshots.find(s => s.id === screenshotId),
@@ -62,19 +48,105 @@ export default function ScreenshotPreviewRenderer({
   )
 
   const containerRef = useRef<HTMLDivElement>(null)
-  const imageRef = useRef<any>(null)
-  const trRef = useRef<any>(null)
+  const imageRef = useRef<Konva.Image | null>(null)
+  const trRef = useRef<Konva.Transformer | null>(null)
+  const textRef = useRef<Konva.Text | null>(null)
+  const logoRef = useRef<Konva.Image | null>(null)
 
   const [containerWidth, setContainerWidth] = useState<number>(300)
 
-  const { trueWidth, trueHeight, ratio } = useMemo(() => {
-    const w = screenshot?.template.canvas.width ?? 400
-    const h = screenshot?.template.canvas.height ?? 800
-    return { trueWidth: w, trueHeight: h, ratio: w / h }
-  }, [screenshot?.template.canvas])
+  const {
+    ratio,
+    stageWidth,
+    stageHeight,
+    mockConfig,
+  } = useScreenshotLayout(screenshot, containerWidth)
 
-  const stageWidth = containerWidth
-  const stageHeight = containerWidth / ratio
+  type MainTextField = {
+    text: string
+    fontFamily: string
+    fontWeight: number
+    fontSize: number
+    color: string
+  }
+  const mainTextField = (screenshot?.template.params?.title ?? null) as MainTextField | null
+
+  const screenshotForSatori = screenshot
+    ? { ...screenshot, previewSvg: screenshot.previewSvg ?? undefined }
+    : undefined
+
+  const { renderSvg } = useSatoriPreview(screenshotForSatori, updatePreviewSvg)
+
+  useEffect(() => {
+    if (screenshot) {
+      renderSvg()
+    }
+  }, [screenshot?.template])
+
+  const initialImage = {
+    x: mockConfig.x,
+    y: mockConfig.y,
+    width: mockConfig.width,
+    height: mockConfig.height,
+    rotation: 0,
+  }
+  let textX = 0
+  let textWidth = mockConfig.width
+  if (screenshot?.template.name === "apple:app-screenshot") {
+    textWidth = mockConfig.width - 200
+    textX = (mockConfig.width - textWidth) / 2
+  }
+  const initialText = { x: textX, y: 20, width: textWidth, rotation: 0 }
+
+  // Initialisation des états pour image, texte et logo
+  const logoParams = screenshot?.template?.params && "logo" in screenshot.template.params ? (screenshot.template.params.logo as any) : undefined;
+  const initialLogo = {
+    x: typeof logoParams?.x === "number" ? logoParams.x : 20,
+    y: typeof logoParams?.y === "number" ? logoParams.y : 20,
+    width: typeof logoParams?.width === "number" ? logoParams.width : 120,
+    height: typeof logoParams?.height === "number" ? logoParams.height : 120,
+    rotation: 0,
+  }
+
+  const [editorState, dispatch] = useEditorState(initialImage, initialText, initialLogo)
+
+  useEffect(() => {
+    dispatch({ type: "reset", image: initialImage, text: initialText, logo: initialLogo })
+  }, [screenshotId, mockConfig, screenshot?.template.name])
+
+  const [textRerenderKey, setTextRerenderKey] = useState(0)
+  useEffect(() => {
+    if (!mainTextField) return
+    const timeout = setTimeout(() => {
+      setTextRerenderKey(k => k + 1)
+    }, 500)
+    return () => clearTimeout(timeout)
+  }, [mainTextField?.fontFamily])
+
+  const konvaImage = useMemo(() => {
+    if (typeof window === "undefined" || !screenshot?.previewSvg) return null
+    const img = new window.Image()
+    img.src = `data:image/svg+xml;utf8,${encodeURIComponent(screenshot.previewSvg)}`
+    return img
+  }, [screenshot?.previewSvg])
+
+  // Génère l'image HTML pour le logo (comme konvaImage)
+  const logoImage = useMemo(() => {
+    if (typeof window === "undefined" || !screenshot?.template?.params || !("logo" in screenshot.template.params) || !screenshot.template.params.logo?.url) return null
+    const img = new window.Image()
+    img.src = screenshot.template.params.logo.url
+    return img
+  }, [screenshot?.template?.params && "logo" in screenshot.template.params ? screenshot.template.params.logo?.url : undefined])
+
+  useEffect(() => {
+    if (konvaImage && imageRef.current && trRef.current && editorState.selected === "image") {
+      trRef.current.nodes([imageRef.current])
+      trRef.current.getLayer()?.batchDraw()
+    } else if (textRef.current && trRef.current && editorState.selected === "text") {
+      trRef.current.nodes([textRef.current])
+      trRef.current.getLayer()?.batchDraw()
+    }
+  }, [konvaImage, editorState.selected])
 
   useLayoutEffect(() => {
     const handleResize = () => {
@@ -87,263 +159,155 @@ export default function ScreenshotPreviewRenderer({
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const mainTextField = useMemo(
-    () => getMainTextField(screenshot?.template.params),
-    [screenshot?.template.params]
-  )
-
-  const renderSvg = useCallback(async () => {
-    if (!screenshot) return
-
-    const templateFonts = getFontsFromTemplate(screenshot.template.params)
-    const fontResponses = await Promise.all(
-      templateFonts.map(async f => {
-        try {
-          const url = await getFontUrl({ family: f.family, weight: f.weight })
-          if (!url) return null
-          const res = await fetch(url)
-          return res.ok ? { ...f, data: await res.arrayBuffer() } : null
-        } catch {
-          return null
-        }
-      })
-    )
-    const validFonts = fontResponses.filter(Boolean)
-
-    const templateEntry = templates[screenshot.template.name] as {
-      Template: React.ComponentType<{ template: typeof screenshot.template, renderWatermark: boolean }>
-    }
-    const TemplateComp = templateEntry.Template
-
-    const templateWithoutText = JSON.parse(JSON.stringify(screenshot.template))
-    const textFieldKey = Object.keys(templateWithoutText.params).find(key => {
-      const val = templateWithoutText.params[key] as Record<string, unknown>
-      return val && typeof val === "object" && "text" in val
-    })
-
-    if (textFieldKey) {
-      templateWithoutText.params[textFieldKey].text = ""
-    }
-    if (templateWithoutText.params.logo) {
-      templateWithoutText.params.logo.url = ""
-    }
-
-    templateWithoutText.background = {
-      type: "color",
-      color: "transparent",
-      noise: 0,
-    }
-
-    const svg = await satori(<TemplateComp template={templateWithoutText} renderWatermark={false} />, {
-      width: screenshot.template.canvas.width,
-      height: screenshot.template.canvas.height,
-      fonts: (validFonts as any[]).map(f => ({
-        name: f.family,
-        weight: f.weight,
-        data: f.data,
-        style: "normal",
-      })),
-      loadAdditionalAsset: async (languageCode, segment) => {
-        if (languageCode === "emoji") {
-          return `data:image/svg+xml;base64,${btoa(await loadEmoji(getIconCode(segment)))}`
-        }
-        return ""
-      },
-    })
-
-    updatePreviewSvg(screenshotId, svg)
-  }, [screenshot, screenshotId, updatePreviewSvg])
-
-  useEffect(() => {
-    if (screenshot) {
-      renderSvg()
-    }
-  }, [screenshot?.template])
-
-  const mockConfig = useMemo(() => {
-    if (screenshot?.template.name === "android:app-screenshot") {
-      const width = trueWidth * 0.7
-      const height = trueHeight * 0.7
-      return { x: 0, y: 0, width, height, borderRadius: 80 }
-    }
-    return {
-      x: 50,
-      y: 150,
-      width: stageWidth * 0.8,
-      height: stageHeight * 0.8,
-      borderRadius: 0,
-    }
-  }, [screenshot?.template.name, trueWidth, trueHeight, stageWidth, stageHeight])
-
-  const [imageState, setImageState] = useState({
-    x: 0,
-    y: 0,
-    width: 400,
-    height: 800,
-    rotation: 0,
-  })
-
-  const [textState, setTextState] = useState({
-    x: 0,
-    y: 0,
-    width: 400,
-    rotation: 0,
-  })
-
-  // Nouvel état pour la sélection
-  const [selectedElement, setSelectedElement] = useState<"image" | "text" | null>(null)
-  const textRef = useRef<any>(null)
-
-  // Ajout d'un délai de 0.5s pour forcer le rerender de DraggableTemplateText quand fontFamily change
-  const [textRerenderKey, setTextRerenderKey] = useState(0)
-  useEffect(() => {
-    if (!mainTextField) return
-    const timeout = setTimeout(() => {
-      setTextRerenderKey(k => k + 1)
-    }, 500)
-    return () => clearTimeout(timeout)
-  }, [mainTextField?.fontFamily])
-
-  useEffect(() => {
-    setImageState({
-      x: mockConfig.x,
-      y: mockConfig.y,
-      width: mockConfig.width,
-      height: mockConfig.height,
-      rotation: 0,
-    })
-
-    let textX = 0
-    let textWidth = mockConfig.width
-    if (screenshot?.template.name === "apple:app-screenshot") {
-      textWidth = mockConfig.width - 200
-      textX = (mockConfig.width - textWidth) / 2
-    }
-    setTextState({ x: textX, y: 20, width: textWidth, rotation: 0 })
-  }, [screenshotId, mockConfig, screenshot?.template.name])
-
-  const konvaImage = useMemo(() => {
-    if (!screenshot?.previewSvg) return null
-    const img = new window.Image()
-    img.src = `data:image/svg+xml;utf8,${encodeURIComponent(screenshot.previewSvg)}`
-    return img
-  }, [screenshot?.previewSvg])
-
-  useEffect(() => {
-    if (konvaImage && imageRef.current && trRef.current && selectedElement === "image") {
-      trRef.current.nodes([imageRef.current])
-      trRef.current.getLayer()?.batchDraw()
-    } else if (textRef.current && trRef.current && selectedElement === "text") {
-      trRef.current.nodes([textRef.current])
-      trRef.current.getLayer()?.batchDraw()
-    }
-  }, [konvaImage, selectedElement])
-
   if (!screenshot) return null
-
   return (
     <div
       ref={containerRef}
       style={{ width: "100%", maxWidth: 400, position: "relative" }}
     >
-      <PreviewBackground
-        background={screenshot.template.background}
-        width={stageWidth}
-        height={stageHeight}
-      />
+      {/* On retire PreviewBackground, le fond est maintenant dans le canvas */}
       <AspectRatio
         ratio={ratio}
         style={{ width: "100%", position: "relative", zIndex: 1 }}
       >
-        <Stage width={stageWidth} height={stageHeight}>
-          <Layer>
+        <Stage ref={effectiveStageRef} width={stageWidth} height={stageHeight}>
+          <KonvaBackgroundLayer background={screenshot.template.background} width={stageWidth} height={stageHeight} />
+          <SelectableLayer
+            selected={editorState.selected}
+            imageRef={imageRef}
+            textRef={textRef}
+            trRef={trRef}
+            logoRef={logoRef}
+          >
             {mainTextField && (
               <DraggableTemplateText
                 key={`${screenshotId}-${mainTextField.fontFamily}-${mainTextField.fontWeight}-${textRerenderKey}`}
                 text={mainTextField.text}
-                x={textState.x}
-                y={textState.y}
+                x={editorState.text.x}
+                y={editorState.text.y}
                 fontSize={mainTextField.fontSize}
                 fontFamily={mainTextField.fontFamily}
                 fontWeight={mainTextField.fontWeight}
                 color={mainTextField.color}
-                width={textState.width}
-                onDragEnd={s => setTextState(prev => ({ ...prev, ...s }))}
+                width={editorState.text.width}
+                onDragEnd={s => dispatch({ type: "update", element: "text", payload: s })}
                 draggable={true}
                 ref={textRef}
-                onClick={() => setSelectedElement("text")}
-                onTap={() => setSelectedElement("text")}
-              // Ajout de la sélection par clic/tap
+                onClick={() => dispatch({ type: "select", element: "text" })}
+                onTap={() => dispatch({ type: "select", element: "text" })}
               />
             )}
             {konvaImage && (
-              <>
-                <ImageKonva
-                  ref={imageRef}
-                  image={konvaImage}
-                  x={imageState.x}
-                  y={imageState.y}
-                  width={imageState.width}
-                  height={imageState.height}
-                  rotation={imageState.rotation}
-                  draggable={true}
-                  onClick={() => setSelectedElement("image")}
-                  onTap={() => setSelectedElement("image")}
-                  onDragEnd={e => {
-                    const node = imageRef.current
-                    if (node) {
-                      const scaleX = node.scaleX()
-                      const scaleY = node.scaleY()
-                      node.scaleX(1)
-                      node.scaleY(1)
-                      setImageState(s => ({
-                        ...s,
+              <DraggableComponent
+                ref={imageRef}
+                image={konvaImage}
+                x={editorState.image.x}
+                y={editorState.image.y}
+                width={editorState.image.width ?? 120}
+                height={editorState.image.height ?? 120}
+                rotation={editorState.image.rotation ?? 0}
+                cornerRadius={mockConfig.borderRadius}
+                draggable={true}
+                onClick={() => dispatch({ type: "select", element: "image" })}
+                onTap={() => dispatch({ type: "select", element: "image" })}
+                onDragEnd={e => {
+                  const node = imageRef.current
+                  if (node) {
+                    const scaleX = node.scaleX()
+                    const scaleY = node.scaleY()
+                    node.scaleX(1)
+                    node.scaleY(1)
+                    dispatch({
+                      type: "update",
+                      element: "image",
+                      payload: {
                         x: node.x(),
                         y: node.y(),
-                        width: Math.max(5, s.width * scaleX),
-                        height: Math.max(5, s.height * scaleY),
-                        rotation: node.rotation(),
-                      }))
-                    }
-                  }}
-                  onTransformEnd={() => {
-                    const node = imageRef.current
-                    if (node) {
-                      const scaleX = node.scaleX()
-                      const scaleY = node.scaleY()
-                      node.scaleX(1)
-                      node.scaleY(1)
-                      setImageState(s => ({
-                        ...s,
+                        width: Math.max(5, (editorState.image.width ?? 120) * scaleX),
+                        height: Math.max(5, (editorState.image.height ?? 120) * scaleY),
+                        rotation: node.rotation?.() ?? 0,
+                      },
+                    })
+                  }
+                }}
+                onTransformEnd={() => {
+                  const node = imageRef.current
+                  if (node) {
+                    const scaleX = node.scaleX()
+                    const scaleY = node.scaleY()
+                    node.scaleX(1)
+                    node.scaleY(1)
+                    dispatch({
+                      type: "update",
+                      element: "image",
+                      payload: {
                         x: node.x(),
                         y: node.y(),
-                        width: Math.max(5, s.width * scaleX),
-                        height: Math.max(5, s.height * scaleY),
-                        rotation: node.rotation(),
-                      }))
-                    }
-                  }}
-                  cornerRadius={mockConfig.borderRadius}
-                />
-                {/* Transformer sur l'élément sélectionné */}
-                {selectedElement && (
-                  <Transformer
-                    ref={trRef}
-                    rotateEnabled={true}
-                    enabledAnchors={[
-                      "top-left",
-                      "top-right",
-                      "bottom-left",
-                      "bottom-right",
-                    ]}
-                    boundBoxFunc={(oldBox, newBox) =>
-                      newBox.width < 10 || newBox.height < 10 ? oldBox : newBox
-                    }
-                  />
-                )}
-              </>
+                        width: Math.max(5, (editorState.image.width ?? 120) * scaleX),
+                        height: Math.max(5, (editorState.image.height ?? 120) * scaleY),
+                        rotation: node.rotation?.() ?? 0,
+                      },
+                    })
+                  }
+                }}
+              />
             )}
-          </Layer>
+            {/* Ajout du logo sur le stage si présent dans le template, drag & drop */}
+            {typeof window !== "undefined" && logoImage && (
+              <DraggableComponent
+                ref={logoRef}
+                image={logoImage}
+                x={editorState.logo.x}
+                y={editorState.logo.y}
+                width={editorState.logo.width ?? 24}
+                height={editorState.logo.height ?? 24}
+                draggable={true}
+                onClick={() => dispatch({ type: "select", element: "logo" })}
+                onTap={() => dispatch({ type: "select", element: "logo" })}
+                onDragEnd={e => {
+                  const node = logoRef.current
+                  if (node) {
+                    const scaleX = node.scaleX()
+                    const scaleY = node.scaleY()
+                    node.scaleX(1)
+                    node.scaleY(1)
+                    dispatch({
+                      type: "update",
+                      element: "logo",
+                      payload: {
+                        x: node.x(),
+                        y: node.y(),
+                        width: Math.max(5, editorState.logo.width * scaleX),
+                        height: Math.max(5, (editorState.logo.height ?? 120) * scaleY),
+                        rotation: node.rotation?.() ?? 0,
+                      },
+                    })
+                  }
+                }}
+                onTransformEnd={() => {
+                  const node = logoRef.current
+                  if (node) {
+                    const scaleX = node.scaleX()
+                    const scaleY = node.scaleY()
+                    node.scaleX(1)
+                    node.scaleY(1)
+                    dispatch({
+                      type: "update",
+                      element: "logo",
+                      payload: {
+                        x: node.x(),
+                        y: node.y(),
+                        width: Math.max(5, editorState.logo.width * scaleX),
+                        height: Math.max(5, (editorState.logo.height ?? 120) * scaleY),
+                        rotation: node.rotation?.() ?? 0,
+                      },
+                    })
+                  }
+                }}
+                listening={true}
+              />
+            )}
+          </SelectableLayer>
         </Stage>
       </AspectRatio>
     </div>

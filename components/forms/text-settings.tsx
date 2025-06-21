@@ -17,6 +17,7 @@ import {
   getAvailableFontsFromAPI,
   getFontUrl,
 } from "@/lib/fonts"
+import { Skeleton } from "@/components/template-skeletons/skeleton"
 
 interface TextSettingsProps {
   fontFamily: string
@@ -28,6 +29,13 @@ interface TextSettingsProps {
   color: string
   onChangeColor: (color: string) => void
   className?: string
+}
+
+interface FontInfo {
+  value: string
+  label: string
+  weights: number[]
+  subset: string
 }
 
 // tailwind gray color palette
@@ -54,46 +62,104 @@ export function TextSettings({
   className,
 }: TextSettingsProps) {
   const [subset, setSubset] = useState<string>("latin")
-  const [fonts, setFonts] = useState<any[]>([])
+  const [fonts, setFonts] = useState<FontInfo[]>([])
   const [loadingFonts, setLoadingFonts] = useState(false)
 
   useEffect(() => {
+    let isMounted = true
+    const controller = new AbortController()
     setLoadingFonts(true)
-    getAvailableFontsFromAPI(subset, 100).then((f) => {
-      setFonts(f)
-      setLoadingFonts(false)
-    })
+    getAvailableFontsFromAPI(subset, 100)
+      .then((f) => {
+        if (!isMounted) return
+        setFonts(f)
+        setLoadingFonts(false)
+        const foundFont = f.find(font => font.value === fontFamily)
+        if (!foundFont) {
+          if (f.length > 0) {
+            onChangeFontFamily(f[0].value)
+          }
+        } else {
+          if (!foundFont.weights.includes(fontWeight)) {
+            if (foundFont.weights.length > 0) {
+              onChangeFontWeight(foundFont.weights[0] as FontWeight)
+            }
+          }
+        }
+      })
+      .catch(() => {
+        if (!isMounted) return
+        setLoadingFonts(false)
+      })
+    return () => {
+      isMounted = false
+      controller.abort()
+    }
   }, [subset])
 
-  // Charge dynamiquement la font sélectionnée côté client
   useEffect(() => {
     if (!fontFamily || !fontWeight) return
+    let cancelled = false
     getFontUrl({ family: fontFamily, weight: fontWeight }).then((fontUrl) => {
-      if (!fontUrl) return
+      if (!fontUrl || cancelled) return
       const fontName = fontFamily.replace(/-/g, ' ')
-      const styleId = `dynamic-font-${fontFamily}-${fontWeight}`
-      // Supprime l'ancien style si déjà injecté
-      const oldStyle = document.getElementById(styleId)
-      if (oldStyle) oldStyle.remove()
-      // Crée la règle @font-face
-      const style = document.createElement('style')
-      style.id = styleId
-      style.innerHTML = `@font-face { font-family: '${fontName}'; src: url('${fontUrl}') format('woff2'); font-weight: ${fontWeight}; font-display: swap; }`
-      document.head.appendChild(style)
+      // Utilisation de FontFace API pour éviter les doublons et avoir un meilleur contrôle
+      if (document.fonts) {
+        const fontFace = new FontFace(fontName, `url('${fontUrl}')`, {
+          weight: fontWeight.toString(),
+          display: 'swap',
+        })
+        // Vérifie si la font est déjà chargée
+        const alreadyLoaded = Array.from(document.fonts).some(
+          (f) => f.family === fontName && f.weight === fontWeight.toString()
+        )
+        if (!alreadyLoaded) {
+          fontFace.load().then((loadedFace) => {
+            document.fonts.add(loadedFace)
+          })
+        }
+      } else {
+        // Fallback pour navigateurs sans FontFace API
+        const styleId = `dynamic-font-${fontFamily}-${fontWeight}`
+        if (!document.getElementById(styleId)) {
+          const style = document.createElement('style')
+          style.id = styleId
+          style.innerHTML = `@font-face { font-family: '${fontName}'; src: url('${fontUrl}') format('woff2'); font-weight: ${fontWeight}; font-display: swap; }`
+          document.head.appendChild(style)
+        }
+      }
     })
+    return () => { cancelled = true }
   }, [fontFamily, fontWeight, subset])
+
+  useEffect(() => {
+    const foundFont = fonts.find(font => font.value === fontFamily)
+    if (foundFont && !foundFont.weights.includes(fontWeight)) {
+      if (foundFont.weights.length > 0) {
+        onChangeFontWeight(foundFont.weights[0] as FontWeight)
+      }
+    }
+  }, [fontFamily, fonts])
 
   const weights: number[] = Array.isArray(fonts.find((f) => f.value === fontFamily)?.weights)
     ? Array.from(new Set(fonts.find((f) => f.value === fontFamily)?.weights as number[]))
     : [];
 
+  function SettingRow({ label, htmlFor, children }: { label: string, htmlFor: string, children: React.ReactNode }) {
+    return (
+      <div className="grid grid-cols-3 items-center gap-4">
+        <Label htmlFor={htmlFor}>{label}</Label>
+        <div className="col-span-2">{children}</div>
+      </div>
+    )
+  }
+
   return (
     <div className={cn("grid gap-4", className)}>
       <div className="grid gap-2">
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="subset">Subset</Label>
+        <SettingRow label="Subset" htmlFor="subset">
           <Select value={subset} onValueChange={setSubset}>
-            <SelectTrigger id="subset" className="col-span-2 h-8">
+            <SelectTrigger id="subset" className="h-8">
               <SelectValue placeholder="Subset" />
             </SelectTrigger>
             <SelectContent>
@@ -103,70 +169,78 @@ export function TextSettings({
               </SelectGroup>
             </SelectContent>
           </Select>
-        </div>
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="font-family">Font family</Label>
-          <Select
-            value={fontFamily}
-            onValueChange={onChangeFontFamily}
-            disabled={loadingFonts}
-          >
-            <SelectTrigger id="font-family" className="col-span-2 h-8">
-              <SelectValue placeholder="Select a font" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {fonts.map((f) => (
-                  <SelectItem key={f.value} value={f.value}>
-                    {f.label}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="font-weight">Font weight</Label>
-          <Select
-            value={fontWeight.toString()}
-            onValueChange={(v) =>
-              onChangeFontWeight(parseInt(v as string) as FontWeight)
-            }
-            disabled={loadingFonts || weights.length === 0}
-          >
-            <SelectTrigger id="font-weight" className="col-span-2 h-8">
-              <SelectValue placeholder="Select a weight" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                {weights.length > 0 &&
-                  weights.map((weight: number) => (
-                    <SelectItem key={weight} value={weight.toString()}>
-                      {fontWeights[weight as keyof typeof fontWeights] ?? weight}
+        </SettingRow>
+        <SettingRow label="Font family" htmlFor="font-family">
+          {loadingFonts ? (
+            <div className="h-8 flex items-center"><Skeleton className="w-full h-8" /></div>
+          ) : (
+            <Select
+              value={fontFamily}
+              onValueChange={onChangeFontFamily}
+              disabled={loadingFonts}
+            >
+              <SelectTrigger id="font-family" className="h-8">
+                <SelectValue placeholder="Select a font" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {fonts.map((f) => (
+                    <SelectItem key={f.value} value={f.value}>
+                      {f.label}
                     </SelectItem>
                   ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="font-size">Font size</Label>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          )}
+        </SettingRow>
+        <SettingRow label="Font weight" htmlFor="font-weight">
+          {loadingFonts ? (
+            <div className="h-8 flex items-center"><Skeleton className="w-full h-8" /></div>
+          ) : (
+            <Select
+              value={fontWeight.toString()}
+              onValueChange={(v) =>
+                onChangeFontWeight(parseInt(v as string) as FontWeight)
+              }
+              disabled={loadingFonts || weights.length === 0}
+            >
+              <SelectTrigger id="font-weight" className="h-8">
+                <SelectValue placeholder="Select a weight" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {weights.length > 0 &&
+                    weights.map((weight: number) => (
+                      <SelectItem key={weight} value={weight.toString()}>
+                        {fontWeights[weight as keyof typeof fontWeights] ?? weight}
+                      </SelectItem>
+                    ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          )}
+        </SettingRow>
+        <SettingRow label="Font size" htmlFor="font-size">
           <Input
             id="font-size"
             type="number"
-            className="col-span-2 h-8"
+            className="h-8"
             value={fontSize.toString()}
-            onChange={(e) => onChangeFontSize(parseInt(e.currentTarget.value))}
+            min={8}
+            max={200}
+            onChange={(e) => {
+              const val = parseInt(e.currentTarget.value)
+              if (!isNaN(val) && val >= 8 && val <= 200) {
+                onChangeFontSize(val)
+              }
+            }}
           />
-        </div>
-
-        <div className="grid grid-cols-3 items-center gap-4">
-          <Label htmlFor="text-color">Text Color</Label>
+        </SettingRow>
+        <SettingRow label="Text Color" htmlFor="text-color">
           <RadioGroup
             id="text-color"
-            className="col-span-2"
+            className=""
             value={color}
             onValueChange={onChangeColor}
           >
@@ -189,7 +263,7 @@ export function TextSettings({
               ))}
             </div>
           </RadioGroup>
-        </div>
+        </SettingRow>
       </div>
     </div >
   )

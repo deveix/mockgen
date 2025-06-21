@@ -1,10 +1,10 @@
 import { z } from "zod"
 
-import { fontFamilySchema, fontWeightSchema } from "@/lib/fonts"
+import { fontWeightSchema } from "@/lib/fonts"
 
 export const textSchema = z.object({
   text: z.string(),
-  fontFamily: fontFamilySchema,
+  fontFamily: z.string(),
   fontWeight: fontWeightSchema,
   fontSize: z.number(),
   color: z.string(),
