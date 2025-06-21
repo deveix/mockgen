@@ -2,8 +2,8 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*.*.*'
+    branches:
+      - main
 
 jobs:
   check-tools:
@@ -15,15 +15,25 @@ jobs:
     needs: check-tools
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # nécessaire pour push
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'yarn'
       - run: yarn install --frozen-lockfile
+      - name: Bump version
+        run: |
+          yarn version --patch --no-git-tag-version
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add package.json
+          git commit -m "chore: bump version [skip ci]"
+          git push origin HEAD:master
       - run: yarn build
       - name: Zip build
         run: |
-          VERSION=$(echo $GITHUB_REF | sed 's|refs/tags/v||')
+          VERSION=$(node -p "require('./package.json').version")
           zip -r build-$VERSION.zip .next public package.json yarn.lock
       - name: Create Release
         uses: softprops/action-gh-release@v2

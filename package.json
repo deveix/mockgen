@@ -10,7 +10,8 @@
     "start": "next start",
     "lint": "next lint",
     "knip": "knip --config knip.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "echo \"No tests specified\" && exit 0"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
